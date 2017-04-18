@@ -10,13 +10,9 @@ from modules.tdt import tdt
 from modules.util import storage
 from modules.util import debug
 from modules.data import strings
+from modules.data import private
 
 from datetime import datetime
-
-token = 'Mjk3MjM3ODQ1NTkxMTk1NjUx.C7-JAQ.gSV561c3t0oOHe_jFN98pGhQtl8'
-tdt_server_id = '108476397504217088'
-anaeon_id = '108467075613216768'
-anaeon_dm_id = '297303814124470272'
 
 client = discord.Client()
 
@@ -131,14 +127,14 @@ async def on_message(message): # when someone sends a message. Read command inpu
 		
 		# basic personal commands
 		
-		if message.channel.id == anaeon_dm_id:
+		if message.channel.id == private.anaeon_dm_id:
 			if m.startswith('!talk'):
 				args = message.content.split('--')
 				await sendTalk(args)
 				print(args[3])
 		
 		for mention in message.mentions:
-			if mention == client.user and message.author.id == anaeon_id:
+			if mention == client.user and message.author.id == private.anaeon_id:
 				if '!debugon' in m:
 					if debug.DEBUG:
 						await client.send_message(message.channel, 'Debug was already active.')
@@ -248,4 +244,4 @@ async def on_message(message): # when someone sends a message. Read command inpu
 # async def on_reaction_add(reaction, user): # when someone adds a reaction?
 	# do nothing
 
-client.run(token)
+client.run(private.token)

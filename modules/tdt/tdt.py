@@ -8,11 +8,10 @@ from modules.api import gw2
 from modules.tdt import scoreboard
 from modules.util import storage
 from modules.util import debug
+from modules.data import private
 from datetime import datetime
 
-anaeon_id = '108467075613216768'
-
-server = discord.Object('108476397504217088')
+server = discord.Object(private.tdt_server_id)
 channels = {
 	'general' : '108476397504217088',
 	'other' : '179852602031341569',
@@ -80,7 +79,7 @@ async def handleMessage(client, message):
 					response = scoreboard.readPoints(client, message)
 			elif 'who\'s winning' in m or'leaderboard' in m:
 				response = scoreboard.getTopPoints()
-			print('{}, {}'.format(message.author.id, anaeon_id))
+			print('{}, {}'.format(message.author.id, private.anaeon_id))
 			
 			# -- end pearl points --
 			
@@ -105,11 +104,11 @@ async def handleMessage(client, message):
 			# -- end dailies --
 			
 			# commands unique to myself
-			if '!resetpearlpoints' in m and message.author.id == anaeon_id:
+			if '!resetpearlpoints' in m and message.author.id == private.anaeon_id:
 				response = scoreboard.resetPoints(client, message)
-			if '!initpearlpoints' in m and message.author.id == anaeon_id:
+			if '!initpearlpoints' in m and message.author.id == private.anaeon_id:
 				response = scoreboard.initPointsToGive(message)
-			if '!resetpointstogive' in m and message.author.id == anaeon_id:
+			if '!resetpointstogive' in m and message.author.id == private.anaeon_id:
 				response = scoreboard.resetPointsToGive(message.server)
 			
 			if response != '':
