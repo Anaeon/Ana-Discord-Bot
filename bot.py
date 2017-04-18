@@ -5,7 +5,6 @@ import random
 import re
 import os
 
-# from modules.scoreboard import scoreboard
 from modules.tdt import scoreboard
 from modules.tdt import tdt
 from modules.util import storage
@@ -66,7 +65,7 @@ async def on_message_edit(before, after):
 	
 @client.event
 async def on_message(message): # when someone sends a message. Read command inputs here.
-	# print(debug.DEBUG)
+
 	try:
 		debug.debug(debug.D_INFO, 'server: {}, id: {}'.format(message.server, message.server.id))
 	except AttributeError as e:
@@ -79,6 +78,7 @@ async def on_message(message): # when someone sends a message. Read command inpu
 	
 	debug.debug(debug.D_INFO, 'author: {}, id: {}'.format(message.author, message.author.id))
 	debug.debug(debug.D_INFO, 'message: {}'.format(message.content))
+	
 	# go ahead and check which server we're in
 	is_tdt = False
 	is_neon = False
@@ -87,7 +87,6 @@ async def on_message(message): # when someone sends a message. Read command inpu
 		is_tdt = message.server.id == tdt_server_id
 	except AttributeError as e:
 		debug.debug(debug.D_ERROR, 'Caught AttributeError while trying to determine what server a message came from. {}'.format(e))
-	
 	
 	m = message.content.lower()
 	if message.author != client.user: # don't react to your own messages.
@@ -163,9 +162,9 @@ async def on_message(message): # when someone sends a message. Read command inpu
 						debug.D_CURRENT_LEVEL = debug.D_VERBOSE
 						await client.send_message(message.channel, 'Now logging debug at VERBOSE level and below.')
 					
-		
 		# end basic personal commands
 		
+		# end general stuff
 		
 		# STUPID STUFF GOES HERE ============================
 		
@@ -238,10 +237,10 @@ async def on_message(message): # when someone sends a message. Read command inpu
 					r = ['Smash.', 'Pass.']
 					response = (r[random.randint(1, len(r)) - 1])
 					await client.send_message(message.channel, response)
+					
 		# END STUPID STUFF =================================
 				
 		# Only do these things in Digital Table server.
-		# Put tdt logic method here
 		if is_tdt:
 			await tdt.handleMessage(client, message)
 

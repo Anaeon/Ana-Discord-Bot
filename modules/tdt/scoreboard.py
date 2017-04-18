@@ -129,8 +129,6 @@ def givePoints(client, message):
 					storage.set_user_attribute(message.author.id, 'available_pearl_points', ptg - 1)
 			else:
 				response = 'You don\'t have any more points to give today, {}.'.format(message.author.mention)
-		# elif mention.bot:
-			# return 'You can\'t give points to a bot.'
 	return response
 
 def takePoints(client, message):
@@ -197,14 +195,14 @@ def readPoints(client, message):
 			try:
 				pearlpoints = int(storage.get_user_attribute(id, "pearl_points"))
 			except KeyError as e:
-				print('{} did not have a \'pearl_points\' attribute.'.format(mention))
+				debug.debug(debug.D_ERROR, '{} did not have a \'pearl_points\' attribute.'.format(mention))
 				storage.set_user_attribute(id, "pearl_points", pearlpoints)
 			finally:
 				if pearlpoints == 1:
 					response = "{} has {} pearl point.".format(mention.mention, pearlpoints)
 				else:
 					response = "{} has {} pearl points.".format(mention.mention, pearlpoints)
-				# return response
+	return response
 					
 def resetPoints(client, message):
 	response = 'Pearl points for the following users have been reset: \n\n'

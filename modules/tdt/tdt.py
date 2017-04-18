@@ -15,13 +15,13 @@ anaeon_id = '108467075613216768'
 server = discord.Object('108476397504217088')
 channels = {
 	'general' : '108476397504217088',
+	'other' : '179852602031341569',
 	'funny-stuff' : '108481880596197376',
 	'bot-test-chat' : '231571819574984705'
 	}
 
 async def handleMessage(client, message):
-	# maybe just reset the points here?
-	# have it check the server attribute for when the next reset should be
+	# check if alloted points for the day should be reset yet.
 	m = message.content.lower()
 	try:
 		if datetime.now() > storage.get_server_attribute(message.server.id, 'next_pearl_point_reset_datetime'):
@@ -32,6 +32,7 @@ async def handleMessage(client, message):
 	# if it's past that time, reset.
 	
 	# respond to solo fractal emote and give daily fractals
+	
 	if m == '<:fractals:230520375396532224>':
 		response = '```\nToday\'s daily fractals:\n\n'
 		t = ''
@@ -54,6 +55,8 @@ async def handleMessage(client, message):
 		await client.add_reaction(message, 'treebs:235655554465398784')
 	
 	# End adding reactions
+	
+	# direct mention commands
 	
 	for mention in message.mentions: # when someone is mentioned
 		debug.debug(debug.D_INFO, '{} was mentioned'.format(mention))
@@ -81,7 +84,6 @@ async def handleMessage(client, message):
 			# -- dailies --
 			
 			if re.search('\\bfractal(\\b|s)|\\bfric frac(\\b|s)', m):
-				# if re.search('\\btoday\\b|\\bdaily\\b|\\bdailies\\b', m):
 				response = '```\nToday\'s daily fractals:\n\n'
 				t = ''
 				r = ''
@@ -94,7 +96,7 @@ async def handleMessage(client, message):
 						r = '{}{}\n'.format(r, gw2.getAchievementName(daily['id']))
 				response = '{}{}{}\n```'.format(response, r, t)
 			
-			# -- dailies --
+			# -- end dailies --
 			
 			# commands unique to myself
 			if '!resetpearlpoints' in m and message.author.id == anaeon_id:
@@ -106,3 +108,5 @@ async def handleMessage(client, message):
 			
 			if response != '':
 				await client.send_message(message.channel, response)
+				
+	# end direct mention commands
