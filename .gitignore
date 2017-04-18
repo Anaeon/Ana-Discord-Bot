@@ -7,3 +7,5 @@
 *.pyc
 *.dat
 *.pyc
+*.pyc
+data/user.dat
