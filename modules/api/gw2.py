@@ -7,9 +7,10 @@ def getFractalDailies():
 	fractal_dailies = data['fractals']
 	return fractal_dailies
 	
-def getAchievementName(id):
-	name = 'Unknown achievement... ID == {}.'.format(id)
+def getAchievementNames(id):
+	names = []
 	req = requests.get('https://api.guildwars2.com/v2/achievements?ids={}'.format(id))
 	data = json.loads(req.content)
-	name = data[0]['name']
-	return name
+	for d in data:
+		names.append(d['name'])
+	return names

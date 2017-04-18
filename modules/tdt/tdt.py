@@ -38,12 +38,15 @@ async def handleMessage(client, message):
 		t = ''
 		r = ''
 		fractal_dailies = gw2.getFractalDailies()
+		ids =[]
 		for daily in fractal_dailies:
-			name = gw2.getAchievementName(daily['id'])
+			ids.append(daily['id'])
+		names = gw2.getAchievementNames(ids)
+		for name in names:
 			if ' Tier ' in name and ' 4 ' in name:
-				t = '{}{}\n'.format(t, gw2.getAchievementName(daily['id']))
+				t = '{}{}\n'.format(t, name)
 			elif not ' Tier ' in name:
-				r = '{}{}\n'.format(r, gw2.getAchievementName(daily['id']))
+				r = '{}{}\n'.format(r, name)
 		await client.send_message(message.channel, '{}{}{}\n```'.format(response, r, t))
 	
 	# end fractals
@@ -88,12 +91,15 @@ async def handleMessage(client, message):
 				t = ''
 				r = ''
 				fractal_dailies = gw2.getFractalDailies()
+				ids =[]
 				for daily in fractal_dailies:
-					name = gw2.getAchievementName(daily['id'])
+					ids.append(daily['id'])
+				names = gw2.getAchievementNames(ids)
+				for name in names:
 					if ' Tier ' in name and ' 4 ' in name:
-						t = '{}{}\n'.format(t, gw2.getAchievementName(daily['id']))
+						t = '{}{}\n'.format(t, name)
 					elif not ' Tier ' in name:
-						r = '{}{}\n'.format(r, gw2.getAchievementName(daily['id']))
+						r = '{}{}\n'.format(r, name)
 				response = '{}{}{}\n```'.format(response, r, t)
 			
 			# -- end dailies --
