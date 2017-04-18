@@ -31,6 +31,22 @@ async def handleMessage(client, message):
 	debug.debug(debug.D_INFO, 'Time to next reset: {}'.format((storage.get_server_attribute(message.server.id, 'next_pearl_point_reset_datetime') - datetime.now())))
 	# if it's past that time, reset.
 	
+	# respond to solo fractal emote and give daily fractals
+	if m == '<:fractals:230520375396532224>':
+		response = '```\nToday\'s daily fractals:\n\n'
+		t = ''
+		r = ''
+		fractal_dailies = gw2.getFractalDailies()
+		for daily in fractal_dailies:
+			name = gw2.getAchievementName(daily['id'])
+			if ' Tier ' in name and ' 4 ' in name:
+				t = '{}{}\n'.format(t, gw2.getAchievementName(daily['id']))
+			elif not ' Tier ' in name:
+				r = '{}{}\n'.format(r, gw2.getAchievementName(daily['id']))
+		await client.send_message(message.channel, '{}{}{}\n```'.format(response, r, t))
+	
+	# end fractals
+	
 	# Add reactions to some messages
 	
 	if 'treebs' in m or 'omega' in m:
