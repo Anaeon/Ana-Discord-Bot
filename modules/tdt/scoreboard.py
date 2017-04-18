@@ -123,9 +123,12 @@ def givePoints(client, message):
 						"Hurray!"
 						]
 						
-					response = (give_point[random.randint(1, len(give_point)) - 1])
+					response = random.choice(give_point)
 					response = "{}\n\nAlright, I gave a point to {}.".format(response, mention.mention)
-					response = '{}\n\n{}, you have {} points left to give.'.format(response, message.author.mention, ptg - 1)
+					if ptg - 1 == 1:
+						response = '{}\n\n{}, you have {} point left to give.'.format(response, message.author.mention, ptg - 1)
+					else:
+						response = '{}\n\n{}, you have {} points left to give.'.format(response, message.author.mention, ptg - 1)
 					storage.set_user_attribute(message.author.id, 'available_pearl_points', ptg - 1)
 			else:
 				response = 'You don\'t have any more points to give today, {}.'.format(message.author.mention)
@@ -179,7 +182,10 @@ def takePoints(client, message):
 					
 					response = (take_point[random.randint(1, len(take_point)) - 1])
 					response = "{}\n\nAlright, I took a point from {}.".format(response, mention.mention)
-					response = '{}\n\n{}, you have {} points left to take.'.format(response, message.author.mention, ptg - 1)
+					if ptg - 1 == 1:
+						response = '{}\n\n{}, you have {} point left to take.'.format(response, message.author.mention, ptg - 1)
+					else:
+						response = '{}\n\n{}, you have {} points left to take.'.format(response, message.author.mention, ptg - 1)
 					storage.set_user_attribute(message.author.id, 'available_pearl_points', ptg - 1)
 			else:
 				response = 'You don\'t have any more points to take today, {}.'.format(message.author.mention)
