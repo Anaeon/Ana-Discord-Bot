@@ -1,3 +1,7 @@
 *.pyc
 *.pyc
 *.dat
+*.dat
+*.dir
+*.bak
+*.pyc
