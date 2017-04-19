@@ -45,7 +45,7 @@ async def on_message_edit(before, after):
 	is_neon = False
 	is_durg = False
 	try:
-		is_tdt = after.server.id == tdt_server_id
+		is_tdt = after.server.id == private.tdt_server_id
 	except AttributeError as e:
 		debug.debug(debug.D_ERROR, 'Caught AttributeError while trying to determine what server a message came from. {}'.format(e))
 	
@@ -80,7 +80,7 @@ async def on_message(message): # when someone sends a message. Read command inpu
 	is_neon = False
 	is_durg = False
 	try:
-		is_tdt = message.server.id == tdt_server_id
+		is_tdt = message.server.id == private.tdt_server_id
 	except AttributeError as e:
 		debug.debug(debug.D_ERROR, 'Caught AttributeError while trying to determine what server a message came from. {}'.format(e))
 	
