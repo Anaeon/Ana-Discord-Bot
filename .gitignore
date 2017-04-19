@@ -12,3 +12,5 @@ data/user.dat
 modules/api/__pycache__/gw2.cpython-36.pyc
 modules/tdt/__pycache__/tdt.cpython-36.pyc
 modules/data/private.py
+*.dat
+data/user.dat
