@@ -31,7 +31,7 @@ async def handleMessage(client, message):
 
     # respond to solo fractal emote and give daily fractals
 
-    if m == '<:fractals:230520375396532224>':
+    if '<:fractals:230520375396532224>' in m:
         response = '```\nToday\'s daily fractals:\n\n'
         t = ''
         r = ''
