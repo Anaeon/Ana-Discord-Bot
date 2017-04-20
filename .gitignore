@@ -17,3 +17,7 @@ data/user.dat
 data/user.dat
 *.dat
 data/server.dat
+*.pyc
+*.dir
+*.pyc
+*.bak
