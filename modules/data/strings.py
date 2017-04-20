@@ -1,3 +1,5 @@
+import random
+
 no_words_regex = [
     '\\bsuc{2,999}(\\b|s|k)',
     '\\bfuc{2,999}(\\b|s|k)',
@@ -25,37 +27,39 @@ no_words_response = [
     'My faith in your race as a whole is dwindling.'
 ]
 
-# give_point = [
-# "{}, you did a thing!".format(mention.mention),
-# "Yay!",
-# "Congrats, {}, you dirty bastard.".format(mention.mention),
-# "Did you really earn that point?",
-# "Congratulations.",
-# "{}, your friends have acknowledged your existance.",
-# "Fine... I guess.",
-# "Alright, but I don't like it.",
-# "Are you sure? Like... really sure?\n\nOoookkkkkk.",
-# "Finally! 'Bout time.",
-# "Do I even want to know what you had to do to get that, {}?".format(mention.mention),
-# "Don't spend it all in one place. ;D",
-# "Woooooow hooow speciaaaallll. *rolls eyes*",
-# "Hurray!"
-# ]
+def give_point(mention):
+    return random.choice([
+        "{}, you did a thing!".format(mention.mention),
+        "Yay!",
+        "Congrats, {}, you dirty bastard.".format(mention.mention),
+        "Did you really earn that point?",
+        "Congratulations.",
+        "{}, your friends have acknowledged your existance.",
+        "Fine... I guess.",
+        "Alright, but I don't like it.",
+        "Are you sure? Like... really sure?\n\nOoookkkkkk.",
+        "Finally! 'Bout time.",
+        "Do I even want to know what you had to do to get that, {}?".format(mention.mention),
+        "Don't spend it all in one place. ;D",
+        "Woooooow hooow speciaaaallll. *rolls eyes*",
+        'Hurray!'
+        ])
 
-# take_point = [
-# "LOL!",
-# "Ha! Loser.",
-# "Get owned!",
-# "Say, \"Bye bye,\" point.",
-# "Oooooh~ You're in troubleeee~",
-# "You dun fucked up!",
-# "What did you do now, {}?".format(mention.mention),
-# "Your friends have deemed you an aweful person, {}.".format(mention.mention),
-# "Your friends have denied you any glory or honor, {}.".format(mention.mention),
-# "git gud",
-# "RIP",
-# "GG EZ",
-# "Sucks to suck.",
-# "Adiós, punto.",
-# "Say, \"Goodbye,\" to your likeability, {}.".format(mention.mention)
-# ]
+def take_point(mention):
+    return random.choice([
+        "LOL!",
+        "Ha! Loser.",
+        "Get owned!",
+        "Say, \"Bye bye,\" point.",
+        "Oooooh~ You're in troubleeee~",
+        "You dun fucked up!",
+        "What did you do now, {}?".format(mention.mention),
+        "Your friends have deemed you an aweful person, {}.".format(mention.mention),
+        "Your friends have denied you any glory or honor, {}.".format(mention.mention),
+        "git gud",
+        "RIP",
+        "GG EZ",
+        "Sucks to suck.",
+        "Adiós, punto.",
+        "Say, \"Goodbye,\" to your likeability, {}.".format(mention.mention)
+        ])

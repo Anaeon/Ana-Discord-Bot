@@ -1,5 +1,3 @@
-import random
-
 from operator import itemgetter
 from datetime import datetime
 
@@ -107,25 +105,7 @@ def give_points(client, message):
                     storage.set_user_attribute(id, "pearl_points", pearlpoints)
                     p = storage.get_user_attribute(id, "pearl_points")
                     debug.debug(debug.D_INFO, '{} has {} points now.'.format(mention, p))
-
-                    give_point = [
-                        "{}, you did a thing!".format(mention.mention),
-                        "Yay!",
-                        "Congrats, {}, you dirty bastard.".format(mention.mention),
-                        "Did you really earn that point?",
-                        "Congratulations.",
-                        "{}, your friends have acknowledged your existance.".format(mention.mention),
-                        "Fine... I guess.",
-                        "Alright, but I don't like it.",
-                        "Are you sure? Like... really sure?\n\nOoookkkkkk.",
-                        "Finally! 'Bout time.",
-                        "Do I even want to know what you had to do to get that, {}?".format(mention.mention),
-                        "Don't spend it all in one place. ;D",
-                        "Woooooow hooow speciaaaallll. *rolls eyes*",
-                        "Hurray!"
-                    ]
-
-                    response = random.choice(give_point)
+                    response = strings.give_point(mention)
                     response = "{}\n\nAlright, I gave a point to {}.".format(response, mention.mention)
                     if ptg - 1 == 1:
                         response = '{}\n\n{}, you have {} point left to give.'.format(response, message.author.mention,
@@ -166,26 +146,7 @@ def take_points(client, message):
                     storage.set_user_attribute(id, "pearl_points", pearlpoints)
                     p = storage.get_user_attribute(id, "pearl_points")
                     print('{} has {} points now.'.format(mention, p))
-
-                    take_point = [
-                        "LOL!",
-                        "Ha! Loser.",
-                        "Get owned!",
-                        "Say, \"Bye bye,\" point.",
-                        "Oooooh~ You're in troubleeee~",
-                        "You dun fucked up!",
-                        "What did you do now, {}?".format(mention.mention),
-                        "Your friends have deemed you an awful person, {}.".format(mention.mention),
-                        "Your friends have denied you any glory or honor, {}.".format(mention.mention),
-                        "git gud",
-                        "RIP",
-                        "GG EZ",
-                        "Sucks to suck.",
-                        "Adiós, punto.",
-                        "Say, \"Goodbye,\" to your likeability, {}.".format(mention.mention)
-                    ]
-
-                    response = (take_point[random.randint(1, len(take_point)) - 1])
+                    response = strings.take_point(mention)
                     response = "{}\n\nAlright, I took a point from {}.".format(response, mention.mention)
                     if ptg - 1 == 1:
                         response = '{}\n\n{}, you have {} point left to take.'.format(response, message.author.mention,
