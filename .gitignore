@@ -14,3 +14,6 @@ modules/tdt/__pycache__/tdt.cpython-36.pyc
 modules/data/private.py
 *.dat
 data/user.dat
+data/user.dat
+*.dat
+data/server.dat
