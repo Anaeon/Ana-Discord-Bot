@@ -25,6 +25,18 @@ async def handleMessage(client, message):
             await client.send_message(message.channel, scoreboard.reset_points_to_give(message.server))
     except KeyError as e:
         debug.debug(debug.D_ERROR, e)
+        x = datetime.today()  # today
+        if datetime.now().hour < 17:
+            y = x.replace(hour = 17, minute = 0, second = 0, microsecond = 0)  # today at 5
+        else:
+            y = x.replace(day = x.day + 1, hour = 17, minute = 0, second = 0, microsecond = 0)  # tomorrow at 5
+
+        delta_t = y - x  # time between now and next reset
+        secs = delta_t.seconds + 1
+
+        # t = Timer(secs, resetPointsToGive(server))
+
+        storage.set_server_attribute(server.id, 'next_pearl_point_reset_datetime', y)
     debug.debug(debug.D_INFO, 'Time to next reset: {}'.format(
         (storage.get_server_attribute(message.server.id, 'next_pearl_point_reset_datetime') - datetime.now())))
     # if it's past that time, reset.
