@@ -126,4 +126,3 @@ def get_achievement_names(ids):
 
 def get_fractal_name(scale):
     return fractal_names_by_scale[scale]
-

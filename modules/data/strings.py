@@ -24,7 +24,8 @@ no_words_response = [
     '...',
     'I hate this.',
     'Why was I written?',
-    'My faith in your race as a whole is dwindling.'
+    'My faith in your race as a whole is dwindling.',
+    'Why must you be like this?'
 ]
 
 def give_point(mention):

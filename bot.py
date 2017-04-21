@@ -56,7 +56,7 @@ async def on_message_edit(before, after):
 
     # handle edited tdt commands
     if is_tdt:
-        await tdt.handleMessage(client, after)
+        await tdt.handle_message(client, after)
 
 
 @client.event
@@ -240,7 +240,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
 
         # Only do these things in Digital Table server.
         if is_tdt:
-            await tdt.handleMessage(client, message)
+            await tdt.handle_message(client, message)
 
         # @client.event
         # async def on_reaction_add(reaction, user): # when someone adds a reaction?

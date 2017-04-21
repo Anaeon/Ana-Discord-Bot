@@ -17,7 +17,7 @@ channels = {
 }
 
 
-async def handleMessage(client, message):
+async def handle_message(client, message):
     # check if alloted points for the day should be reset yet.
     m = message.content.lower()
     try:
@@ -30,12 +30,6 @@ async def handleMessage(client, message):
             y = x.replace(hour = 17, minute = 0, second = 0, microsecond = 0)  # today at 5
         else:
             y = x.replace(day = x.day + 1, hour = 17, minute = 0, second = 0, microsecond = 0)  # tomorrow at 5
-
-        delta_t = y - x  # time between now and next reset
-        secs = delta_t.seconds + 1
-
-        # t = Timer(secs, resetPointsToGive(server))
-
         storage.set_server_attribute(server.id, 'next_pearl_point_reset_datetime', y)
     debug.debug(debug.D_INFO, 'Time to next reset: {}'.format(
         (storage.get_server_attribute(message.server.id, 'next_pearl_point_reset_datetime') - datetime.now())))
@@ -55,7 +49,7 @@ async def handleMessage(client, message):
         for name in names:
             if ' Tier ' in name and ' 4 ' in name:
                 t = '{}{}\n'.format(t, name)
-            elif not ' Tier ' in name:
+            elif ' Tier ' not in name:
                 scale = re.split('Scale ', name)[1]
                 n = gw2.get_fractal_name(scale)
                 r = '{}Daily {}, Scale {}\n'.format(r, n, scale)
@@ -81,7 +75,7 @@ async def handleMessage(client, message):
             # -- pearl points --
 
             if 'give' in m and ('pearlpoint' in m or 'pearl point' in m or (
-                    'pearl' in m and 'point' in m) or 'point' in m) and not '!resetpointstogive' in m:
+                    'pearl' in m and 'point' in m) or 'point' in m) and '!resetpointstogive' not in m:
                 response = scoreboard.give_points(client, message)
             elif ('take' in m or 'remove' in m) and (
                             'pearlpoint' in m or 'pearl point' in m or ('pearl' in m and 'point' in m) or 'point' in m):
@@ -113,7 +107,7 @@ async def handleMessage(client, message):
                 for name in names:
                     if ' Tier ' in name and ' 4 ' in name:
                         t = '{}{}\n'.format(t, name)
-                    elif not ' Tier ' in name:
+                    elif ' Tier ' not in name:
                         scale = re.split('Scale ', name)[1]
                         n = gw2.get_fractal_name(scale)
                         r = '{}Daily {}, Scale {}\n'.format(r, n, scale)
