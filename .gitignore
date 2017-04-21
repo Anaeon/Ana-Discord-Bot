@@ -3,4 +3,4 @@
 *.dir
 *.bak
 modules/data/private.py
-
+__pycache__/
