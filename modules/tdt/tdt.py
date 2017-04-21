@@ -56,8 +56,10 @@ async def handleMessage(client, message):
             if ' Tier ' in name and ' 4 ' in name:
                 t = '{}{}\n'.format(t, name)
             elif not ' Tier ' in name:
-                r = '{}{}\n'.format(r, name)
-        await client.send_message(message.channel, '{}{}{}\n```'.format(response, r, t))
+                scale = re.split('Scale ', name)[1]
+                n = gw2.get_fractal_name(scale)
+                r = '{}Daily {}, Scale {}\n'.format(r, n, scale)
+        await client.send_message(message.channel, '{}{}\n{}\n```'.format(response, r, t))
 
     # end fractals
 
@@ -112,8 +114,10 @@ async def handleMessage(client, message):
                     if ' Tier ' in name and ' 4 ' in name:
                         t = '{}{}\n'.format(t, name)
                     elif not ' Tier ' in name:
-                        r = '{}{}\n'.format(r, name)
-                response = '{}{}{}\n```'.format(response, r, t)
+                        scale = re.split('Scale ', name)[1]
+                        n = gw2.get_fractal_name(scale)
+                        r = '{}Daily {}, Scale {}\n'.format(r, n, scale)
+                response = '{}{}\n{}\n```'.format(response, r, t)
 
             # -- end dailies --
 
