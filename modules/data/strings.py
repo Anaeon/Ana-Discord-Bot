@@ -64,3 +64,12 @@ def take_point(mention):
         "Adiós, punto.",
         "Say, \"Goodbye,\" to your likeability, {}.".format(mention.mention)
         ])
+
+def roll_zero(message):
+    return random.choice([
+        'I mean... I can roll a marble, if you\'d like...',
+        'Yeah... Let me just roll a marble and see what it lands on.',
+        'I\'ll just save us both some time and tell you it\'s zero.',
+        'That\'s not how this works.',
+        'I can\'t roll a zero-sided die.'
+    ])

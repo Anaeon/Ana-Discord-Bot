@@ -52,7 +52,7 @@ async def on_message_edit(before, after):
     for regex in strings.no_words_regex:
         if re.search(regex, a_m):
             debug.debug(debug.D_INFO, 'A unacceptable word was used... attemting to delete it.')
-            await client.edit_message(after, new_content = 'Noooo... nice try though.', embed = None)
+            await client.send_message(after.channel, 'Noooo... nice try though.')
 
     # handle edited tdt commands
     if is_tdt:
@@ -116,15 +116,22 @@ async def on_message(message):  # when someone sends a message. Read command inp
                         await client.send_message(message.channel, 'Fuck you.')
                     time.sleep(3)
                     rolls = max_rolls
-                if rolls < 2:
-                    await client.send_message(message.channel, 'Rolling a d{}.'.format(die))
+                if die == 0:
+                    await client.send_message(message.channel, strings.roll_zero(message))
                 else:
-                    await client.send_message(message.channel, 'Rolling {} d{}\'s.'.format(rolls, die))
-                time.sleep(2)
-                for i in range(rolls):
-                    n = random.randint(1, die)
-                    await client.send_message(message.channel, '*Roll {}*: {}.'.format(i + 1, n))
+                    if rolls == 0:
+                        await client.send_message(message.channel, 'You want me to roll zero d{}\'s?'.format(die))
+                        time.sleep(3)
+                        await client.send_message(message.channel, '... well, I guess I\'m done then.')
+                    elif rolls < 2:
+                        await client.send_message(message.channel, 'Rolling a d{}.'.format(die))
+                    else:
+                        await client.send_message(message.channel, 'Rolling {} d{}\'s.'.format(rolls, die))
                     time.sleep(2)
+                    for i in range(rolls):
+                        n = random.randint(1, die)
+                        await client.send_message(message.channel, '*Roll {}*: {}.'.format(i + 1, n))
+                        time.sleep(2)
 
         # basic personal commands
 
