@@ -38,7 +38,7 @@ async def handle_message(client, message):
     # respond to solo fractal emote and give daily fractals
 
     if '<:fractals:230520375396532224>' in m:
-        response = '```\nToday\'s daily fractals:\n\n'
+        response = '```haskell\nDaily Fractals:\n\n'
         t = ''
         r = ''
         fractal_dailies = gw2.get_fractal_dailies()
@@ -48,11 +48,12 @@ async def handle_message(client, message):
         names = gw2.get_achievement_names(ids)
         for name in names:
             if ' Tier ' in name and ' 4 ' in name:
-                t = '{}{}\n'.format(t, name)
+                n = re.split(' 4 ', name)[1]
+                t = '{}tier 4: {}\n'.format(t, n)
             elif ' Tier ' not in name:
                 scale = re.split('Scale ', name)[1]
                 n = gw2.get_fractal_name(scale)
-                r = '{}Daily {}, Scale {}\n'.format(r, n, scale)
+                r = '{}scale: {} {}\n'.format(r, scale, n)
         await client.send_message(message.channel, '{}{}\n{}\n```'.format(response, r, t))
 
     # end fractals
