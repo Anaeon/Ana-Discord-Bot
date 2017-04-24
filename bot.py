@@ -174,9 +174,9 @@ async def on_message(message):  # when someone sends a message. Read command inp
         # STUPID STUFF GOES HERE ============================
 
         try:
-            if message.author.nick.lower() == 'duck':
+            if 'duck' in message.author.nick.lower():
                 await client.send_message(message.channel, 'Quack.')
-            if message.author.nick.lower() == 'goose':
+            if 'goose' in message.author.nick.lower():
                 await client.send_message(message.channel, 'Honk.')
         except AttributeError as e:
             debug.debug(debug.D_ERROR, 'AttributeError caught: {}'.format(e))
