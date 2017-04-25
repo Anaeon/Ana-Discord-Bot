@@ -12,14 +12,35 @@ from modules.data import private
 client = discord.Client()
 
 
-async def send_talk(args):
-    _, _svr, _ch, msg = args
+async def send_talk(_svr, _ch, msg):
+    """Sends a custom message to a specific server."""
+
+    #  slot in the intended server
     svr = ''
-    ch = ''
-    if _svr == 'tdt':
-        svr = tdt.server
-        ch = client.get_channel(tdt.channels[_ch])
-    await client.send_message(ch, msg)
+    svr_found = False
+    for server in client.servers:
+        print(server.name)
+        if server.name == _svr:
+            svr = server
+            svr_found = True
+
+    if not svr_found:  # if the bot is not part of the server or the server can't be found, say so
+        await client.send_message(client.get_channel(private.anaeon_dm_id), 'No server found with name {}.'.format(_svr))
+    elif svr_found:  # else, try to slot in the channel
+        ch = ''
+        ch_found = False
+        for channel in svr.channels:
+            if channel.name == _ch:
+                ch = channel
+                ch_found = True
+
+        if not ch_found:  # if the bot can't find the channel in the server, say so
+            await client.send_message(client.get_channel(private.anaeon_dm_id), 'No channel found with name {}.'.format(_ch))
+        elif ch_found:  # else, go ahead and format the message and send it to the channel.
+            if msg == '':
+                await client.send_message(client.get_channel(private.anaeon_dm_id), 'I can\'t send a blank message.')
+            else:
+                await client.send_message(ch, msg)
 
 
 @client.event
@@ -83,7 +104,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
         is_tdt = message.server.id == private.tdt_server_id
     except AttributeError as e:
         debug.debug(debug.D_ERROR,
-                    'Caught AttributeError while trying to determine what server a message came from. {}'.format(e))
+                    'AttributeError caught: {}'.format(e))
 
     m = message.content.lower()
     if message.author != client.user:  # don't react to your own messages.
@@ -135,11 +156,21 @@ async def on_message(message):  # when someone sends a message. Read command inp
 
         # basic personal commands
 
+        #  private message commands
         if message.channel.id == private.anaeon_dm_id:
+
             if m.startswith('!talk'):
-                args = message.content.split('--')
-                await send_talk(args)
-                print(args[3])
+                args = message.content.split(',')
+                print(args)
+                msg = ''
+                for i in range(len(args)):
+                    if i == 3:
+                        #  add in the first chunk of message
+                        msg = '{}{}'.format(msg, args[i])
+                    elif i > 3:
+                        #  add in the rest of the chunks including commas to replace those lost by re.split()
+                        msg = '{},{}'.format(msg, args[i])
+                await send_talk(args[1].strip(), args[2].strip(), msg.strip())
 
         for mention in message.mentions:
             if mention == client.user and message.author.id == private.anaeon_id:
@@ -193,7 +224,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
 
         if re.search('\\bfag(\\b|s)|\\bfaggot(\\b|s)|\\bfaggotry\\b|\\bgay(\\b|s)|\\bga{2,99}y(\\b|s)', m):
             debug.debug(debug.D_INFO, 'Reacting to some faggotry.')
-            await client.add_reaction(message, '??????')
+            await client.add_reaction(message, '\\U0001F3F3\\U0000FE0F\\U0001F308')
 
         # GIV DEM BITCHES SOME LIZARDS
         if re.search('\\blizard(\\b|s)', m):

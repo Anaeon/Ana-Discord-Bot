@@ -8,14 +8,6 @@ from modules.util import debug
 from modules.data import private
 from datetime import datetime
 
-server = discord.Object(private.tdt_server_id)
-channels = {
-    'general': '108476397504217088',
-    'other': '179852602031341569',
-    'funny-stuff': '108481880596197376',
-    'bot-test-chat': '231571819574984705'
-}
-
 
 async def handle_message(client, message):
     # check if alloted points for the day should be reset yet.
@@ -30,7 +22,7 @@ async def handle_message(client, message):
             y = x.replace(hour = 17, minute = 0, second = 0, microsecond = 0)  # today at 5
         else:
             y = x.replace(day = x.day + 1, hour = 17, minute = 0, second = 0, microsecond = 0)  # tomorrow at 5
-        storage.set_server_attribute(server.id, 'next_pearl_point_reset_datetime', y)
+        storage.set_server_attribute(message.server.id, 'next_pearl_point_reset_datetime', y)
     debug.debug(debug.D_INFO, 'Time to next reset: {}'.format(
         (storage.get_server_attribute(message.server.id, 'next_pearl_point_reset_datetime') - datetime.now())))
     # if it's past that time, reset.
