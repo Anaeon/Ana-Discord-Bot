@@ -1,4 +1,3 @@
-import discord
 import re
 
 from modules.api import gw2
