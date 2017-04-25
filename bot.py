@@ -8,6 +8,7 @@ from modules.tdt import tdt
 from modules.util import debug
 from modules.data import strings
 from modules.data import private
+from modules.api import trump
 
 client = discord.Client()
 
@@ -110,6 +111,14 @@ async def on_message(message):  # when someone sends a message. Read command inp
     if message.author != client.user:  # don't react to your own messages.
 
         # Do these things in general...
+
+        # get a random Trump quote because why the fuck not?
+
+        if re.search('\\btrump\\b|\\bgyna\\b', m):
+            msg = trump.get_quote()
+            await client.send_message(message.channel, '"{}" - Lord Emperor The Donald Trump'.format(msg))
+
+        # end trump
 
         if 'roll' in m:
             sm = m.replace(' ', '')
