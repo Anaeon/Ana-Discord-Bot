@@ -90,8 +90,8 @@ def give_points(client, message):
             ptg = 0
             try:
                 ptg = storage.get_user_attribute(message.author.id, 'available_pearl_points')
-            except:
-                pass
+            except KeyError as e:
+                debug.debug(debug.D_ERROR, e)
             if ptg > 0:
                 id = mention.id
                 try:
@@ -163,10 +163,11 @@ def take_points(client, message):
 def read_points(client, message):
     id = 'null'
     pearlpoints = 0
+    response = ''
     for mention in message.mentions:
         if mention != client.user:
             id = mention.id
-            response = ''
+
             try:
                 pearlpoints = int(storage.get_user_attribute(id, "pearl_points"))
             except KeyError as e:
@@ -203,3 +204,27 @@ def get_top_points():
     for i, p in enumerate(board):
         response = '{0}{1}:[{2}] - <@{3}>\n'.format(response, i + 1, p['pearl_points'], p['id'])
     return response
+
+def force_change_attribute(client, message, attribute_name, value):
+    """Changes the target users attribute by the given amount."""
+    old_attribute = ''
+    for mention in message.mentions:
+        if mention is not client.user:
+            int_value = None
+            try:
+                old_attribute = storage.get_user_attribute(mention.id, attribute_name)
+            except KeyError as e:
+                return '{} does not have a {} attribute.'.format(mention.mention, attribute_name)
+            try:
+                int_attribute = int(old_attribute)
+            except ValueError as e:
+                return 'Command is not valid on {} attribute'.format(attribute_name)
+            try:
+                int_value = int(value)
+                storage.set_user_attribute(mention.id, attribute_name, int_attribute + int_value)
+                s = '{} attribute set to {}. (was {})'.format(attribute_name, int_attribute + int_value, int_attribute)
+                return s
+            except ValueError as e:
+                return '{} is not a valid integer.'.format(value)
+        else:
+            return 'I can\'t modify my own attributes.'

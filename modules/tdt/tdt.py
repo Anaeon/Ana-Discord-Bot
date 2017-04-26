@@ -57,6 +57,8 @@ async def handle_message(client, message):
 
     # End adding reactions
 
+
+
     # direct mention commands
 
     for mention in message.mentions:  # when someone is mentioned
@@ -66,10 +68,10 @@ async def handle_message(client, message):
 
             # -- pearl points --
 
-            if 'give' in m and ('pearlpoint' in m or 'pearl point' in m or (
+            if ('give' in m or '+1' in m) and ('pearlpoint' in m or 'pearl point' in m or (
                     'pearl' in m and 'point' in m) or 'point' in m) and '!resetpointstogive' not in m:
                 response = scoreboard.give_points(client, message)
-            elif ('take' in m or 'remove' in m) and (
+            elif ('take' in m or 'remove' in m or '-1' in m) and (
                             'pearlpoint' in m or 'pearl point' in m or ('pearl' in m and 'point' in m) or 'point' in m):
                 response = scoreboard.take_points(client, message)
             elif 'how many points' in m or 'how many pearlpoints' in m or (
@@ -108,12 +110,16 @@ async def handle_message(client, message):
             # -- end dailies --
 
             # commands unique to myself
-            if '!resetpearlpoints' in m and message.author.id == private.anaeon_id:
-                response = scoreboard.reset_points(client, message)
-            if '!initpearlpoints' in m and message.author.id == private.anaeon_id:
-                response = scoreboard.init_points_to_give(message)
-            if '!resetpointstogive' in m and message.author.id == private.anaeon_id:
-                response = scoreboard.reset_points_to_give(message.server)
+            if message.author.id == private.anaeon_id:
+                if '!resetpearlpoints' in m:
+                    response = scoreboard.reset_points(client, message)
+                if '!initpearlpoints' in m:
+                    response = scoreboard.init_points_to_give(message)
+                if '!resetpointstogive' in m:
+                    response = scoreboard.reset_points_to_give(message.server)
+                if '!changeattribute' in m:
+                    args = m.split(',')
+                    response = scoreboard.force_change_attribute(client, message, args[2].strip(), args[3].strip())
 
             if response != '':
                 await client.send_message(message.channel, response)

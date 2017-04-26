@@ -26,7 +26,8 @@ async def send_talk(_svr, _ch, msg):
             svr_found = True
 
     if not svr_found:  # if the bot is not part of the server or the server can't be found, say so
-        await client.send_message(client.get_channel(private.anaeon_dm_id), 'No server found with name {}.'.format(_svr))
+        await client.send_message(client.get_channel(private.anaeon_dm_id),
+                                  'No server found with name {}.'.format(_svr))
     elif svr_found:  # else, try to slot in the channel
         ch = ''
         ch_found = False
@@ -36,7 +37,8 @@ async def send_talk(_svr, _ch, msg):
                 ch_found = True
 
         if not ch_found:  # if the bot can't find the channel in the server, say so
-            await client.send_message(client.get_channel(private.anaeon_dm_id), 'No channel found with name {}.'.format(_ch))
+            await client.send_message(client.get_channel(private.anaeon_dm_id),
+                                      'No channel found with name {}.'.format(_ch))
         elif ch_found:  # else, go ahead and format the message and send it to the channel.
             if msg == '':
                 await client.send_message(client.get_channel(private.anaeon_dm_id), 'I can\'t send a blank message.')
@@ -57,13 +59,13 @@ async def on_ready():
 
 @client.event
 async def on_message_edit(before, after):
-    b_m = before.content.lower()
+    #  b_m = before.content.lower()
     a_m = after.content.lower()
 
     # go ahead and check which server we're in
     is_tdt = False
-    is_neon = False
-    is_durg = False
+    #  is_neon = False
+    #  is_durg = False
     try:
         is_tdt = after.server.id == private.tdt_server_id
     except AttributeError as e:
