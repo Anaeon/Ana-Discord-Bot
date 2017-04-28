@@ -55,7 +55,7 @@ def take_point(mention):
         "Oooooh~ You're in troubleeee~",
         "You dun fucked up!",
         "What did you do now, {}?".format(mention.mention),
-        "Your friends have deemed you an aweful person, {}.".format(mention.mention),
+        "Your friends have deemed you an awful person, {}.".format(mention.mention),
         "Your friends have denied you any glory or honor, {}.".format(mention.mention),
         "git gud",
         "RIP",
