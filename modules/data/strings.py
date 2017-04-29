@@ -35,7 +35,7 @@ def give_point(mention):
         "Congrats, {}, you dirty bastard.".format(mention.mention),
         "Did you really earn that point?",
         "Congratulations.",
-        "{}, your friends have acknowledged your existance.".formate(mention.mention),
+        "{}, your friends have acknowledged your existance.".format(mention.mention),
         "Fine... I guess.",
         "Alright, but I don't like it.",
         "Are you sure? Like... really sure?\n\nOoookkkkkk.",
