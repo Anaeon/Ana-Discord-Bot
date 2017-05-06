@@ -1,4 +1,5 @@
 import re
+import calendar
 
 from modules.api import gw2
 from modules.tdt import scoreboard
@@ -18,9 +19,17 @@ async def handle_message(client, message):
         debug.debug(debug.D_ERROR, e)
         x = datetime.today()  # today
         if datetime.now().hour < 17:
-            y = x.replace(hour = 17, minute = 0, second = 0, microsecond = 0)  # today at 5
+            y = x.replace(hour = 17, minute = 0, second = 0, microsecond = 0)  # today at 5pm
         else:
-            y = x.replace(day = x.day + 1, hour = 17, minute = 0, second = 0, microsecond = 0)  # tomorrow at 5
+            if x.day + 1 <= calendar.monthrange(x.year, x.month)[1]:
+                y = x.replace(day = x.day + 1, hour = 17, minute = 0, second = 0, microsecond = 0)  # tomorrow at 5pm
+            else:
+                if x.month + 1 <= 12:
+                    #  first day of next month at 5pm
+                    y = x.replace(month = x.month + 1, day = 1, hour = 17, minute = 0, second = 0, microsecond = 0)
+                else:
+                    y = x.replace(year = x.year + 1, month = 1, day = 1, hour = 17, minute = 0, second = 0,
+                                  microsecond = 0)
         storage.set_server_attribute(message.server.id, 'next_pearl_point_reset_datetime', y)
     debug.debug(debug.D_INFO, 'Time to next reset: {}'.format(
         (storage.get_server_attribute(message.server.id, 'next_pearl_point_reset_datetime') - datetime.now())))

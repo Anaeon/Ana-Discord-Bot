@@ -1,5 +1,6 @@
 from operator import itemgetter
 from datetime import datetime
+import calendar
 
 from modules.data import strings
 from modules.util import storage
@@ -48,9 +49,16 @@ def reset_points_to_give(server):
     debug.debug(debug.D_INFO, 'Points to spend have been reset')
     x = datetime.today()  # today
     if datetime.now().hour < 17:
-        y = x.replace(hour = 17, minute = 0, second = 0, microsecond = 0)  # today at 5
+        y = x.replace(hour = 17, minute = 0, second = 0, microsecond = 0)  # today at 5pm
     else:
-        y = x.replace(day = x.day + 1, hour = 17, minute = 0, second = 0, microsecond = 0)  # tomorrow at 5
+        if x.day + 1 <= calendar.monthrange(x.year, x.month)[1]:
+            y = x.replace(day = x.day + 1, hour = 17, minute = 0, second = 0, microsecond = 0)  # tomorrow at 5pm
+        else:
+            if x.month + 1 <= 12:
+                #  first day of next month at 5pm
+                y = x.replace(month = x.month + 1, day = 1, hour = 17, minute = 0, second = 0, microsecond = 0)
+            else:
+                y = x.replace(year = x.year + 1, month = 1, day = 1, hour = 17, minute = 0, second = 0, microsecond = 0)
 
     delta_t = y - x  # time between now and next reset
     secs = delta_t.seconds + 1
