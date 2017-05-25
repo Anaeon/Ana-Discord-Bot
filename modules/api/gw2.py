@@ -1,5 +1,6 @@
 import requests
 import json
+import discord
 
 fractal_names_by_scale = {
     '1': 'Urban Battleground',
@@ -105,11 +106,15 @@ fractal_names_by_scale = {
 }
 
 
-def get_fractal_dailies():
+def get_fractal_dailies(get_as_embed = False):
     req = requests.get('https://api.guildwars2.com/v2/achievements/daily')
     data = json.loads(req.content)
     fractal_dailies = data['fractals']
-    return fractal_dailies
+    if not get_as_embed:
+        return fractal_dailies
+    else:
+        embed = discord.Embed(title = 'Daily Fractals', color = int('ff0000', 16))
+        return embed
 
 
 def get_achievement_names(ids):

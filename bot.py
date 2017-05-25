@@ -12,6 +12,7 @@ from modules.api import trump
 
 client = discord.Client()
 
+ANA_COLOR = int('4408a3', 16)
 
 async def send_talk(_svr, _ch, msg):
     """Sends a custom message to a specific server."""
@@ -122,7 +123,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
 
         # end trump
 
-        if 'roll' in m:
+        if re.search('\\broll\\b', m):
             sm = m.replace(' ', '')
             if re.search('d\d+', sm):
                 try:
@@ -198,7 +199,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
                         await client.send_message(message.channel, 'Debug is now off.')
                     elif not debug.DEBUG:
                         await client.send_message(message.channel, 'Debug was already off.')
-                if 'debuglevel' in m:
+                if '!debuglevel' in m:
                     if re.search('0|error', m):
                         debug.D_CURRENT_LEVEL = debug.D_ERROR
                         await client.send_message(message.channel, 'Now logging debug at ERROR level.')
@@ -208,6 +209,15 @@ async def on_message(message):  # when someone sends a message. Read command inp
                     elif re.search('2|verbose', m):
                         debug.D_CURRENT_LEVEL = debug.D_VERBOSE
                         await client.send_message(message.channel, 'Now logging debug at VERBOSE level and below.')
+
+                if '!embedtest' in m:
+                    embed = discord.Embed(title = '', color = ANA_COLOR)
+                    embed.set_author(name = 'Test Author Name')
+                    embed.add_field(name = 'Test Field 1', value = 'Test Value')
+                    embed.add_field(name = 'Test Field 2', value = 's;laksdfj')
+                    embed.add_field(name = 'Non-inline', value = 'stuff', inline = False)
+                    embed.set_footer(text = 'Test Footer Text')
+                    await client.send_message(message.channel, embed = embed)
 
         # end basic personal commands
 
