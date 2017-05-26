@@ -36,7 +36,7 @@ def give_point(mention):
         "Congrats, {}, you dirty bastard.".format(mention.mention),
         "Did you really earn that point?",
         "Congratulations.",
-        "{}, your friends have acknowledged your existance.",
+        "{}, your friends have acknowledged your existance.".format(mention.mention),
         "Fine... I guess.",
         "Alright, but I don't like it.",
         "Are you sure? Like... really sure?\n\nOoookkkkkk.",
@@ -56,7 +56,7 @@ def take_point(mention):
         "Oooooh~ You're in troubleeee~",
         "You dun fucked up!",
         "What did you do now, {}?".format(mention.mention),
-        "Your friends have deemed you an aweful person, {}.".format(mention.mention),
+        "Your friends have deemed you an awful person, {}.".format(mention.mention),
         "Your friends have denied you any glory or honor, {}.".format(mention.mention),
         "git gud",
         "RIP",
@@ -65,3 +65,12 @@ def take_point(mention):
         "Adiós, punto.",
         "Say, \"Goodbye,\" to your likeability, {}.".format(mention.mention)
         ])
+
+def roll_zero(message):
+    return random.choice([
+        'I mean... I can roll a marble, if you\'d like...',
+        'Yeah... Let me just roll a marble and see what it lands on.',
+        'I\'ll just save us both some time and tell you it\'s zero.',
+        'That\'s not how this works.',
+        'I can\'t roll a zero-sided die.'
+    ])

@@ -8,18 +8,43 @@ from modules.tdt import tdt
 from modules.util import debug
 from modules.data import strings
 from modules.data import private
+from modules.api import trump
 
 client = discord.Client()
 
+ANA_COLOR = int('4408a3', 16)
 
-async def send_talk(args):
-    _, _svr, _ch, msg = args
+async def send_talk(_svr, _ch, msg):
+    """Sends a custom message to a specific server."""
+
+    #  slot in the intended server
     svr = ''
-    ch = ''
-    if _svr == 'tdt':
-        svr = tdt.server
-        ch = client.get_channel(tdt.channels[_ch])
-    await client.send_message(ch, msg)
+    svr_found = False
+    for server in client.servers:
+        print(server.name)
+        if server.name == _svr:
+            svr = server
+            svr_found = True
+
+    if not svr_found:  # if the bot is not part of the server or the server can't be found, say so
+        await client.send_message(client.get_channel(private.anaeon_dm_id),
+                                  'No server found with name {}.'.format(_svr))
+    elif svr_found:  # else, try to slot in the channel
+        ch = ''
+        ch_found = False
+        for channel in svr.channels:
+            if channel.name == _ch:
+                ch = channel
+                ch_found = True
+
+        if not ch_found:  # if the bot can't find the channel in the server, say so
+            await client.send_message(client.get_channel(private.anaeon_dm_id),
+                                      'No channel found with name {}.'.format(_ch))
+        elif ch_found:  # else, go ahead and format the message and send it to the channel.
+            if msg == '':
+                await client.send_message(client.get_channel(private.anaeon_dm_id), 'I can\'t send a blank message.')
+            else:
+                await client.send_message(ch, msg)
 
 
 @client.event
@@ -35,13 +60,13 @@ async def on_ready():
 
 @client.event
 async def on_message_edit(before, after):
-    b_m = before.content.lower()
+    #  b_m = before.content.lower()
     a_m = after.content.lower()
 
     # go ahead and check which server we're in
     is_tdt = False
-    is_neon = False
-    is_durg = False
+    #  is_neon = False
+    #  is_durg = False
     try:
         is_tdt = after.server.id == private.tdt_server_id
     except AttributeError as e:
@@ -52,7 +77,7 @@ async def on_message_edit(before, after):
     for regex in strings.no_words_regex:
         if re.search(regex, a_m):
             debug.debug(debug.D_INFO, 'A unacceptable word was used... attemting to delete it.')
-            await client.edit_message(after, new_content = 'Noooo... nice try though.', embed = None)
+            await client.send_message(after.channel, 'Noooo... nice try though.')
 
     # handle edited tdt commands
     if is_tdt:
@@ -83,14 +108,22 @@ async def on_message(message):  # when someone sends a message. Read command inp
         is_tdt = message.server.id == private.tdt_server_id
     except AttributeError as e:
         debug.debug(debug.D_ERROR,
-                    'Caught AttributeError while trying to determine what server a message came from. {}'.format(e))
+                    'AttributeError caught: {}'.format(e))
 
     m = message.content.lower()
     if message.author != client.user:  # don't react to your own messages.
 
         # Do these things in general...
 
-        if 'roll' in m:
+        # get a random Trump quote because why the fuck not?
+
+        if re.search('\\btrump\\b|\\bgyna\\b', m):
+            msg = trump.get_quote()
+            await client.send_message(message.channel, '"{}" - Lord Emperor The Donald Trump'.format(msg))
+
+        # end trump
+
+        if re.search('\\broll\\b', m):
             sm = m.replace(' ', '')
             if re.search('d\d+', sm):
                 try:
@@ -116,23 +149,40 @@ async def on_message(message):  # when someone sends a message. Read command inp
                         await client.send_message(message.channel, 'Fuck you.')
                     time.sleep(3)
                     rolls = max_rolls
-                if rolls < 2:
-                    await client.send_message(message.channel, 'Rolling a d{}.'.format(die))
+                if die == 0:
+                    await client.send_message(message.channel, strings.roll_zero(message))
                 else:
-                    await client.send_message(message.channel, 'Rolling {} d{}\'s.'.format(rolls, die))
-                time.sleep(2)
-                for i in range(rolls):
-                    n = random.randint(1, die)
-                    await client.send_message(message.channel, '*Roll {}*: {}.'.format(i + 1, n))
+                    if rolls == 0:
+                        await client.send_message(message.channel, 'You want me to roll zero d{}\'s?'.format(die))
+                        time.sleep(3)
+                        await client.send_message(message.channel, '... well, I guess I\'m done then.')
+                    elif rolls < 2:
+                        await client.send_message(message.channel, 'Rolling a d{}.'.format(die))
+                    else:
+                        await client.send_message(message.channel, 'Rolling {} d{}\'s.'.format(rolls, die))
                     time.sleep(2)
+                    for i in range(rolls):
+                        n = random.randint(1, die)
+                        await client.send_message(message.channel, '*Roll {}*: {}.'.format(i + 1, n))
+                        time.sleep(2)
 
         # basic personal commands
 
+        #  private message commands
         if message.channel.id == private.anaeon_dm_id:
+
             if m.startswith('!talk'):
-                args = message.content.split('--')
-                await send_talk(args)
-                print(args[3])
+                args = message.content.split(',')
+                print(args)
+                msg = ''
+                for i in range(len(args)):
+                    if i == 3:
+                        #  add in the first chunk of message
+                        msg = '{}{}'.format(msg, args[i])
+                    elif i > 3:
+                        #  add in the rest of the chunks including commas to replace those lost by re.split()
+                        msg = '{},{}'.format(msg, args[i])
+                await send_talk(args[1].strip(), args[2].strip(), msg.strip())
 
         for mention in message.mentions:
             if mention == client.user and message.author.id == private.anaeon_id:
@@ -149,7 +199,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
                         await client.send_message(message.channel, 'Debug is now off.')
                     elif not debug.DEBUG:
                         await client.send_message(message.channel, 'Debug was already off.')
-                if 'debuglevel' in m:
+                if '!debuglevel' in m:
                     if re.search('0|error', m):
                         debug.D_CURRENT_LEVEL = debug.D_ERROR
                         await client.send_message(message.channel, 'Now logging debug at ERROR level.')
@@ -160,6 +210,15 @@ async def on_message(message):  # when someone sends a message. Read command inp
                         debug.D_CURRENT_LEVEL = debug.D_VERBOSE
                         await client.send_message(message.channel, 'Now logging debug at VERBOSE level and below.')
 
+                if '!embedtest' in m:
+                    embed = discord.Embed(title = '', color = ANA_COLOR)
+                    embed.set_author(name = 'Test Author Name')
+                    embed.add_field(name = 'Test Field 1', value = 'Test Value')
+                    embed.add_field(name = 'Test Field 2', value = 's;laksdfj')
+                    embed.add_field(name = 'Multi-line', value = 'other\nstuff', inline = True)
+                    embed.set_footer(text = 'Test Footer Text')
+                    await client.send_message(message.channel, embed = embed)
+
         # end basic personal commands
 
         # end general stuff
@@ -167,9 +226,9 @@ async def on_message(message):  # when someone sends a message. Read command inp
         # STUPID STUFF GOES HERE ============================
 
         try:
-            if message.author.nick.lower() == 'duck':
+            if 'duck' in message.author.nick.lower():
                 await client.send_message(message.channel, 'Quack.')
-            if message.author.nick.lower() == 'goose':
+            if 'goose' in message.author.nick.lower():
                 await client.send_message(message.channel, 'Honk.')
         except AttributeError as e:
             debug.debug(debug.D_ERROR, 'AttributeError caught: {}'.format(e))
@@ -186,7 +245,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
 
         if re.search('\\bfag(\\b|s)|\\bfaggot(\\b|s)|\\bfaggotry\\b|\\bgay(\\b|s)|\\bga{2,99}y(\\b|s)', m):
             debug.debug(debug.D_INFO, 'Reacting to some faggotry.')
-            await client.add_reaction(message, '??????')
+            await client.add_reaction(message, '\\U0001F3F3\\U0000FE0F\\U0001F308')
 
         # GIV DEM BITCHES SOME LIZARDS
         if re.search('\\blizard(\\b|s)', m):

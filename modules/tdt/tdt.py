@@ -1,5 +1,5 @@
-import discord
 import re
+import calendar
 
 from modules.api import gw2
 from modules.tdt import scoreboard
@@ -7,14 +7,6 @@ from modules.util import storage
 from modules.util import debug
 from modules.data import private
 from datetime import datetime
-
-server = discord.Object(private.tdt_server_id)
-channels = {
-    'general': '108476397504217088',
-    'other': '179852602031341569',
-    'funny-stuff': '108481880596197376',
-    'bot-test-chat': '231571819574984705'
-}
 
 
 async def handle_message(client, message):
@@ -27,10 +19,18 @@ async def handle_message(client, message):
         debug.debug(debug.D_ERROR, e)
         x = datetime.today()  # today
         if datetime.now().hour < 17:
-            y = x.replace(hour = 17, minute = 0, second = 0, microsecond = 0)  # today at 5
+            y = x.replace(hour = 17, minute = 0, second = 0, microsecond = 0)  # today at 5pm
         else:
-            y = x.replace(day = x.day + 1, hour = 17, minute = 0, second = 0, microsecond = 0)  # tomorrow at 5
-        storage.set_server_attribute(server.id, 'next_pearl_point_reset_datetime', y)
+            if x.day + 1 <= calendar.monthrange(x.year, x.month)[1]:
+                y = x.replace(day = x.day + 1, hour = 17, minute = 0, second = 0, microsecond = 0)  # tomorrow at 5pm
+            else:
+                if x.month + 1 <= 12:
+                    #  first day of next month at 5pm
+                    y = x.replace(month = x.month + 1, day = 1, hour = 17, minute = 0, second = 0, microsecond = 0)
+                else:
+                    y = x.replace(year = x.year + 1, month = 1, day = 1, hour = 17, minute = 0, second = 0,
+                                  microsecond = 0)
+        storage.set_server_attribute(message.server.id, 'next_pearl_point_reset_datetime', y)
     debug.debug(debug.D_INFO, 'Time to next reset: {}'.format(
         (storage.get_server_attribute(message.server.id, 'next_pearl_point_reset_datetime') - datetime.now())))
     # if it's past that time, reset.
@@ -38,7 +38,7 @@ async def handle_message(client, message):
     # respond to solo fractal emote and give daily fractals
 
     if '<:fractals:230520375396532224>' in m:
-        response = '```\nToday\'s daily fractals:\n\n'
+        response = '```haskell\nDaily Fractals:\n\n'
         t = ''
         r = ''
         fractal_dailies = gw2.get_fractal_dailies()
@@ -48,11 +48,12 @@ async def handle_message(client, message):
         names = gw2.get_achievement_names(ids)
         for name in names:
             if ' Tier ' in name and ' 4 ' in name:
-                t = '{}{}\n'.format(t, name)
+                n = re.split(' 4 ', name)[1]
+                t = '{}tier 4: {}\n'.format(t, n)
             elif ' Tier ' not in name:
                 scale = re.split('Scale ', name)[1]
                 n = gw2.get_fractal_name(scale)
-                r = '{}Daily {}, Scale {}\n'.format(r, n, scale)
+                r = '{}scale: {} {}\n'.format(r, scale, n)
         await client.send_message(message.channel, '{}{}\n{}\n```'.format(response, r, t))
 
     # end fractals
@@ -65,6 +66,8 @@ async def handle_message(client, message):
 
     # End adding reactions
 
+
+
     # direct mention commands
 
     for mention in message.mentions:  # when someone is mentioned
@@ -74,10 +77,10 @@ async def handle_message(client, message):
 
             # -- pearl points --
 
-            if 'give' in m and ('pearlpoint' in m or 'pearl point' in m or (
+            if ('give' in m or '+1' in m) and ('pearlpoint' in m or 'pearl point' in m or (
                     'pearl' in m and 'point' in m) or 'point' in m) and '!resetpointstogive' not in m:
                 response = scoreboard.give_points(client, message)
-            elif ('take' in m or 'remove' in m) and (
+            elif ('take' in m or 'remove' in m or '-1' in m) and (
                             'pearlpoint' in m or 'pearl point' in m or ('pearl' in m and 'point' in m) or 'point' in m):
                 response = scoreboard.take_points(client, message)
             elif 'how many points' in m or 'how many pearlpoints' in m or (
@@ -116,12 +119,18 @@ async def handle_message(client, message):
             # -- end dailies --
 
             # commands unique to myself
-            if '!resetpearlpoints' in m and message.author.id == private.anaeon_id:
-                response = scoreboard.reset_points(client, message)
-            if '!initpearlpoints' in m and message.author.id == private.anaeon_id:
-                response = scoreboard.init_points_to_give(message)
-            if '!resetpointstogive' in m and message.author.id == private.anaeon_id:
-                response = scoreboard.reset_points_to_give(message.server)
+            if message.author.id == private.anaeon_id:
+                if '!resetpearlpoints' in m:
+                    response = scoreboard.reset_points(client, message)
+                if '!initpearlpoints' in m:
+                    response = scoreboard.init_points_to_give(message)
+                if '!resetpointstogive' in m:
+                    response = scoreboard.reset_points_to_give(message.server)
+                if '!changeattribute' in m:
+                    args = m.split(',')
+                    response = scoreboard.force_change_attribute(client, message, args[2].strip(), args[3].strip())
+                if '!let' in m:
+                    await client.send_message(message.channel, embed = scoreboard.get_top_points(use_embed = True))
 
             if response != '':
                 await client.send_message(message.channel, response)

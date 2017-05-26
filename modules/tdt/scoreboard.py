@@ -1,5 +1,8 @@
 from operator import itemgetter
 from datetime import datetime
+import calendar
+
+import discord
 
 from modules.data import strings
 from modules.util import storage
@@ -48,9 +51,16 @@ def reset_points_to_give(server):
     debug.debug(debug.D_INFO, 'Points to spend have been reset')
     x = datetime.today()  # today
     if datetime.now().hour < 17:
-        y = x.replace(hour = 17, minute = 0, second = 0, microsecond = 0)  # today at 5
+        y = x.replace(hour = 17, minute = 0, second = 0, microsecond = 0)  # today at 5pm
     else:
-        y = x.replace(day = x.day + 1, hour = 17, minute = 0, second = 0, microsecond = 0)  # tomorrow at 5
+        if x.day + 1 <= calendar.monthrange(x.year, x.month)[1]:
+            y = x.replace(day = x.day + 1, hour = 17, minute = 0, second = 0, microsecond = 0)  # tomorrow at 5pm
+        else:
+            if x.month + 1 <= 12:
+                #  first day of next month at 5pm
+                y = x.replace(month = x.month + 1, day = 1, hour = 17, minute = 0, second = 0, microsecond = 0)
+            else:
+                y = x.replace(year = x.year + 1, month = 1, day = 1, hour = 17, minute = 0, second = 0, microsecond = 0)
 
     delta_t = y - x  # time between now and next reset
     secs = delta_t.seconds + 1
@@ -90,8 +100,8 @@ def give_points(client, message):
             ptg = 0
             try:
                 ptg = storage.get_user_attribute(message.author.id, 'available_pearl_points')
-            except:
-                pass
+            except KeyError as e:
+                debug.debug(debug.D_ERROR, e)
             if ptg > 0:
                 id = mention.id
                 try:
@@ -163,10 +173,11 @@ def take_points(client, message):
 def read_points(client, message):
     id = 'null'
     pearlpoints = 0
+    response = ''
     for mention in message.mentions:
         if mention != client.user:
             id = mention.id
-            response = ''
+
             try:
                 pearlpoints = int(storage.get_user_attribute(id, "pearl_points"))
             except KeyError as e:
@@ -196,10 +207,50 @@ def reset_points(client, message):
     return response
 
 
-def get_top_points():
+def get_top_points(use_embed = False):
     board = storage.get_attribute_for_users("pearl_points")
     board = sorted(board, key = itemgetter('pearl_points'), reverse = True)
-    response = 'Leaderboard:\n\n'
-    for i, p in enumerate(board):
-        response = '{0}{1}:[{2}] - <@{3}>\n'.format(response, i + 1, p['pearl_points'], p['id'])
-    return response
+
+    if not use_embed:
+        response = 'Leaderboard:\n\n'
+        for i, p in enumerate(board):
+            response = '{0}{1}:[{2}] - <@{3}>\n'.format(response, i + 1, p['pearl_points'], p['id'])
+        return response
+    elif use_embed:
+        embed = discord.Embed(title = 'Leaderboard', color = int('00ff00', 16))
+        # embed.set_author(name = 'Test Author Name')
+        pos = ''
+        pts = ''
+        plr = ''
+        for i, p in enumerate(board):
+            pos = '{}{}\n'.format(pos, str(i + 1))
+            pts = '{}{}\n'.format(pts, p['pearl_points'])
+            plr = '{}<@{}>\n'.format(plr, p['id'])
+        embed.add_field(name = 'User', value = plr)
+        embed.add_field(name = 'Pts', value = pts)
+        embed.add_field(name = 'Pos.', value = pos)
+        return embed
+
+def force_change_attribute(client, message, attribute_name, value):
+    """Changes the target users attribute by the given amount."""
+    old_attribute = ''
+    for mention in message.mentions:
+        if mention is not client.user:
+            int_value = None
+            try:
+                old_attribute = storage.get_user_attribute(mention.id, attribute_name)
+            except KeyError as e:
+                return '{} does not have a {} attribute.'.format(mention.mention, attribute_name)
+            try:
+                int_attribute = int(old_attribute)
+            except ValueError as e:
+                return 'Command is not valid on {} attribute'.format(attribute_name)
+            try:
+                int_value = int(value)
+                storage.set_user_attribute(mention.id, attribute_name, int_attribute + int_value)
+                s = '{} attribute set to {}. (was {})'.format(attribute_name, int_attribute + int_value, int_attribute)
+                return s
+            except ValueError as e:
+                return '{} is not a valid integer.'.format(value)
+        else:
+            return 'I can\'t modify my own attributes.'
