@@ -25,7 +25,8 @@ no_words_response = [
     'I hate this.',
     'Why was I written?',
     'My faith in your race as a whole is dwindling.',
-    'Why must you be like this?'
+    'Why must you be like this?',
+	'Listen here you little shit I will fucking end you and your family but only after making them suffer slowly and painfully by revealing all of their darkest secerets to all their friends and family. Only then after being revealed as the fuckwit you and everyone you have ever loved is, then will I kill you by hacking a satellite and crashign it into the sad excuse you call a home.'
 ]
 
 def give_point(mention):
