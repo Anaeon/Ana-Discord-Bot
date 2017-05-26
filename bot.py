@@ -215,7 +215,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
                     embed.set_author(name = 'Test Author Name')
                     embed.add_field(name = 'Test Field 1', value = 'Test Value')
                     embed.add_field(name = 'Test Field 2', value = 's;laksdfj')
-                    embed.add_field(name = 'Non-inline', value = 'stuff', inline = False)
+                    embed.add_field(name = 'Multi-line', value = 'other\nstuff', inline = True)
                     embed.set_footer(text = 'Test Footer Text')
                     await client.send_message(message.channel, embed = embed)
 

@@ -129,6 +129,8 @@ async def handle_message(client, message):
                 if '!changeattribute' in m:
                     args = m.split(',')
                     response = scoreboard.force_change_attribute(client, message, args[2].strip(), args[3].strip())
+                if '!let' in m:
+                    await client.send_message(message.channel, embed = scoreboard.get_top_points(use_embed = True))
 
             if response != '':
                 await client.send_message(message.channel, response)

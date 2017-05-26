@@ -2,6 +2,8 @@ from operator import itemgetter
 from datetime import datetime
 import calendar
 
+import discord
+
 from modules.data import strings
 from modules.util import storage
 from modules.util import debug
@@ -205,13 +207,29 @@ def reset_points(client, message):
     return response
 
 
-def get_top_points():
+def get_top_points(use_embed = False):
     board = storage.get_attribute_for_users("pearl_points")
     board = sorted(board, key = itemgetter('pearl_points'), reverse = True)
-    response = 'Leaderboard:\n\n'
-    for i, p in enumerate(board):
-        response = '{0}{1}:[{2}] - <@{3}>\n'.format(response, i + 1, p['pearl_points'], p['id'])
-    return response
+
+    if not use_embed:
+        response = 'Leaderboard:\n\n'
+        for i, p in enumerate(board):
+            response = '{0}{1}:[{2}] - <@{3}>\n'.format(response, i + 1, p['pearl_points'], p['id'])
+        return response
+    elif use_embed:
+        embed = discord.Embed(title = 'Leaderboard', color = int('00ff00', 16))
+        # embed.set_author(name = 'Test Author Name')
+        pos = ''
+        pts = ''
+        plr = ''
+        for i, p in enumerate(board):
+            pos = '{}{}\n'.format(pos, str(i + 1))
+            pts = '{}{}\n'.format(pts, p['pearl_points'])
+            plr = '{}<@{}>\n'.format(plr, p['id'])
+        embed.add_field(name = 'User', value = plr)
+        embed.add_field(name = 'Pts', value = pts)
+        embed.add_field(name = 'Pos.', value = pos)
+        return embed
 
 def force_change_attribute(client, message, attribute_name, value):
     """Changes the target users attribute by the given amount."""
