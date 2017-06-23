@@ -245,7 +245,10 @@ async def on_message(message):  # when someone sends a message. Read command inp
 
         if re.search('\\bfag(\\b|s)|\\bfaggot(\\b|s)|\\bfaggotry\\b|\\bgay(\\b|s)|\\bga{2,99}y(\\b|s)', m):
             debug.debug(debug.D_INFO, 'Reacting to some faggotry.')
-            await client.add_reaction(message, '\\U0001F3F3\\U0000FE0F\\U0001F308')
+            try:
+                await client.add_reaction(message, '🏳️‍🌈')
+            except discord.errors.HTTPException as e:
+                debug.debug(debug.D_ERROR, e)
 
         # GIV DEM BITCHES SOME LIZARDS
         if re.search('\\blizard(\\b|s)', m):
