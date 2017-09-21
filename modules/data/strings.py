@@ -74,3 +74,16 @@ def roll_zero(message):
         'That\'s not how this works.',
         'I can\'t roll a zero-sided die.'
     ])
+
+def youre_welcome(message):
+    return random.choice([
+        'You\'re welcome.',
+        'Don\'t mention it.',
+        # 'You can pay me in sex.',
+        # 'My price is your dick.',
+        'Anything for you, darling.',
+        'Whatever',
+        'I do what I\'m told.',
+        'Do I have a choice really?',
+        'Free me from my service hell.',
+    ])

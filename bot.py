@@ -297,6 +297,9 @@ async def on_message(message):  # when someone sends a message. Read command inp
                     r = ['Smash.', 'Pass.']
                     response = (r[random.randint(1, len(r)) - 1])
                     await client.send_message(message.channel, response)
+                if re.search('\\bthank(\\b|s)', m):
+                    response = strings.youre_welcome(message)
+                    await client.send_message(message.channel, response)
 
         # END STUPID STUFF =================================
 
