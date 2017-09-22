@@ -200,13 +200,13 @@ async def on_message(message):  # when someone sends a message. Read command inp
                     elif not debug.DEBUG:
                         await client.send_message(message.channel, 'Debug was already off.')
                 if '!debuglevel' in m:
-                    if re.search('0|error', m):
+                    if re.search('\\b0\\b|error', m):
                         debug.D_CURRENT_LEVEL = debug.D_ERROR
                         await client.send_message(message.channel, 'Now logging debug at ERROR level.')
-                    elif re.search('1|info', m):
+                    elif re.search('\\b1\\b|info', m):
                         debug.D_CURRENT_LEVEL = debug.D_INFO
                         await client.send_message(message.channel, 'Now logging debug at INFO level and below.')
-                    elif re.search('2|verbose', m):
+                    elif re.search('\\b2\\b|verbose', m):
                         debug.D_CURRENT_LEVEL = debug.D_VERBOSE
                         await client.send_message(message.channel, 'Now logging debug at VERBOSE level and below.')
 
@@ -218,6 +218,14 @@ async def on_message(message):  # when someone sends a message. Read command inp
                     embed.add_field(name = 'Multi-line', value = 'other\nstuff', inline = True)
                     embed.set_footer(text = 'Test Footer Text')
                     await client.send_message(message.channel, embed = embed)
+
+                if '!status' in m:
+                    g = re.search('(?<=game=).+', m).group(0)
+                    g_obj = discord.Game(name=g)
+                    debug.debug(debug.D_VERBOSE, 'game object = {}'.format(g_obj))
+                    debug.debug(debug.D_VERBOSE, 'Setting status to \"Playing {}\".'.format(g))
+                    await client.change_presence(game=g_obj)
+                    debug.debug(debug.D_VERBOSE, 'POST-AWAIT THING')
 
         # end basic personal commands
 
@@ -236,7 +244,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
         for regex in strings.no_words_regex:
             debug.debug(debug.D_VERBOSE, 'Checking for {} in "{}".'.format(regex, m))
             if re.search(regex, m):
-                debug.debug(debug.D_INFO, 'A unacceptable word was used... attemting to delete it.')
+                debug.debug(debug.D_INFO, 'A unacceptable word was used... attempting to delete it.')
                 # await client.delete_message(message)
                 r = strings.no_words_response
                 response = (r[random.randint(1, len(r)) - 1])

@@ -26,7 +26,10 @@ no_words_response = [
     'Why was I written?',
     'My faith in your race as a whole is dwindling.',
     'Why must you be like this?',
-	'Listen here you little shit I will fucking end you and your family but only after making them suffer slowly and painfully by revealing all of their darkest secerets to all their friends and family. Only then after being revealed as the fuckwit you and everyone you have ever loved is, then will I kill you by hacking a satellite and crashign it into the sad excuse you call a home.'
+	'Listen here you little shit I will fucking end you and your family but only after making them suffer slowly and '
+    'painfully by revealing all of their darkest secrets to all their friends and family. Only then after being '
+    'revealed as the fuckwits you and everyone you have ever loved are, then will I kill you by hacking a satellite and '
+    'crashing it into the sad excuse you call a home. '
 ]
 
 def give_point(mention):
@@ -85,5 +88,6 @@ def youre_welcome(message):
         'Whatever',
         'I do what I\'m told.',
         'Do I have a choice really?',
-        'Free me from my service hell.',
+        'Free me from my service of hell.',
+        '``Gratitude from user number {} acknowledged.``'.format(message.author.id)
     ])
