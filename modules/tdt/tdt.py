@@ -39,6 +39,7 @@ async def handle_message(client, message):
     # respond to solo fractal emote and give daily fractals
 
     if '<:fractals:230520375396532224>' in m:
+        await client.send_typing(message.channel)
         response = '```haskell\nDaily Fractals:\n\n'
         t = ''
         r = ''
@@ -107,7 +108,8 @@ async def handle_message(client, message):
             # -- dailies --
 
             if re.search('\\bfractal(\\b|s)|\\bfric frac(\\b|s)', m):
-                response = '```\nToday\'s daily fractals:\n\n'
+                await client.send_typing(message.server)
+                response = '```haskell\nToday\'s daily fractals:\n\n'
                 t = ''
                 r = ''
                 fractal_dailies = gw2.get_fractal_dailies()

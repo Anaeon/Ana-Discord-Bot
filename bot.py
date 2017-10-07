@@ -120,6 +120,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
         # get a random Trump quote because why the fuck not?
 
         if re.search('\\btrump\\b|\\bgyna\\b', m):
+            await client.send_typing(message.server)
             msg = trump.get_quote()
             await client.send_message(message.channel, '"{}" - Lord Emperor The Donald Trump'.format(msg))
 
@@ -271,6 +272,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
 
         # GIV DEM BITCHES SOME LIZARDS
         if re.search('\\blizard(\\b|s)', m):
+            await client.send_typing(message.server)
             dir = './data/images/lizard'
             filename = random.choice([x for x in os.listdir(dir) if os.path.isfile(dir + "/" + x)])
             path = os.path.join(dir, filename)
@@ -279,6 +281,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
 
         # GIV DEM BITCHES SOME FOXES
         if re.search('\\bfox(\\b|s)', m):
+            await client.send_typing(message.server)
             dir = './data/images/fox'
             filename = random.choice([x for x in os.listdir(dir) if os.path.isfile(dir + "/" + x)])
             path = os.path.join(dir, filename)
