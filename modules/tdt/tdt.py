@@ -10,6 +10,7 @@ from datetime import datetime
 
 
 async def handle_message(client, message):
+
     # check if alloted points for the day should be reset yet.
     m = message.content.lower()
     try:
@@ -55,6 +56,7 @@ async def handle_message(client, message):
                 n = gw2.get_fractal_name(scale)
                 r = '{}scale: {} {}\n'.format(r, scale, n)
         await client.send_message(message.channel, '{}{}\n{}\n```'.format(response, r, t))
+        # handled = True
 
     # end fractals
 
@@ -73,6 +75,7 @@ async def handle_message(client, message):
     for mention in message.mentions:  # when someone is mentioned
         debug.debug(debug.D_INFO, '{} was mentioned'.format(mention))
         if mention == client.user:  # if the bot is mentioned
+            # handled = False
             response = ''
 
             # -- pearl points --
@@ -80,19 +83,24 @@ async def handle_message(client, message):
             if ('give' in m or '+1' in m) and ('pearlpoint' in m or 'pearl point' in m or (
                     'pearl' in m and 'point' in m) or 'point' in m) and '!resetpointstogive' not in m:
                 response = scoreboard.give_points(client, message)
+                # handled = True
             elif ('take' in m or 'remove' in m or '-1' in m) and (
                             'pearlpoint' in m or 'pearl point' in m or ('pearl' in m and 'point' in m) or 'point' in m):
                 response = scoreboard.take_points(client, message)
+                # handled = True
             elif 'how many points' in m or 'how many pearlpoints' in m or (
                         'how' in m and 'many' in m and 'points' in m):
                 if ' i ' in m:
                     debug.debug(debug.D_INFO, 'Fetching remaining points for {}.'.format(message.author))
                     response = scoreboard.read_points_to_give(client, message)
+                    # handled = True
                 else:
                     response = scoreboard.read_points(client, message)
+                    # handled = True
             elif 'who\'s winning' in m or 'leaderboard' in m:
                 response = scoreboard.get_top_points()
-            print('{}, {}'.format(message.author.id, private.anaeon_id))
+                # handled = True
+            debug.debug(debug.D_VERBOSE, '{}, {}'.format(message.author.id, private.anaeon_id))
 
             # -- end pearl points --
 
@@ -115,6 +123,7 @@ async def handle_message(client, message):
                         n = gw2.get_fractal_name(scale)
                         r = '{}Daily {}, Scale {}\n'.format(r, n, scale)
                 response = '{}{}\n{}\n```'.format(response, r, t)
+                # handled = True
 
             # -- end dailies --
 
@@ -122,17 +131,21 @@ async def handle_message(client, message):
             if message.author.id == private.anaeon_id:
                 if '!resetpearlpoints' in m:
                     response = scoreboard.reset_points(client, message)
+                    # handled = True
                 if '!initpearlpoints' in m:
                     response = scoreboard.init_points_to_give(message)
+                    # handled = True
                 if '!resetpointstogive' in m:
                     response = scoreboard.reset_points_to_give(message.server)
+                    # handled = True
                 if '!changeattribute' in m:
                     args = m.split(',')
                     response = scoreboard.force_change_attribute(client, message, args[2].strip(), args[3].strip())
+                    # handled = True
                 if '!let' in m:
                     await client.send_message(message.channel, embed = scoreboard.get_top_points(use_embed = True))
 
             if response != '':
                 await client.send_message(message.channel, response)
-
+                # handled = True
                 # end direct mention commands

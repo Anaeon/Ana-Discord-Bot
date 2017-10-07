@@ -69,6 +69,7 @@ def take_point(mention):
         "Say, \"Goodbye,\" to your likeability, {}.".format(mention.mention)
         ])
 
+
 def roll_zero(message):
     return random.choice([
         'I mean... I can roll a marble, if you\'d like...',
@@ -77,6 +78,14 @@ def roll_zero(message):
         'That\'s not how this works.',
         'I can\'t roll a zero-sided die.'
     ])
+
+
+def hi(message):
+    return random.choice([
+        "Hi.",
+        "What?"
+    ])
+
 
 def youre_welcome(message):
     return random.choice([

@@ -3,6 +3,7 @@ import time
 import random
 import re
 import os
+import logging as log
 
 from modules.tdt import tdt
 from modules.util import debug
@@ -14,6 +15,7 @@ client = discord.Client()
 
 ANA_COLOR = int('4408a3', 16)
 
+
 async def send_talk(_svr, _ch, msg):
     """Sends a custom message to a specific server."""
 
@@ -21,7 +23,6 @@ async def send_talk(_svr, _ch, msg):
     svr = ''
     svr_found = False
     for server in client.servers:
-        print(server.name)
         if server.name == _svr:
             svr = server
             svr_found = True
@@ -52,6 +53,7 @@ async def on_ready():
     print('Logged in as')
     print(client.user.name)
     print(client.user.id)
+    await client.change_presence(game = discord.Game(name="with quantum strings."))
     print('------')
     print(discord.__version__)
     print('------')
@@ -86,7 +88,7 @@ async def on_message_edit(before, after):
 
 @client.event
 async def on_message(message):  # when someone sends a message. Read command inputs here.
-
+    # handled = True
     try:
         debug.debug(debug.D_INFO, 'server: {}, id: {}'.format(message.server, message.server.id))
     except AttributeError as e:
@@ -173,7 +175,6 @@ async def on_message(message):  # when someone sends a message. Read command inp
 
             if m.startswith('!talk'):
                 args = message.content.split(',')
-                print(args)
                 msg = ''
                 for i in range(len(args)):
                     if i == 3:
@@ -189,26 +190,33 @@ async def on_message(message):  # when someone sends a message. Read command inp
                 if '!debugon' in m:
                     if debug.DEBUG:
                         await client.send_message(message.channel, 'Debug was already active.')
+                        # handled = True
                     elif not debug.DEBUG:
                         debug.DEBUG = True
                         await client.send_message(message.channel, 'Debug is now active at {} level.'.format(
                             debug.D_HEADER[debug.D_CURRENT_LEVEL]))
+                        # handled = True
                 if '!debugoff' in m:
                     if debug.DEBUG:
                         debug.DEBUG = False
                         await client.send_message(message.channel, 'Debug is now off.')
+                        # handled = True
                     elif not debug.DEBUG:
                         await client.send_message(message.channel, 'Debug was already off.')
+                        # handled = True
                 if '!debuglevel' in m:
                     if re.search('\\b0\\b|error', m):
                         debug.D_CURRENT_LEVEL = debug.D_ERROR
                         await client.send_message(message.channel, 'Now logging debug at ERROR level.')
+                        # handled = True
                     elif re.search('\\b1\\b|info', m):
                         debug.D_CURRENT_LEVEL = debug.D_INFO
                         await client.send_message(message.channel, 'Now logging debug at INFO level and below.')
+                        # handled = True
                     elif re.search('\\b2\\b|verbose', m):
                         debug.D_CURRENT_LEVEL = debug.D_VERBOSE
                         await client.send_message(message.channel, 'Now logging debug at VERBOSE level and below.')
+                        # handled = True
 
                 if '!embedtest' in m:
                     embed = discord.Embed(title = '', color = ANA_COLOR)
@@ -218,6 +226,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
                     embed.add_field(name = 'Multi-line', value = 'other\nstuff', inline = True)
                     embed.set_footer(text = 'Test Footer Text')
                     await client.send_message(message.channel, embed = embed)
+                    # handled = True
 
                 if '!status' in m:
                     g = re.search('(?<=game=).+', m).group(0)
@@ -225,6 +234,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
                     debug.debug(debug.D_VERBOSE, 'game object = {}'.format(g_obj))
                     debug.debug(debug.D_VERBOSE, 'Setting status to \"Playing {}\".'.format(g))
                     await client.change_presence(game=g_obj)
+                    # await client.change_status(game=g_obj) # depricated
                     debug.debug(debug.D_VERBOSE, 'POST-AWAIT THING')
 
         # end basic personal commands
@@ -239,7 +249,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
             if 'goose' in message.author.nick.lower():
                 await client.send_message(message.channel, 'Honk.')
         except AttributeError as e:
-            debug.debug(debug.D_ERROR, 'AttributeError caught: {}'.format(e))
+            debug.debug(debug.D_ERROR, 'Tried to find a fowl with no nick: {}'.format(e))
 
         for regex in strings.no_words_regex:
             debug.debug(debug.D_VERBOSE, 'Checking for {} in "{}".'.format(regex, m))
@@ -249,6 +259,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
                 r = strings.no_words_response
                 response = (r[random.randint(1, len(r)) - 1])
                 await client.send_message(message.channel, response)
+                # handled = True
                 time.sleep(2)
 
         if re.search('\\bfag(\\b|s)|\\bfaggot(\\b|s)|\\bfaggotry\\b|\\bgay(\\b|s)|\\bga{2,99}y(\\b|s)', m):
@@ -275,6 +286,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
                 await client.send_file(message.channel, file)
 
         for mention in message.mentions:
+            # handled = False
             if mention == client.user:
                 if 'anal' in m:
                     r = [
@@ -284,6 +296,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
                     ]
                     response = (r[random.randint(1, len(r)) - 1])
                     await client.send_message(message.channel, response)
+                    # handled = True
                 if 'suck' in m:
                     r = [
                         'Sorry, {}, I\'m not scripted for that kind of thing...'.format(message.author.mention),
@@ -292,6 +305,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
                     ]
                     response = (r[random.randint(1, len(r)) - 1])
                     await client.send_message(message.channel, response)
+                    # handled = True
                 if 'lick' in m:
                     r = [
                         'I don\'t exactly have a tongue, {}...'.format(message.author.mention),
@@ -301,19 +315,32 @@ async def on_message(message):  # when someone sends a message. Read command inp
                     ]
                     response = (r[random.randint(1, len(r)) - 1])
                     await client.send_message(message.channel, response)
+                    # handled = True
                 if 'smash or pass' in m:
                     r = ['Smash.', 'Pass.']
                     response = (r[random.randint(1, len(r)) - 1])
                     await client.send_message(message.channel, response)
-                if re.search('\\bthank(\\b|s)', m):
-                    response = strings.youre_welcome(message)
-                    await client.send_message(message.channel, response)
+                    # handled = True
 
         # END STUPID STUFF =================================
 
+        # SIMPLE RESPONSES =================================
+
+                if re.search('\\bthank(\\b|s)', m):
+                    await client.send_message(message.channel, strings.youre_welcome(message))
+
+                if 'hi' in m or 'hey' in m or 'hello' in m or m is '<@297237845591195651>' or 'what\'s up' in m:
+                    await client.send_message(message.channel, strings.hi(message))
+
+        # END SIMPLE RESPONSES =================================
+
+        # Begin per-server message handling.
+
         # Only do these things in Digital Table server.
+
         if is_tdt:
             await tdt.handle_message(client, message)
+
 
         # @client.event
         # async def on_reaction_add(reaction, user): # when someone adds a reaction?

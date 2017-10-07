@@ -36,6 +36,7 @@ def init_points_to_give(message):
 def reset_points_to_give(server):
     users = server.members
     response = 'The following users have been given new points to use:\n\n'
+    new_points_given = False
     for user in users:
         user_points_left = 0
         try:
@@ -44,6 +45,7 @@ def reset_points_to_give(server):
                 give = user_points_left + dailyPoints
                 storage.set_user_attribute(user.id, 'available_pearl_points', give)
                 response = '{}{}\n'.format(response, user.mention)
+                new_points_given = True
         except KeyError as e:
             pass
 
@@ -68,6 +70,8 @@ def reset_points_to_give(server):
     # t = Timer(secs, resetPointsToGive(server))
 
     storage.set_server_attribute(server.id, 'next_pearl_point_reset_datetime', y)
+    if not new_points_given:
+        response = 'No users have been given new points because no one used any.'
     return response
 
 
