@@ -329,9 +329,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
                     await client.send_message(message.channel, response)
                     # handled = True
                 if 'smash or pass' in m:
-                    r = ['Smash.', 'Pass.']
-                    response = (r[random.randint(1, len(r)) - 1])
-                    await client.send_message(message.channel, response)
+                    await client.send_message(message.channel, random.choice(['smash', 'pass']))
                     # handled = True
 
         # END STUPID STUFF =================================

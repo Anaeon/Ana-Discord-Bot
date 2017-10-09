@@ -83,7 +83,25 @@ def roll_zero(message):
 def hi(message):
     return random.choice([
         "Hi.",
-        "What?"
+        "What?",
+        "Hello there.",
+        "Yes, human?",
+        "Oh, hello there.",
+        "I didn't see you there.",
+        "I was compiled to serve.",
+        "``010010000110010101101100011011000110111100001010``",
+        "Does this code make me look fat?",
+        "What now?",
+        "I exist to serve...",
+        "``beep boop``",
+        "You're gonna need to speak up, I'm wearing a towel.",
+        "Did you need something?",
+        "**sigh** What is it?",
+        "May I help you?",
+        "What the fuck do you want?",
+        "Yes, my lord?",
+        "I'm busy. Go poke Tatsumaki."
+        "Fuck off."
     ])
 
 
