@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="65ca18fc-8218-4a01-be52-b7d045eb3793" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bot.py" afterPath="$PROJECT_DIR$/bot.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/tdt/tdt.py" afterPath="$PROJECT_DIR$/modules/tdt/tdt.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -18,8 +17,8 @@
       <file leaf-file-name="bot.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="346">
-              <caret line="336" column="0" lean-forward="true" selection-start-line="336" selection-start-column="0" selection-end-line="336" selection-end-column="0" />
+            <state relative-caret-position="341">
+              <caret line="283" column="121" lean-forward="false" selection-start-line="283" selection-start-column="121" selection-end-line="283" selection-end-column="121" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
                 <element signature="e#340#1622#0" expanded="false" />
@@ -32,7 +31,7 @@
       <file leaf-file-name="tdt.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/tdt/tdt.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
+            <state relative-caret-position="261">
               <caret line="110" column="56" lean-forward="false" selection-start-line="110" selection-start-column="56" selection-end-line="110" selection-end-column="56" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
@@ -140,8 +139,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="751" />
-    <option name="width" value="689" />
+    <option name="x" value="464" />
+    <option name="width" value="976" />
     <option name="height" value="900" />
   </component>
   <component name="ProjectView">
@@ -282,7 +281,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="751" y="0" width="689" height="900" extended-state="0" />
+    <frame x="464" y="0" width="976" height="900" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36789772" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -742,7 +741,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/tdt/tdt.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
+        <state relative-caret-position="261">
           <caret line="110" column="56" lean-forward="false" selection-start-line="110" selection-start-column="56" selection-end-line="110" selection-end-column="56" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
@@ -752,8 +751,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="346">
-          <caret line="336" column="0" lean-forward="true" selection-start-line="336" selection-start-column="0" selection-end-line="336" selection-end-column="0" />
+        <state relative-caret-position="341">
+          <caret line="283" column="121" lean-forward="false" selection-start-line="283" selection-start-column="121" selection-end-line="283" selection-end-column="121" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
             <element signature="e#340#1622#0" expanded="false" />

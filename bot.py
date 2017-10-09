@@ -272,21 +272,30 @@ async def on_message(message):  # when someone sends a message. Read command inp
 
         # GIV DEM BITCHES SOME LIZARDS
         if re.search('\\blizard(\\b|s)', m):
-            await client.send_typing(message.server)
             dir = './data/images/lizard'
             filename = random.choice([x for x in os.listdir(dir) if os.path.isfile(dir + "/" + x)])
             path = os.path.join(dir, filename)
             with open(path, 'rb') as file:
-                await client.send_file(message.channel, file)
+                try:
+                    await client.send_file(message.channel, file)
+                except discord.HTTPException as e:
+                    await client.send_message(message.channel, e)
+                    time.sleep(2)
+                    await client.send_message(message.channel, 'Error encountered on file "{}/{}"'.format(dir, filename))
+
 
         # GIV DEM BITCHES SOME FOXES
         if re.search('\\bfox(\\b|s)', m):
-            await client.send_typing(message.server)
             dir = './data/images/fox'
             filename = random.choice([x for x in os.listdir(dir) if os.path.isfile(dir + "/" + x)])
             path = os.path.join(dir, filename)
             with open(path, 'rb') as file:
-                await client.send_file(message.channel, file)
+                try:
+                    await client.send_file(message.channel, file)
+                except discord.HTTPException as e:
+                    await client.send_message(message.channel, e)
+                    time.sleep(2)
+                    await client.send_message(message.channel, 'Error encountered on file "{}/{}"'.format(dir, filename))
 
         for mention in message.mentions:
             # handled = False
@@ -332,7 +341,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
                 if re.search('\\bthank(\\b|s)', m):
                     await client.send_message(message.channel, strings.youre_welcome(message))
 
-                if 'hi' in m or 'hey' in m or 'hello' in m or m is '<@297237845591195651>' or 'what\'s up' in m:
+                if re.search('\\bhi\\b|\\bhey\\b|\\bhello\\b|\\bwhat\'s up\\b', m):
                     await client.send_message(message.channel, strings.hi(message))
 
         # END SIMPLE RESPONSES =================================
