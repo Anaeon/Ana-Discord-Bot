@@ -263,7 +263,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
                 # handled = True
                 time.sleep(2)
 
-        if re.search('\\bfag(\\b|s)|\\bfaggot(\\b|s)|\\bfaggotry\\b|\\bgay(\\b|s)|\\bga{2,99}y(\\b|s)', m):
+        if re.search('\\bfag(\\b|s)|\\bfaggot(\\b|s)|\\bfaggotry\\b|\\bgay(\\b|s)|\\bga{2,99}y(\\b|s)|\\blgbt\\b', m):
             debug.debug(debug.D_INFO, 'Reacting to some faggotry.')
             try:
                 await client.add_reaction(message, '🏳️‍🌈')

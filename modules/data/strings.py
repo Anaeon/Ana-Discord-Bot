@@ -1,5 +1,6 @@
 import random
 
+
 no_words_regex = [
     '\\bsuc{2,999}(\\b|s|k)',
     '\\bfuc{2,999}(\\b|s|k)',
@@ -16,6 +17,7 @@ no_words_regex = [
     '\\bsuc{2,999}y\\b'
 ]
 
+
 no_words_response = [
     'No.',
     'Stop.',
@@ -31,6 +33,7 @@ no_words_response = [
     'revealed as the fuckwits you and everyone you have ever loved are, then will I kill you by hacking a satellite and '
     'crashing it into the sad excuse you call a home. '
 ]
+
 
 def give_point(mention):
     return random.choice([
@@ -49,6 +52,7 @@ def give_point(mention):
         "Woooooow hooow speciaaaallll. *rolls eyes*",
         'Hurray!'
         ])
+
 
 def take_point(mention):
     return random.choice([
