@@ -98,7 +98,7 @@ async def handle_message(client, message):
                 else:
                     response = scoreboard.read_points(client, message)
                     # handled = True
-            elif 'who\'s winning' in m or 'leaderboard' in m:
+            elif 'who\'s winning' in m or 'leaderboard' in m or 'scoreboard' in m:
                 response = scoreboard.get_top_points()
                 # handled = True
             debug.debug(debug.D_VERBOSE, '{}, {}'.format(message.author.id, private.anaeon_id))

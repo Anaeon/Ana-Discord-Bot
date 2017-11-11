@@ -70,7 +70,8 @@ def take_point(mention):
         "GG EZ",
         "Sucks to suck.",
         "Adiós, punto.",
-        "Say, \"Goodbye,\" to your likeability, {}.".format(mention.mention)
+        "Say, \"Goodbye,\" to your likeability, {}.".format(mention.mention),
+        "Let's give it everything we got, it's punishment tiiiime!"
         ])
 
 
@@ -104,7 +105,7 @@ def hi(message):
         "May I help you?",
         "What the fuck do you want?",
         "Yes, my lord?",
-        "I'm busy. Go poke Tatsumaki."
+        "I'm busy. Go poke Tatsumaki.",
         "Fuck off."
     ])
 
