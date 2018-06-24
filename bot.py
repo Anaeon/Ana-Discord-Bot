@@ -272,7 +272,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
 
         # GIV DEM BITCHES SOME LIZARDS
         if re.search('\\blizard(\\b|s)', m):
-            dir = './data/images/lizard'
+            dir = 'C:/Users/Hayden/Dropbox/Ana Cache/lizard'
             filename = random.choice([x for x in os.listdir(dir) if os.path.isfile(dir + "/" + x)])
             path = os.path.join(dir, filename)
             with open(path, 'rb') as file:
@@ -286,7 +286,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
 
         # GIV DEM BITCHES SOME FOXES
         if re.search('\\bfox(\\b|s)', m):
-            dir = './data/images/fox'
+            dir = 'C:/Users/Hayden/Dropbox/Ana Cache/fox'
             filename = random.choice([x for x in os.listdir(dir) if os.path.isfile(dir + "/" + x)])
             path = os.path.join(dir, filename)
             with open(path, 'rb') as file:
