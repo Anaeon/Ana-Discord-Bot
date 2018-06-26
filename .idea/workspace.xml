@@ -2,103 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="65ca18fc-8218-4a01-be52-b7d045eb3793" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/cat/tenor.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/fox/COMZA4H1EWMF2.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/fox/Ep63m.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/fox/FCao2bD.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/fox/OMnjhF9Vz_A8YnzApIn20KH2uDSPU1OhsiYZtGQE74A.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/fox/QaNH1ao - Imgur.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/fox/bx7w55o134xy.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/fox/exbTVs2.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/fox/giphy.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/fox/grabby_fox__anim__by_dashrendar100-d3kurc6.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/fox/nnbapgu.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/fox/too big/1 - 1fAZxXF.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/fox/too big/nZqADY.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/fox/tumblr_mx751f9oXr1sifbwho1_400.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/fox/tumblr_o14qz5XJUE1s7fey2o1_400.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/fox/tumblr_o74nz0jLTw1v6ekqyo1_400.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/grump/154106fcfdbadb129363d719aeda4476.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/grump/2KoeK8j3YhJOtq_pe2AXABuSlmxo_VjGYv_Z02pKBiM.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/grump/2fb1c70ba2bf1dcfc1eff44f7011675f.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/grump/7381036aa2da47558800687d12e38bd3.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/grump/Game_1ae3d9_5992020.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/grump/Game_1b5445_5992020.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/grump/Game_599389_5992020.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/grump/Game_91a3f2_5992020.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/grump/Game_e93275_5992020.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/grump/Game_fdfd0f_5992020.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/grump/KoZBv4k.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/grump/b4416966350040a4a9b29293813edc2e.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/grump/d95c04d8ac70c2daa381d0aaabfc43d6.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/grump/tumblr_nw8l499s411uj7eepo1_500.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/grump/tumblr_nylniwFegC1tqx6wdo5_r1_540.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/grump/xqN932G.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/grump/zgipOoC.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/06151339773769.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/0b53bf5ca11158f758636c6decc5f7b8.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/18-Cute-and-Adorable-Reptiles-That-Will-Make-You-Go-Awww-03-720x1079.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/18-Cute-and-Adorable-Reptiles-That-Will-Make-You-Go-Awww-05.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/18-Cute-and-Adorable-Reptiles-That-Will-Make-You-Go-Awww-07.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/18-Cute-and-Adorable-Reptiles-That-Will-Make-You-Go-Awww-08.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/18-Cute-and-Adorable-Reptiles-That-Will-Make-You-Go-Awww-12.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/18-Cute-and-Adorable-Reptiles-That-Will-Make-You-Go-Awww-13.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/2012-08-16-Geckos.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/201412171603384644.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/237be9b509c89fc27d664813f2575cdc.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/250px-Bartagame_fcm.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/3934c2de8346100e261dc77ba011642d.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/50514659dcf4286d41009ded3b63575d.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/61cf7daa3663d9e3dabbfdb936ca8c9b.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/61cf7daa3663d9e3dabbfdb936ca8c9b.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/6217c08ee6627f3a126fbad3269490b7.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/7eb83cbd57f3155e3e250e4c0ba68b9a.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/87ccf4ce5795f22df5dd1dda257a36ef.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/Blue-toungued_skink444.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/Bph4d8UIAAEuGE7.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/CQhkIl9WEAEGQ5N.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/Funny_Lizards.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/Green_anole.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/IMG_7526.JPG" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/IMG_7646.JPG" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/Ur8Lt6Y.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/a9a6b6db5b2cae1adc79c889c63ab768e90fb1f5257839debc77509df97b11a9_1.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/animals_hero_lizards.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/ba4f576e4118395f7752c08e880e9ec7.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/bluetailskink.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/c6e68d6f0ff359faf5667dc876331180.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/camaleon-4024.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/chameleon-body-painting-optical-illusion-johannes-stotter-fb1.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/collared-lizard3.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/cute-reptiles-1011__605.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/cute-reptiles-104__700.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/cute-reptiles-107__605.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/cute_baby_gecko.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/cute_gecko_stock_by_crysta_stock.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/d0rINv18p4JJl4cVTsawOI5N-KPe-YbRIs8IieYgHro.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/db3fc0d9916a51629d32839541698312.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/dqSng.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/dragon-lizard-playing-leaf-guitar-aditya-permana-indonesia-2.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/e6106066d4fc3e9d6dbabb94f031fab9.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/emwebbiihp.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/enhanced-buzz-20139-1363064063-3.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/fde6cff35117363d7ac2cf3ca6aab234.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/funny-lizard-watching-jurassic-park.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/funnylizards0021_O.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/giphy.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/ilOr3Fq.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/jKbzYFu5kIQc8.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/lifespan-lizard_244df25469973699.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/lizard-07.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/lizard-eye-view.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/lizards-move_3ecea8f000406a2e.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/tenor.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/these_funny_animals_640_21.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/tumblr_ntsqnrzf1O1r81c8do1_500.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/tumblr_ofrvn42C261s04h2ho1_400.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/images/lizard/z3cgt9swjjry.jpg" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bot.py" afterPath="$PROJECT_DIR$/bot.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/api/gw2.py" afterPath="$PROJECT_DIR$/modules/api/gw2.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/tdt/tdt.py" afterPath="$PROJECT_DIR$/modules/tdt/tdt.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -113,8 +19,8 @@
       <file leaf-file-name="bot.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="287" column="41" lean-forward="true" selection-start-line="287" selection-start-column="41" selection-end-line="287" selection-end-column="41" />
+            <state relative-caret-position="2742">
+              <caret line="302" column="31" lean-forward="true" selection-start-line="302" selection-start-column="31" selection-end-line="302" selection-end-column="31" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
                 <element signature="e#340#1622#0" expanded="false" />
@@ -127,8 +33,8 @@
       <file leaf-file-name="tdt.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/tdt/tdt.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1564">
-              <caret line="100" column="81" lean-forward="false" selection-start-line="100" selection-start-column="81" selection-end-line="100" selection-end-column="81" />
+            <state relative-caret-position="-1474">
+              <caret line="27" column="37" lean-forward="true" selection-start-line="27" selection-start-column="37" selection-end-line="27" selection-end-column="37" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -139,9 +45,11 @@
       <file leaf-file-name="gw2.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/api/gw2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1734">
-              <caret line="104" column="25" lean-forward="false" selection-start-line="104" selection-start-column="25" selection-end-line="104" selection-end-column="25" />
-              <folding />
+            <state relative-caret-position="-845">
+              <caret line="45" column="27" lean-forward="true" selection-start-line="45" selection-start-column="27" selection-end-line="45" selection-end-column="27" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -149,7 +57,7 @@
       <file leaf-file-name="trump.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/api/trump.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
+            <state relative-caret-position="272">
               <caret line="16" column="31" lean-forward="false" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
@@ -171,14 +79,12 @@
       <file leaf-file-name="strings.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/data/strings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="952">
-              <caret line="107" column="39" lean-forward="false" selection-start-line="107" selection-start-column="39" selection-end-line="107" selection-end-column="39" />
+            <state relative-caret-position="549">
+              <caret line="118" column="37" lean-forward="true" selection-start-line="118" selection-start-column="37" selection-end-line="118" selection-end-column="37" />
               <folding>
                 <element signature="e#33#383#0" expanded="false" />
-                <element signature="e#406#1020#0" expanded="false" />
                 <element signature="e#1052#1757#0" expanded="false" />
                 <element signature="e#2501#2812#0" expanded="false" />
-                <element signature="e#3543#3958#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -187,8 +93,8 @@
       <file leaf-file-name="scoreboard.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/tdt/scoreboard.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1105">
-              <caret line="73" column="81" lean-forward="false" selection-start-line="73" selection-start-column="81" selection-end-line="73" selection-end-column="81" />
+            <state relative-caret-position="481">
+              <caret line="85" column="93" lean-forward="true" selection-start-line="85" selection-start-column="93" selection-end-line="85" selection-end-column="93" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -209,7 +115,7 @@
       <file leaf-file-name="storage.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/util/storage.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="629">
+            <state relative-caret-position="-114">
               <caret line="37" column="39" lean-forward="false" selection-start-line="37" selection-start-column="33" selection-end-line="37" selection-end-column="39" />
               <folding />
             </state>
@@ -242,9 +148,9 @@
         <option value="$PROJECT_DIR$/modules/api/trump.py" />
         <option value="$PROJECT_DIR$/modules/tdt/scoreboard.py" />
         <option value="$PROJECT_DIR$/modules/data/strings.py" />
+        <option value="$PROJECT_DIR$/bot.py" />
         <option value="$PROJECT_DIR$/modules/tdt/tdt.py" />
         <option value="$PROJECT_DIR$/modules/api/gw2.py" />
-        <option value="$PROJECT_DIR$/bot.py" />
       </list>
     </option>
   </component>
@@ -393,18 +299,17 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1456" height="916" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36789772" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32996207" sideWeight="0.50520056" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32996207" sideWeight="0.4947994" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32996207" sideWeight="0.4947994" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40644363" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -456,10 +361,8 @@
           <caret line="38" column="67" lean-forward="false" selection-start-line="38" selection-start-column="67" selection-end-line="38" selection-end-column="67" />
           <folding>
             <element signature="e#33#383#0" expanded="false" />
-            <element signature="e#406#1020#0" expanded="false" />
             <element signature="e#1052#1757#0" expanded="false" />
             <element signature="e#2501#2812#0" expanded="false" />
-            <element signature="e#3543#3958#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -543,10 +446,8 @@
           <caret line="37" column="67" lean-forward="false" selection-start-line="37" selection-start-column="67" selection-end-line="37" selection-end-column="67" />
           <folding>
             <element signature="e#33#383#0" expanded="false" />
-            <element signature="e#406#1020#0" expanded="false" />
             <element signature="e#1052#1757#0" expanded="false" />
             <element signature="e#2501#2812#0" expanded="false" />
-            <element signature="e#3543#3958#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -630,10 +531,8 @@
           <caret line="37" column="67" lean-forward="false" selection-start-line="37" selection-start-column="67" selection-end-line="37" selection-end-column="67" />
           <folding>
             <element signature="e#33#383#0" expanded="false" />
-            <element signature="e#406#1020#0" expanded="false" />
             <element signature="e#1052#1757#0" expanded="false" />
             <element signature="e#2501#2812#0" expanded="false" />
-            <element signature="e#3543#3958#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -697,10 +596,8 @@
           <caret line="9" column="30" lean-forward="true" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
           <folding>
             <element signature="e#33#383#0" expanded="false" />
-            <element signature="e#406#1020#0" expanded="false" />
             <element signature="e#1052#1757#0" expanded="false" />
             <element signature="e#2501#2812#0" expanded="false" />
-            <element signature="e#3543#3958#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -783,40 +680,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/api/trump.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="16" column="31" lean-forward="false" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/util/debug.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="16" lean-forward="false" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/data/private.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/util/storage.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="37" column="39" lean-forward="false" selection-start-line="37" selection-start-column="33" selection-end-line="37" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/Program Files (x86)/Python36-32/Lib/selectors.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-309">
@@ -838,34 +701,66 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/tdt/scoreboard.py">
+    <entry file="file://$PROJECT_DIR$/modules/api/trump.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1105">
-          <caret line="73" column="81" lean-forward="false" selection-start-line="73" selection-start-column="81" selection-end-line="73" selection-end-column="81" />
+        <state relative-caret-position="272">
+          <caret line="16" column="31" lean-forward="false" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
           <folding>
-            <element signature="e#0#31#0" expanded="true" />
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/data/strings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="952">
-          <caret line="107" column="39" lean-forward="false" selection-start-line="107" selection-start-column="39" selection-end-line="107" selection-end-column="39" />
+        <state relative-caret-position="549">
+          <caret line="118" column="37" lean-forward="true" selection-start-line="118" selection-start-column="37" selection-end-line="118" selection-end-column="37" />
           <folding>
             <element signature="e#33#383#0" expanded="false" />
-            <element signature="e#406#1020#0" expanded="false" />
             <element signature="e#1052#1757#0" expanded="false" />
             <element signature="e#2501#2812#0" expanded="false" />
-            <element signature="e#3543#3958#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/data/private.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/util/debug.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="16" lean-forward="false" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/tdt/scoreboard.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="481">
+          <caret line="85" column="93" lean-forward="true" selection-start-line="85" selection-start-column="93" selection-end-line="85" selection-end-column="93" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/util/storage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-114">
+          <caret line="37" column="39" lean-forward="false" selection-start-line="37" selection-start-column="33" selection-end-line="37" selection-end-column="39" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/tdt/tdt.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1564">
-          <caret line="100" column="81" lean-forward="false" selection-start-line="100" selection-start-column="81" selection-end-line="100" selection-end-column="81" />
+        <state relative-caret-position="-1474">
+          <caret line="27" column="37" lean-forward="true" selection-start-line="27" selection-start-column="37" selection-end-line="27" selection-end-column="37" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
@@ -874,16 +769,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/api/gw2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1734">
-          <caret line="104" column="25" lean-forward="false" selection-start-line="104" selection-start-column="25" selection-end-line="104" selection-end-column="25" />
-          <folding />
+        <state relative-caret-position="-845">
+          <caret line="45" column="27" lean-forward="true" selection-start-line="45" selection-start-column="27" selection-end-line="45" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/bot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="287" column="41" lean-forward="true" selection-start-line="287" selection-start-column="41" selection-end-line="287" selection-end-column="41" />
+        <state relative-caret-position="2742">
+          <caret line="302" column="31" lean-forward="true" selection-start-line="302" selection-start-column="31" selection-end-line="302" selection-end-column="31" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
             <element signature="e#340#1622#0" expanded="false" />

@@ -63,7 +63,7 @@ async def handle_message(client, message):
 
     # Add reactions to some messages
 
-    if 'treebs' in m or 'omega' in m:
+    if 'treebs' in m or 'omega' in m or 'leftovers' in m:
         debug.debug(debug.D_INFO, 'Treebs was here...')
         await client.add_reaction(message, 'treebs:235655554465398784')
 

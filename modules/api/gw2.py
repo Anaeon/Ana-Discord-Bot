@@ -102,7 +102,7 @@ fractal_names_by_scale = {
     '97': 'Thaumanova Reactor',
     '98': 'Chaos Isles',
     '99': 'Nightmare',
-    '100': 'Shattered Observatory',
+    '100': 'Shattered Obsaervatory',
 }
 
 
