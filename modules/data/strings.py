@@ -51,6 +51,7 @@ def give_point(mention):
         "Don't spend it all in one place. ;D",
         "Woooooow hooow speciaaaallll. *rolls eyes*",
         'Hurray!'
+		"Sweet Nibblets!"
         ])
 
 
