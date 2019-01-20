@@ -90,17 +90,17 @@ async def on_message_edit(before, after):
 async def on_message(message):  # when someone sends a message. Read command inputs here.
     # handled = True
     try:
-        debug.debug(debug.D_INFO, 'server: {}, id: {}'.format(message.server, message.server.id))
+        debug.debug(debug.D_INFO, 'S: [{}] {}'.format(message.server.id, message.server))
     except AttributeError as e:
         debug.debug(debug.D_ERROR, 'No server for DM\'s')
 
     try:
-        debug.debug(debug.D_INFO, 'channel: {}, id: {}'.format(message.channel, message.channel.id))
+        debug.debug(debug.D_INFO, 'C: [{}] {}'.format(message.channel.id, message.channel))
     except AttributeError as e:
         debug.debug(debug.D_ERROR, e)
 
-    debug.debug(debug.D_INFO, 'author: {}, id: {}'.format(message.author, message.author.id))
-    debug.debug(debug.D_INFO, 'message: {}'.format(message.content))
+    debug.debug(debug.D_INFO, 'U: [{}] {}'.format(message.author.id, message.author))
+    debug.debug(debug.D_INFO, 'M: {}'.format(message.content))
 
     # go ahead and check which server we're in
     is_tdt = False
@@ -285,7 +285,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
 
 
         # GIV DEM BITCHES SOME FOXES
-        if re.search('\\bfox(\\b|s)', m):
+        if re.search('\\bfox(\\b|s)', m): # Fold all of these into a big elif somehow.
             dir = 'C:/Users/Hayden/Dropbox/Ana Cache/fox'
             filename = random.choice([x for x in os.listdir(dir) if os.path.isfile(dir + "/" + x)])
             path = os.path.join(dir, filename)
@@ -293,9 +293,16 @@ async def on_message(message):  # when someone sends a message. Read command inp
                 try:
                     await client.send_file(message.channel, file)
                 except discord.HTTPException as e:
+                    # Check for what kind of exception it is before trying to move a file that doesn't exist
+                    # thereby raising another exception
                     await client.send_message(message.channel, e)
                     time.sleep(2)
                     await client.send_message(message.channel, 'Error encountered on file "{}/{}"'.format(dir, filename))
+                    # I want to have Ana move any files that are too large into the appropriate folder.
+                    await client.send_message(message.channel, 'Moving file to another folder to avoid the error.')
+                    await client.send_typing(message.channel)
+                    os.rename('{}/{}'.format(dir, filename), '{}/too big/{}'.format(dir, filename))
+                    await client.send_message(message.channel, 'File moved.')
 
         for mention in message.mentions:
             # handled = False
