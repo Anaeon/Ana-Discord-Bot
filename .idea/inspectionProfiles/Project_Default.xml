@@ -5,6 +5,7 @@
       <option name="ignoredIdentifiers">
         <list>
           <option value="discord.message.Message.*" />
+          <option value="discord" />
         </list>
       </option>
     </inspection_tool>

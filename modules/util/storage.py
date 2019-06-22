@@ -13,26 +13,26 @@ class NoSuchAttributeException(StorageException):
 
 def get_user_info(id):
     with shelve.open('data/user') as s:
-        existing = s[id]
+        existing = s[str(id)]
     return existing
 
 
 def get_user_attribute(id, key):
-    existing = get_user_info(id)
+    existing = get_user_info(str(id))
 
     return existing[key]
 
 
 def set_user_attribute(id, key, value):
     with shelve.open('data/user', writeback = True) as s:
-        if not id in s:
-            s[id] = {}
-        s[id][key] = value
+        if not str(id) in s:
+            s[str(id)] = {}
+        s[str(id)][key] = value
 
 
 def remove_user_attribute(id, key):
     with shelve.open('data/user', writeback = True) as s:
-        del s[id][key]
+        del s[str(id)][key]
 
 
 def get_attribute_for_users(key: object) -> object:
@@ -49,26 +49,26 @@ def get_attribute_for_users(key: object) -> object:
 
 def get_server_info(id):
     with shelve.open('data/server') as s:
-        existing = s[id]
+        existing = s[str(id)]
     return existing
 
 
 def get_server_attribute(id, key):
-    existing = get_server_info(id)
+    existing = get_server_info(str(id))
 
     return existing[key]
 
 
 def set_server_attribute(id, key, value):
     with shelve.open('data/server', writeback = True) as s:
-        if not id in s:
-            s[id] = {}
-        s[id][key] = value
+        if not str(id) in s:
+            s[str(id)] = {}
+        s[str(id)][key] = value
 
 
 def remove_server_attribute(id, key):
     with shelve.open('data/server', writeback = True) as s:
-        del s[id][key]
+        del s[str(id)][key]
 
 
 def get_attribute_for_servers(key):

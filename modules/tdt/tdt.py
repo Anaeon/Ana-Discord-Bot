@@ -5,17 +5,18 @@ from modules.api import gw2
 from modules.tdt import scoreboard
 from modules.util import storage
 from modules.util import debug
+from modules.util import send
 from modules.data import private
 from datetime import datetime
 
 
 async def handle_message(client, message):
 
-    # check if alloted points for the day should be reset yet.
+    # check if allotted points for the day should be reset yet.
     m = message.content.lower()
     try:
-        if datetime.now() > storage.get_server_attribute(message.server.id, 'next_pearl_point_reset_datetime'):
-            await client.send_message(message.channel, scoreboard.reset_points_to_give(message.server))
+        if datetime.now() > storage.get_server_attribute(message.guild.id, 'next_pearl_point_reset_datetime'):
+            await send.message(message.channel, scoreboard.reset_points_to_give(message.guild))
     except KeyError as e:
         debug.debug(debug.D_ERROR, e)
         x = datetime.today()  # today
@@ -31,15 +32,15 @@ async def handle_message(client, message):
                 else:
                     y = x.replace(year = x.year + 1, month = 1, day = 1, hour = 17, minute = 0, second = 0,
                                   microsecond = 0)
-        storage.set_server_attribute(message.server.id, 'next_pearl_point_reset_datetime', y)
-    debug.debug(debug.D_INFO, 'Time to next reset: {}'.format(
-        (storage.get_server_attribute(message.server.id, 'next_pearl_point_reset_datetime') - datetime.now())))
+        storage.set_server_attribute(message.guild.id, 'next_pearl_point_reset_datetime', y)
+    debug.debug(debug.D_VERBOSE, 'Time to next reset: {}'.format(
+        (storage.get_server_attribute(message.guild.id, 'next_pearl_point_reset_datetime') - datetime.now())))
     # if it's past that time, reset.
 
     # respond to solo fractal emote and give daily fractals
 
     if '<:fractals:230520375396532224>' in m:
-        await client.send_typing(message.channel)
+        # await client.send_typing(message.channel)
         response = '```haskell\nDaily Fractals:\n\n'
         t = ''
         r = ''
@@ -56,7 +57,7 @@ async def handle_message(client, message):
                 scale = re.split('Scale ', name)[1]
                 n = gw2.get_fractal_name(scale)
                 r = '{}scale: {} {}\n'.format(r, scale, n)
-        await client.send_message(message.channel, '{}{}\n{}\n```'.format(response, r, t))
+        await send.message(message.channel, '{}{}\n{}\n```'.format(response, r, t))
         # handled = True
 
     # end fractals
@@ -65,7 +66,7 @@ async def handle_message(client, message):
 
     if 'treebs' in m or 'omega' in m or 'leftovers' in m:
         debug.debug(debug.D_INFO, 'Treebs was here...')
-        await client.add_reaction(message, 'treebs:235655554465398784')
+        await send.reaction(message, 'treebs:235655554465398784')
 
     # End adding reactions
 
@@ -108,7 +109,7 @@ async def handle_message(client, message):
             # -- dailies --
 
             if re.search('\\bfractal(\\b|s)|\\bfric frac(\\b|s)', m):
-                await client.send_typing(message.server)
+                await client.send_typing(message.guild)
                 response = '```haskell\nToday\'s daily fractals:\n\n'
                 t = ''
                 r = ''
@@ -130,7 +131,7 @@ async def handle_message(client, message):
             # -- end dailies --
 
             # commands unique to myself
-            if message.author.id == private.anaeon_id:
+            if str(message.author.id) == private.anaeon_id:
                 if '!resetpearlpoints' in m:
                     response = scoreboard.reset_points(client, message)
                     # handled = True
@@ -138,16 +139,17 @@ async def handle_message(client, message):
                     response = scoreboard.init_points_to_give(message)
                     # handled = True
                 if '!resetpointstogive' in m:
-                    response = scoreboard.reset_points_to_give(message.server)
+                    response = scoreboard.reset_points_to_give(message.guild)
                     # handled = True
                 if '!changeattribute' in m:
                     args = m.split(',')
                     response = scoreboard.force_change_attribute(client, message, args[2].strip(), args[3].strip())
                     # handled = True
                 if '!let' in m:
-                    await client.send_message(message.channel, embed = scoreboard.get_top_points(use_embed = True))
+                    await send.message(message.channel, 'This command is broken. Please update.')
+                    # await send.message(message.channel, embed = scoreboard.get_top_points(use_embed = True))
 
             if response != '':
-                await client.send_message(message.channel, response)
+                await send.message(message.channel, response)
                 # handled = True
                 # end direct mention commands
