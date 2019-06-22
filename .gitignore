@@ -4,3 +4,4 @@
 *.bak
 modules/data/private.py
 __pycache__/
+.idea/workspace.xml

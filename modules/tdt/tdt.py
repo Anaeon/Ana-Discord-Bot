@@ -75,7 +75,7 @@ async def handle_message(client, message):
     # direct mention commands
 
     for mention in message.mentions:  # when someone is mentioned
-        debug.debug(debug.D_INFO, '{} was mentioned'.format(mention))
+        debug.debug(debug.D_VERBOSE, '{} was mentioned'.format(mention))
         if mention == client.user:  # if the bot is mentioned
             # handled = False
             response = ''

@@ -243,13 +243,11 @@ async def on_message(message):  # when someone sends a message. Read command inp
 
         # STUPID STUFF GOES HERE ============================
 
-        try:
+        if message.author.nick is not None:
             if 'duck' in message.author.nick.lower():
                 await send.message(message.channel, 'Quack.')
             if 'goose' in message.author.nick.lower():
                 await send.message(message.channel, 'Honk.')
-        except AttributeError as e:
-            debug.debug(debug.D_ERROR, 'Tried to find a fowl with no nick: {}'.format(e))
 
         for regex in strings.no_words_regex:
             debug.debug(debug.D_VERBOSE, 'Checking for {} in "{}".'.format(regex, m))
