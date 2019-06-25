@@ -14,7 +14,7 @@ fractal_names_by_scale = {
     '9': 'Molten Furnace',
     '10': 'Molten Boss',
     '11': 'Deepstone',
-    '12': 'Uncategorized',
+    '12': 'Siren\'s Reef',
     '13': 'Chaos Isles',
     '14': 'Aetherblade',
     '15': 'Thaumanova Reactor',
@@ -39,7 +39,7 @@ fractal_names_by_scale = {
     '34': 'Thaumanova Reactor',
     '35': 'Solid Ocean',
     '36': 'Uncategorized',
-    '37': 'Snowblind',
+    '37': 'Siren\'s Reef',
     '38': 'Chaos Isles',
     '39': 'Molten Furnace',
     '40': 'Molten Boss',
@@ -56,7 +56,7 @@ fractal_names_by_scale = {
     '51': 'Snowblind',
     '52': 'Volcanic',
     '53': 'Underground Facility',
-    '54': 'Chaos Isles',
+    '54': 'Siren\'s Reef',
     '55': 'Thaumanova Reactor',
     '56': 'Swampland',
     '57': 'Urban Battleground',
@@ -80,7 +80,7 @@ fractal_names_by_scale = {
     '75': 'Shattered Observatory',
     '76': 'Aquatic Ruins',
     '77': 'Swampland',
-    '78': 'Urban Battleground',
+    '78': 'Siren\'s Reef',
     '79': 'Uncategorized',
     '80': 'Solid Ocean',
     '81': 'Underground Facility',
@@ -130,4 +130,10 @@ def get_achievement_names(ids):
 
 
 def get_fractal_name(scale):
+    """
+    Returns the name of the fractal at the given scale.
+    :param scale: The scale of the fractal.
+    :type scale: int
+    :return: An array containing the name and instabilities of the fractal.
+    """
     return fractal_names_by_scale[scale]

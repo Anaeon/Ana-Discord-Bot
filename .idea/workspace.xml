@@ -16,10 +16,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="259">
-              <caret line="301" column="37" selection-start-line="301" selection-start-column="37" selection-end-line="301" selection-end-column="37" />
+            <state relative-caret-position="290">
+              <caret line="298" lean-forward="true" selection-start-line="298" selection-end-line="298" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
+                <element signature="e#370#1612#0" />
+                <element signature="e#1655#1942#0" />
+                <element signature="e#2005#2803#0" />
               </folding>
             </state>
           </provider>
@@ -49,8 +52,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/api/gw2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1475">
-              <caret column="10" selection-start-column="10" selection-end-column="10" />
+            <state relative-caret-position="366">
+              <caret line="77" column="34" lean-forward="true" selection-start-line="77" selection-start-column="34" selection-end-line="77" selection-end-column="34" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -153,13 +159,13 @@
         <option value="$PROJECT_DIR$/modules/api/trump.py" />
         <option value="$PROJECT_DIR$/modules/tdt/scoreboard.py" />
         <option value="$PROJECT_DIR$/modules/data/strings.py" />
-        <option value="$PROJECT_DIR$/modules/api/gw2.py" />
         <option value="$PROJECT_DIR$/modules/util/message.py" />
         <option value="$PROJECT_DIR$/modules/util/msg.py" />
         <option value="$PROJECT_DIR$/modules/util/storage.py" />
         <option value="$PROJECT_DIR$/modules/util/send.py" />
-        <option value="$PROJECT_DIR$/bot.py" />
         <option value="$PROJECT_DIR$/modules/tdt/tdt.py" />
+        <option value="$PROJECT_DIR$/bot.py" />
+        <option value="$PROJECT_DIR$/modules/api/gw2.py" />
       </list>
     </option>
   </component>
@@ -318,13 +324,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/api/gw2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1475">
-          <caret column="10" selection-start-column="10" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/api/trump.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -378,12 +377,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/api/gw2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="366">
+          <caret line="77" column="34" lean-forward="true" selection-start-line="77" selection-start-column="34" selection-end-line="77" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/bot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="301" column="37" selection-start-line="301" selection-start-column="37" selection-end-line="301" selection-end-column="37" />
+        <state relative-caret-position="290">
+          <caret line="298" lean-forward="true" selection-start-line="298" selection-end-line="298" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#370#1612#0" />
+            <element signature="e#1655#1942#0" />
+            <element signature="e#2005#2803#0" />
           </folding>
         </state>
       </provider>

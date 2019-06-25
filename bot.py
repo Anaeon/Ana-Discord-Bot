@@ -30,7 +30,7 @@ async def send_talk(_svr, _ch, msg):
 
     if not svr_found:  # if the bot is not part of the server or the server can't be found, say so
         await send.message(client.get_channel(private.anaeon_dm_id),
-                                  'No server found with name {}.'.format(_svr))
+                           'No server found with name {}.'.format(_svr))
     elif svr_found:  # else, try to slot in the channel
         ch = ''
         ch_found = False
@@ -41,7 +41,7 @@ async def send_talk(_svr, _ch, msg):
 
         if not ch_found:  # if the bot can't find the channel in the server, say so
             await send.message(client.get_channel(private.anaeon_dm_id),
-                                      'No channel found with name {}.'.format(_ch))
+                               'No channel found with name {}.'.format(_ch))
         elif ch_found:  # else, go ahead and format the message and send it to the channel.
             if msg == '':
                 await send.message(client.get_channel(private.anaeon_dm_id), 'I can\'t send a blank message.')
@@ -49,12 +49,38 @@ async def send_talk(_svr, _ch, msg):
                 await send.message(ch, msg)
 
 
+async def send_animal(message, animal):
+    """
+    Sends a random image of the given animal to the channel.
+    :param message: The message that caused this to run.
+    :type message: discord.Message
+    :param animal: A string representing the name of the animal to send.
+    :type animal: str
+    """
+    d = 'D:/Users/Anaeon/Dropbox/Ana Cache/{}'.format(animal)
+    filename = random.choice([x for x in os.listdir(d) if os.path.isfile(d + "/" + x)])
+    path = os.path.join(d, filename)
+    with open(path, 'rb') as file:
+        try:
+            await send.file(message.channel, discord.File(file))
+        except discord.HTTPException as e:
+            # Check for what kind of exception it is before trying to move a file that doesn't exist
+            # thereby raising another exception
+            await send.message(message.channel, e)
+            time.sleep(2)
+            await send.message(message.channel, 'Error encountered on file "{}/{}"'.format(d, filename))
+            # I want to have Ana move any files that are too large into the appropriate folder.
+            await send.message(message.channel, 'Moving file to another folder to avoid the error.')
+            await client.send_typing(message.channel)
+            os.rename('{}/{}'.format(d, filename), '{}/too big/{}'.format(d, filename))
+            await send.message(message.channel, 'File moved.')
+
 @client.event
 async def on_ready():
     print('Logged in as')
     print(client.user.name)
     print(client.user.id)
-    await client.change_presence(activity = discord.Activity(name="with quantum strings."))
+    await client.change_presence(activity=discord.Activity(name="with quantum strings."))
     print('------')
     print(discord.__version__)
     print('------')
@@ -192,41 +218,41 @@ async def on_message(message):  # when someone sends a message. Read command inp
                 if '!debugon' in m:
                     if debug.DEBUG:
                         await send.message(message.channel, 'Debug was already active.')
-                        
+
                     elif not debug.DEBUG:
                         debug.DEBUG = True
                         await send.message(message.channel, 'Debug is now active at {} level.'.format(
                             debug.D_HEADER[debug.D_CURRENT_LEVEL]))
-                        
+
                 if '!debugoff' in m:
                     if debug.DEBUG:
                         debug.DEBUG = False
                         await send.message(message.channel, 'Debug is now off.')
-                        
+
                     elif not debug.DEBUG:
                         await send.message(message.channel, 'Debug was already off.')
-                        
+
                 if '!debuglevel' in m:
                     if re.search('\\b0\\b|error', m):
                         debug.D_CURRENT_LEVEL = debug.D_ERROR
                         await send.message(message.channel, 'Now logging debug at ERROR level.')
-                        
+
                     elif re.search('\\b1\\b|info', m):
                         debug.D_CURRENT_LEVEL = debug.D_INFO
                         await send.message(message.channel, 'Now logging debug at INFO level and below.')
-                        
+
                     elif re.search('\\b2\\b|verbose', m):
                         debug.D_CURRENT_LEVEL = debug.D_VERBOSE
                         await send.message(message.channel, 'Now logging debug at VERBOSE level and below.')
 
                 if '!embedtest' in m:
-                    embed = discord.Embed(title = '', color = ANA_COLOR)
-                    embed.set_author(name = 'Test Author Name')
-                    embed.add_field(name = 'Test Field 1', value = 'Test Value')
-                    embed.add_field(name = 'Test Field 2', value = 's;laksdfj')
-                    embed.add_field(name = 'Multi-line', value = 'other\nstuff', inline = True)
-                    embed.set_footer(text = 'Test Footer Text')
-                    await send.message(message.channel, embed = embed)
+                    embed = discord.Embed(title='', color=ANA_COLOR)
+                    embed.set_author(name='Test Author Name')
+                    embed.add_field(name='Test Field 1', value='Test Value')
+                    embed.add_field(name='Test Field 2', value='s;laksdfj')
+                    embed.add_field(name='Multi-line', value='other\nstuff', inline=True)
+                    embed.set_footer(text='Test Footer Text')
+                    await send.message(message.channel, embed=embed)
 
                 if '!status' in m:
                     g = re.search('(?<=game=).+', m).group(0)
@@ -257,7 +283,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
                 r = strings.no_words_response
                 response = (r[random.randint(1, len(r)) - 1])
                 await send.message(message.channel, response)
-                
+
                 time.sleep(2)
 
         if re.search('\\bfag(\\b|s)|\\bfaggot(\\b|s)|\\bfaggotry\\b|\\bgay(\\b|s)|\\bga{2,99}y(\\b|s)|\\blgbt\\b', m):
@@ -267,49 +293,16 @@ async def on_message(message):  # when someone sends a message. Read command inp
             except discord.errors.HTTPException as e:
                 debug.debug(debug.D_ERROR, e)
 
-        # TODO: These two things essentially do the same thing, but with variable input... try to collapse them into
-        #  a fallthrough or make a method.
         # GIV DEM BITCHES SOME LIZARDS
         if re.search('\\blizard(\\b|s)', m):
-            d = 'D:/Users/Anaeon/Dropbox/Ana Cache/lizard'
-            filename = random.choice([x for x in os.listdir(d) if os.path.isfile(d + "/" + x)])
-            path = os.path.join(d, filename)
-            with open(path, 'rb') as file:
-                try:
-                    await send.file(message.channel, discord.File(file))
-                except discord.HTTPException as e:
-                    await send.message(message.channel, e)
-                    time.sleep(2)
-                    await send.message(message.channel, 'Error encountered on file "{}/{}"'.format(d, filename))
-                    # I want to have Ana move any files that are too large into the appropriate folder.
-                    await send.message(message.channel, 'Moving file to another folder to avoid the error.')
-                    await client.send_typing(message.channel)
-                    os.rename('{}/{}'.format(d, filename), '{}/too big/{}'.format(d, filename))
-                    await send.message(message.channel, 'File moved.')
-
+            await send_animal(message, 'lizard')
 
         # GIV DEM BITCHES SOME FOXES
-        if re.search('\\bfox(\\b|s)', m): # Fold all of these into a big elif somehow.
-            d = 'D:/Users/Anaeon/Dropbox/Ana Cache/fox'
-            filename = random.choice([x for x in os.listdir(d) if os.path.isfile(d + "/" + x)])
-            path = os.path.join(d, filename)
-            with open(path, 'rb') as file:
-                try:
-                    await send.file(message.channel, discord.File(file))
-                except discord.HTTPException as e:
-                    # Check for what kind of exception it is before trying to move a file that doesn't exist
-                    # thereby raising another exception
-                    await send.message(message.channel, e)
-                    time.sleep(2)
-                    await send.message(message.channel, 'Error encountered on file "{}/{}"'.format(d, filename))
-                    # I want to have Ana move any files that are too large into the appropriate folder.
-                    await send.message(message.channel, 'Moving file to another folder to avoid the error.')
-                    await client.send_typing(message.channel)
-                    os.rename('{}/{}'.format(d, filename), '{}/too big/{}'.format(d, filename))
-                    await send.message(message.channel, 'File moved.')
+        if re.search('\\bfox(\\b|s)', m):  # Fold all of these into a big elif somehow.
+            await send_animal(message, 'fox')
 
         for mention in message.mentions:
-            
+
             if mention == client.user:
                 if 'anal' in m:
                     r = [
@@ -319,7 +312,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
                     ]
                     response = (r[random.randint(1, len(r)) - 1])
                     await send.message(message.channel, response)
-                    
+
                 if 'suck' in m:
                     r = [
                         'Sorry, {}, I\'m not scripted for that kind of thing...'.format(message.author.mention),
@@ -328,7 +321,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
                     ]
                     response = (r[random.randint(1, len(r)) - 1])
                     await send.message(message.channel, response)
-                    
+
                 if 'lick' in m:
                     r = [
                         'I don\'t exactly have a tongue, {}...'.format(message.author.mention),
@@ -338,14 +331,13 @@ async def on_message(message):  # when someone sends a message. Read command inp
                     ]
                     response = (r[random.randint(1, len(r)) - 1])
                     await send.message(message.channel, response)
-                    
+
                 if 'smash or pass' in m:
                     await send.message(message.channel, random.choice(['smash', 'pass']))
-                    
 
-        # END STUPID STUFF =================================
+                # END STUPID STUFF =================================
 
-        # SIMPLE RESPONSES =================================
+                # SIMPLE RESPONSES =================================
 
                 if re.search('\\bthank(\\b|s)', m):
                     await send.message(message.channel, strings.youre_welcome(message))
@@ -361,7 +353,6 @@ async def on_message(message):  # when someone sends a message. Read command inp
 
         if is_tdt:
             await tdt.handle_message(client, message)
-
 
         # @client.event
         # async def on_reaction_add(reaction, user): # when someone adds a reaction?
