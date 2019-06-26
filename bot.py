@@ -3,7 +3,6 @@ import time
 import random
 import re
 import os
-import logging as log
 
 from modules.tdt import tdt
 from modules.util import debug
@@ -115,19 +114,15 @@ async def on_message_edit(before, after):
 
 @client.event
 async def on_message(message):  # when someone sends a message. Read command inputs here.
-    m_guild = 'Unkown'
-    m_channel = 'Unkown'
-    try:
+    m_guild = 'Unknown'
+    m_channel = 'Unknown'
+    if message.guild is not None:
         m_guild = str(message.guild)
-    except AttributeError as e:
-        m_guild = 'Direct Message'
 
-    try:
+    if message.channel is not None:
         m_channel = str(message.channel)
-    except AttributeError as e:
-        debug.debug(debug.D_ERROR, e)
 
-    debug.debug(debug.D_INFO, '[{}][{}][{}] {}'.format(m_guild, m_channel, message.author, message.content))
+    debug.debug(debug.D_INFO, '[{}][{}][{}]:{}'.format(m_guild, m_channel, message.author, message.content))
 
     # go ahead and check which server we're in
     is_tdt = False
