@@ -3,18 +3,18 @@ import time
 import random
 import re
 import os
+import asyncio
+import hashlib
 
 from modules.tdt import tdt
 from modules.util import debug
 from modules.data import strings
 from modules.data import private
+from modules.data import misc
 from modules.api import trump
 from modules.util import send
 
 client = discord.Client()
-
-ANA_COLOR = int('4408a3', 16)
-
 
 async def send_talk(_svr, _ch, msg):
     """Sends a custom message to a specific server."""
@@ -56,7 +56,7 @@ async def send_animal(message, animal):
     :param animal: A string representing the name of the animal to send.
     :type animal: str
     """
-    d = 'D:/Users/Anaeon/Dropbox/Ana Cache/{}'.format(animal)
+    d = '{}{}{}'.format(misc.CACHE_DIRECTORY, 'images/', animal)
     filename = random.choice([x for x in os.listdir(d) if os.path.isfile(d + "/" + x)])
     path = os.path.join(d, filename)
     with open(path, 'rb') as file:
@@ -74,6 +74,38 @@ async def send_animal(message, animal):
             os.rename('{}/{}'.format(d, filename), '{}/too big/{}'.format(d, filename))
             await send.message(message.channel, 'File moved.')
 
+
+async def makemd5hash(_dir, fn):
+    dat = open(_dir + '/' + fn, 'r+b')
+    ext = fn.split('.')[-1]
+    md5hashname = hashlib.md5(dat.read()).hexdigest()
+    dat.close()
+    debug.debug(debug.D_VERBOSE, 'Checking ' + fn)
+    if fn == md5hashname + '.' + ext:
+        debug.debug(debug.D_VERBOSE, 'File is already hashed... skipping.')
+    elif fn is not md5hashname + '.' + ext:
+        debug.debug(debug.D_VERBOSE, 'Hashing file...')
+        os.rename(_dir + '/' + fn, _dir + '/' + md5hashname + '.' + ext)
+
+
+async def hashimages():
+    debug.debug(debug.D_INFO, 'Hashing image files.')
+    d = '{}{}'.format(misc.CACHE_DIRECTORY, 'images/')
+    for _dir in os.listdir(d):
+        for fn in os.listdir(d + '/' + _dir):
+            if os.path.isfile(d + '/' + _dir + '/' + fn):
+                await makemd5hash(d + _dir, fn)
+
+@client.event
+async def on_connect():
+    print('Connected')
+
+
+@client.event
+async def on_disconnect():
+    print('Disconnected')
+
+
 @client.event
 async def on_ready():
     print('Logged in as')
@@ -84,6 +116,12 @@ async def on_ready():
     print(discord.__version__)
     print('------')
     print('debug.DEBUG: {}'.format(debug.DEBUG))
+
+    await hashimages()
+
+    asyncloop = asyncio.get_event_loop()
+
+    await tdt.on_ready(client, asyncloop)
 
 
 @client.event
@@ -104,7 +142,7 @@ async def on_message_edit(before, after):
     # handle sneaky no_words
     for regex in strings.no_words_regex:
         if re.search(regex, a_m):
-            debug.debug(debug.D_INFO, 'A unacceptable word was used... attemting to delete it.')
+            debug.debug(debug.D_INFO, 'A unacceptable word was used... attempting to delete it.')
             await send.message(after.channel, 'Noooo... nice try though.')
 
     # handle edited tdt commands
@@ -150,12 +188,18 @@ async def on_message(message):  # when someone sends a message. Read command inp
 
         if re.search('\\broll\\b', m):
             sm = m.replace(' ', '')
+            sresult = re.search('(?<=roll)*\d+d\d+', sm)
             if re.search('d\d+', sm):
-                try:
-                    roll = re.search('(?<=roll)*\d+d\d+', sm).group(0)
-                except:
-                    roll = re.search('(?<=roll)*d\d+', sm).group(0)
+                if sresult is None:
+                    sresult = re.search('(?<=roll)*d\d+', sm)
+                if sresult is None:
                     pass
+                roll = sresult.group(0)
+                # try:
+                #    roll = re.search('(?<=roll)*\d+d\d+', sm).group(0)
+                # except:
+                #    roll = re.search('(?<=roll)*d\d+', sm).group(0)
+                #    pass
                 debug.debug(debug.D_INFO, 'roll == {}'.format(roll))
                 request = roll.split('d', 1)
                 rolls = 1
@@ -240,8 +284,12 @@ async def on_message(message):  # when someone sends a message. Read command inp
                         debug.D_CURRENT_LEVEL = debug.D_VERBOSE
                         await send.message(message.channel, 'Now logging debug at VERBOSE level and below.')
 
+                    elif re.search('\\b3\\b|vomit', m):
+                        debug.D_CURRENT_LEVEL = debug.D_VOMIT
+                        await send.message(message.channel, 'Now logging EVERYTHING.')
+
                 if '!embedtest' in m:
-                    embed = discord.Embed(title='', color=ANA_COLOR)
+                    embed = discord.Embed(title='', color=misc.ANA_COLOR)
                     embed.set_author(name='Test Author Name')
                     embed.add_field(name='Test Field 1', value='Test Value')
                     embed.add_field(name='Test Field 2', value='s;laksdfj')
@@ -258,20 +306,27 @@ async def on_message(message):  # when someone sends a message. Read command inp
                     # await client.change_status(game=g_obj) # depricated
                     debug.debug(debug.D_VERBOSE, 'POST-AWAIT THING')
 
+                if '!cleanimagecache' in m:
+                    await send.message(message.channel, 'Cleaning up my image cache...')
+                    await hashimages()
+                    await send.message(message.channel, 'Done.')
+
         # end basic personal commands
 
         # end general stuff
 
         # STUPID STUFF GOES HERE ============================
 
-        if message.author.nick is not None:
+        if hasattr(message.author, 'nick') and message.author.nick is not None:
             if 'duck' in message.author.nick.lower():
                 await send.message(message.channel, 'Quack.')
             if 'goose' in message.author.nick.lower():
                 await send.message(message.channel, 'Honk.')
+            if 'fox' in message.author.nick.lower():
+                await send.message(message.channel, 'Yiff.')
 
         for regex in strings.no_words_regex:
-            debug.debug(debug.D_VERBOSE, 'Checking for {} in "{}".'.format(regex, m))
+            debug.debug(debug.D_VOMIT, 'Checking for {} in "{}".'.format(regex, m))
             if re.search(regex, m):
                 debug.debug(debug.D_INFO, 'A unacceptable word was used... attempting to delete it.')
                 # await client.delete_message(message)
@@ -294,7 +349,10 @@ async def on_message(message):  # when someone sends a message. Read command inp
 
         # GIV DEM BITCHES SOME FOXES
         if re.search('\\bfox(\\b|s)', m):  # Fold all of these into a big elif somehow.
-            await send_animal(message, 'fox')
+            await send_animal(message, 'fox')  # No, because an elif would mean it can't catch multiple in the same msg.
+        # HONK
+        if re.search('\\bhonk\\b', m):
+            await send_animal(message, 'goose')
 
         for mention in message.mentions:
 
@@ -352,6 +410,11 @@ async def on_message(message):  # when someone sends a message. Read command inp
         # @client.event
         # async def on_reaction_add(reaction, user): # when someone adds a reaction?
         # do nothing
+
+
+@client.event
+async def on_exit():
+    pass
 
 
 client.run(private.token)

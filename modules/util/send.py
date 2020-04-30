@@ -1,11 +1,13 @@
-async def message(channel, message):
+async def message(channel, msg='', embed=None):
     """
     Default function for sending messages. Encapsulates the API function call for easy updating.
     :type channel: discord.TextChannel
-    :type message: str
+    :type msg: str
     """
-
-    await channel.send(message)
+    if embed is None:
+        await channel.send(msg)
+    else:
+        await channel.send(embed=embed)
 
 
 async def reaction(message, reaction):
@@ -19,7 +21,13 @@ async def reaction(message, reaction):
 
 
 async def file(channel, input_file):
-
+    """
+    Default function for sending a file.
+    :param channel: The Channel to send the file to.
+    :param input_file: The file itself
+    :type channel: discord.Channel
+    :type input_file: discord.File
+    """
     await channel.send(file=input_file)
 
 

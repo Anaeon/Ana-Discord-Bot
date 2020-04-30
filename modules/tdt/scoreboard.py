@@ -4,7 +4,7 @@ import calendar
 
 import discord
 
-from modules.data import strings
+from modules.data import strings, misc
 from modules.util import storage
 from modules.util import debug
 
@@ -221,7 +221,7 @@ def get_top_points(use_embed = False):
             response = '{0}{1}:[{2}] - <@{3}>\n'.format(response, i + 1, p['pearl_points'], p['id'])
         return response
     elif use_embed:
-        embed = discord.Embed(title = 'Leaderboard', color = int('00ff00', 16))
+        embed = discord.Embed(title = 'Leaderboard', color = misc.ANA_COLOR, footer='This is in beta testing.')
         # embed.set_author(name = 'Test Author Name')
         pos = ''
         pts = ''
@@ -230,10 +230,11 @@ def get_top_points(use_embed = False):
             pos = '{}{}\n'.format(pos, str(i + 1))
             pts = '{}{}\n'.format(pts, p['pearl_points'])
             plr = '{}<@{}>\n'.format(plr, p['id'])
-        embed.add_field(name = 'User', value = plr)
-        embed.add_field(name = 'Pts', value = pts)
-        embed.add_field(name = 'Pos.', value = pos)
+        embed.add_field(name='#', value=pos, inline=True)
+        embed.add_field(name='Pts', value=pts, inline=True)
+        embed.add_field(name='User', value=plr, inline=True)
         return embed
+
 
 def force_change_attribute(client, message, attribute_name, value):
     """Changes the target users attribute by the given amount."""
