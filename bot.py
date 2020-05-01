@@ -115,7 +115,7 @@ async def on_ready():
     print(client.user.id)
     await client.change_presence(activity=discord.Activity(name="with quantum strings."))
     print('------')
-    print(discord.__version__)
+    print('Wrapper version: ' + discord.__version__)
     print('------')
     print('debug.DEBUG: {}'.format(debug.DEBUG))
 
@@ -125,7 +125,6 @@ async def on_ready():
 
     await tdt.on_ready(client, asyncloop)
     debug.on_ready()
-    print(discord.__file__)
 
 
 @client.event
@@ -164,7 +163,8 @@ async def on_message(message):  # when someone sends a message. Read command inp
     if message.channel is not None:
         m_channel = str(message.channel)
 
-    debug.debug(debug.D_INFO, '[{}][{}][{}]:{}'.format(m_guild, m_channel, message.author, message.content))
+    debug.debug(debug.D_INFO, '[G:{}][C:{}][A:{}]:{}'.format(m_guild, m_channel, message.author, message.content))
+    debug.debug(debug.D_VERBOSE, '[G:{}][C:{}][A:{}]'.format(message.guild.id, message.channel.id, message.author.id))
 
     # go ahead and check which server we're in
     is_tdt = False

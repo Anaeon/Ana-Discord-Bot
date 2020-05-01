@@ -2,6 +2,7 @@ import re
 import calendar
 import asyncio
 import time
+import discord
 
 from modules.api import gw2
 from modules.tdt import scoreboard
@@ -16,16 +17,20 @@ import threading
 _guild = None
 _gen_channel = None
 _bot_channel = None
+update_loop = None
 
 
 async def update():
+    global _guild
+    global _gen_channel
     debug.debug(debug.D_VOMIT, 'Staring TDT update coroutine...')
     while True:
         debug.debug(debug.D_VOMIT, 'TDT Updating.')
         try:
             _now = datetime.now()
             _next = storage.get_server_attribute(_guild.id, 'next_pearl_point_reset_datetime')
-            debug.debug(debug.D_VERBOSE, 'Current time: {} Next reset: {}'.format(_now.strftime(), _next.strftime()))
+            debug.debug(debug.D_VERBOSE, 'Current time: {} Next reset: {}'.format(
+                _now.strftime('%H:%M:%S'), _next.strftime('%H:%M:%S')))
             if _now > _next:
                 await send.message(_gen_channel, scoreboard.reset_points_to_give(_guild))
         except KeyError as e:
@@ -44,6 +49,8 @@ async def update():
                         y = x.replace(year=x.year + 1, month=1, day=1, hour=17, minute=0, second=5,
                                       microsecond=0)
             storage.set_server_attribute(_guild.id, 'next_pearl_point_reset_datetime', y)
+        except AttributeError as e:
+            debug.debug(debug.D_ERROR, e)
         debug.debug(debug.D_VERBOSE, 'Time to next reset: {}'.format(
             (storage.get_server_attribute(_guild.id, 'next_pearl_point_reset_datetime') - datetime.now())))
     # if it's past that time, reset.
@@ -65,9 +72,10 @@ async def on_ready(client, loop):
     global _gen_channel
     global _bot_channel
     global _guild
+    global update_loop
 
     for server in client.guilds:
-        if server.name == 'The Digital Table +':
+        if server.id == private.tdt_server_id:
             _guild = server
             for channel in server.channels:
                 if channel.name == 'general':
@@ -75,11 +83,11 @@ async def on_ready(client, loop):
                 elif channel.name == 'bot-test-chat':
                     _bot_channel = channel
     update_loop = asyncio.run_coroutine_threadsafe(update(), loop=loop)
-    print(update_loop)
     debug.debug(debug.D_INFO, 'TDT+ initialized')
 
 
 async def handle_message(client, message):
+    global update_loop
 
     m = message.content.lower()
 
@@ -110,8 +118,9 @@ async def handle_message(client, message):
     # Add reactions to some messages
 
     if 'treebs' in m or 'omega' in m or 'leftovers' in m:
+        r = discord.Reaction(emoji='treebs:235655554465398784')
         debug.debug(debug.D_INFO, 'Treebs was here...')
-        await send.reaction(message, 'treebs:235655554465398784')
+        await send.reaction(message, r)
 
     # End adding reactions
 
@@ -202,5 +211,4 @@ async def handle_message(client, message):
 
 
 async def on_exit():
-
     pass
