@@ -19,6 +19,7 @@ _bot_channel = None
 
 
 async def update():
+    debug.debug(debug.D_VOMIT, 'Staring TDT update coroutine...')
     while True:
         debug.debug(debug.D_VOMIT, 'TDT Updating.')
         try:
@@ -183,7 +184,7 @@ async def handle_message(client, message):
                 if '!initpearlpoints' in m:
                     response = scoreboard.init_points_to_give(message)
                     # handled = True
-                if '!resetpointstogive' in m:
+                if '!resetpointstogive' in m:  # forces daily-like reset.
                     response = scoreboard.reset_points_to_give(message.guild)
                     # handled = True
                 if '!changeattribute' in m:

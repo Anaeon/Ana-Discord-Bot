@@ -1,4 +1,5 @@
 import inspect
+from modules.util import storage
 from datetime import datetime
 
 DEBUG = True
@@ -11,6 +12,13 @@ D_CURRENT_LEVEL = 2
 D_HEADER = ['ERROR', 'INFO', 'VERBOSE', 'VOMIT']
 
 
+def on_ready():
+    try:
+        debug.D_CURRENT_LEVEL = storage.load_server_setting('debug_level')
+    except KeyError as e:
+        pass
+
+
 def debug(l, s):
     # _frame = inspect.currentframe()
     # caller = inspect.getframeinfo(_frame)[0]
@@ -20,3 +28,8 @@ def debug(l, s):
         if l <= D_CURRENT_LEVEL:
             print('[{}][{}] {}'.format(time, D_HEADER[l], s))
     # del _frame
+
+
+def on_exit():
+    storage.save_server_setting('debug_level', D_CURRENT_LEVEL)
+

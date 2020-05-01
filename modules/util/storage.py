@@ -10,6 +10,21 @@ class NoSuchAttributeException(StorageException):
     """exception raised when an attribute doesn't exist"""
     pass
 
+class NoSuchSettingException(StorageException):
+    """Exception raised when the loaded setting doesn't exist."""
+    pass
+
+
+def load_server_setting(setting):
+    with shelve.open('data/settings') as s:
+        setting = s[str(setting)]
+    return setting
+
+
+def save_server_setting(setting, val):
+    with shelve.open('data/settings', writeback=True) as s:
+        s[str(setting)] = str(val)
+
 
 def get_user_info(id):
     with shelve.open('data/user') as s:

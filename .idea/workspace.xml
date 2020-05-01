@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="65ca18fc-8218-4a01-be52-b7d045eb3793" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/tdt/scoreboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/tdt/scoreboard.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/tdt/tdt.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/tdt/tdt.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/util/debug.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/util/debug.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/util/send.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/util/send.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/util/storage.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/util/storage.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,11 +15,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="663">
-              <caret line="288" column="86" selection-start-line="288" selection-start-column="86" selection-end-line="288" selection-end-column="86" />
+            <state relative-caret-position="658">
+              <caret line="416" column="20" lean-forward="true" selection-start-line="416" selection-start-column="20" selection-end-line="416" selection-end-column="20" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
                 <element signature="e#363#1603#0" />
@@ -42,11 +40,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/modules/tdt/tdt.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1161">
-              <caret line="22" column="51" selection-start-line="22" selection-start-column="51" selection-end-line="22" selection-end-column="51" />
+            <state relative-caret-position="502">
+              <caret line="186" column="47" selection-start-line="186" selection-start-column="47" selection-end-line="186" selection-end-column="47" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -85,10 +83,18 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/tdt/scoreboard.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3808">
-              <caret line="245" column="29" selection-start-line="245" selection-start-column="29" selection-end-line="245" selection-end-column="29" />
+            <state relative-caret-position="867">
+              <caret line="238" column="67" selection-start-line="238" selection-start-column="67" selection-end-line="238" selection-end-column="67" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
+                <element signature="e#268#1087#0" />
+                <element signature="e#1128#2917#0" />
+                <element signature="e#2966#3531#0" />
+                <element signature="e#3572#5746#0" />
+                <element signature="e#5787#7892#0" />
+                <element signature="e#7933#8691#0" />
+                <element signature="e#9391#10325#0" />
+                <element signature="e#10399#11484#0" />
               </folding>
             </state>
           </provider>
@@ -97,8 +103,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/util/debug.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="19" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
+            <state relative-caret-position="578">
+              <caret line="34" selection-start-line="34" selection-end-line="34" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -109,8 +115,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/util/storage.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1190">
-              <caret line="70" column="21" selection-start-line="70" selection-start-column="21" selection-end-line="70" selection-end-column="21" />
+            <state relative-caret-position="323">
+              <caret line="25" column="34" lean-forward="true" selection-start-line="25" selection-start-column="34" selection-end-line="25" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -159,23 +165,22 @@
         <option value="$PROJECT_DIR$/modules/data/strings.py" />
         <option value="$PROJECT_DIR$/modules/util/message.py" />
         <option value="$PROJECT_DIR$/modules/util/msg.py" />
-        <option value="$PROJECT_DIR$/modules/util/storage.py" />
         <option value="$PROJECT_DIR$/modules/api/gw2.py" />
         <option value="$PROJECT_DIR$/Gui.py" />
         <option value="$PROJECT_DIR$/bot-classed.py" />
         <option value="$PROJECT_DIR$/modules/util/send.py" />
         <option value="$PROJECT_DIR$/modules/tdt/scoreboard.py" />
         <option value="$PROJECT_DIR$/modules/data/misc.py" />
+        <option value="$PROJECT_DIR$/modules/util/storage.py" />
+        <option value="$PROJECT_DIR$/bot.py" />
         <option value="$PROJECT_DIR$/modules/util/debug.py" />
         <option value="$PROJECT_DIR$/modules/tdt/tdt.py" />
-        <option value="$PROJECT_DIR$/bot.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
-    <option name="x" value="496" />
-    <option name="y" value="5" />
-    <option name="width" value="1406" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="960" />
+    <option name="width" value="960" />
     <option name="height" value="1040" />
   </component>
   <component name="ProjectView">
@@ -266,7 +271,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="496" y="5" width="1406" height="1040" extended-state="1" />
+    <frame x="960" y="0" width="960" height="1040" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.23919916" />
@@ -364,13 +369,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/util/storage.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1190">
-          <caret line="70" column="21" selection-start-line="70" selection-start-column="21" selection-end-line="70" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Gui.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -395,16 +393,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/tdt/scoreboard.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3808">
-          <caret line="245" column="29" selection-start-line="245" selection-start-column="29" selection-end-line="245" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/data/misc.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -412,36 +400,61 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/util/debug.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="19" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/tdt/tdt.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1161">
-          <caret line="22" column="51" selection-start-line="22" selection-start-column="51" selection-end-line="22" selection-end-column="51" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="288" column="86" selection-start-line="288" selection-start-column="86" selection-end-line="288" selection-end-column="86" />
+        <state relative-caret-position="658">
+          <caret line="416" column="20" lean-forward="true" selection-start-line="416" selection-start-column="20" selection-end-line="416" selection-end-column="20" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
             <element signature="e#363#1603#0" />
             <element signature="e#1650#2985#0" />
             <element signature="e#3041#3528#0" />
             <element signature="e#3540#3847#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/util/debug.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="34" selection-start-line="34" selection-end-line="34" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/util/storage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="25" column="34" lean-forward="true" selection-start-line="25" selection-start-column="34" selection-end-line="25" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/tdt/scoreboard.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="867">
+          <caret line="238" column="67" selection-start-line="238" selection-start-column="67" selection-end-line="238" selection-end-column="67" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+            <element signature="e#268#1087#0" />
+            <element signature="e#1128#2917#0" />
+            <element signature="e#2966#3531#0" />
+            <element signature="e#3572#5746#0" />
+            <element signature="e#5787#7892#0" />
+            <element signature="e#7933#8691#0" />
+            <element signature="e#9391#10325#0" />
+            <element signature="e#10399#11484#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/tdt/tdt.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="502">
+          <caret line="186" column="47" selection-start-line="186" selection-start-column="47" selection-end-line="186" selection-end-column="47" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>

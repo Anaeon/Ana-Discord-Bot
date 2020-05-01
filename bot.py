@@ -122,6 +122,7 @@ async def on_ready():
     asyncloop = asyncio.get_event_loop()
 
     await tdt.on_ready(client, asyncloop)
+    debug.on_ready()
 
 
 @client.event
@@ -414,7 +415,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
 
 @client.event
 async def on_exit():
-    pass
+    debug.on_exit()
 
 
 client.run(private.token)
