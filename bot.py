@@ -16,6 +16,7 @@ from modules.util import send
 
 client = discord.Client()
 
+
 async def send_talk(_svr, _ch, msg):
     """Sends a custom message to a specific server."""
 
@@ -75,7 +76,7 @@ async def send_animal(message, animal):
             await send.message(message.channel, 'File moved.')
 
 
-async def makemd5hash(_dir, fn):
+async def make_md5_hash(_dir, fn):
     dat = open(_dir + '/' + fn, 'r+b')
     ext = fn.split('.')[-1]
     md5hashname = hashlib.md5(dat.read()).hexdigest()
@@ -88,13 +89,14 @@ async def makemd5hash(_dir, fn):
         os.rename(_dir + '/' + fn, _dir + '/' + md5hashname + '.' + ext)
 
 
-async def hashimages():
+async def hash_images():
     debug.debug(debug.D_INFO, 'Hashing image files.')
     d = '{}{}'.format(misc.CACHE_DIRECTORY, 'images/')
     for _dir in os.listdir(d):
         for fn in os.listdir(d + '/' + _dir):
             if os.path.isfile(d + '/' + _dir + '/' + fn):
-                await makemd5hash(d + _dir, fn)
+                await make_md5_hash(d + _dir, fn)
+
 
 @client.event
 async def on_connect():
@@ -117,12 +119,13 @@ async def on_ready():
     print('------')
     print('debug.DEBUG: {}'.format(debug.DEBUG))
 
-    await hashimages()
+    await hash_images()
 
     asyncloop = asyncio.get_event_loop()
 
     await tdt.on_ready(client, asyncloop)
     debug.on_ready()
+    print(discord.__file__)
 
 
 @client.event
@@ -309,7 +312,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
 
                 if '!cleanimagecache' in m:
                     await send.message(message.channel, 'Cleaning up my image cache...')
-                    await hashimages()
+                    await hash_images()
                     await send.message(message.channel, 'Done.')
 
         # end basic personal commands
@@ -415,6 +418,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
 
 @client.event
 async def on_exit():
+    await tdt.on_exit()
     debug.on_exit()
 
 

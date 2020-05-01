@@ -74,8 +74,8 @@ async def on_ready(client, loop):
                     _gen_channel = channel
                 elif channel.name == 'bot-test-chat':
                     _bot_channel = channel
-
-    asyncio.run_coroutine_threadsafe(update(), loop=loop)
+    update_loop = asyncio.run_coroutine_threadsafe(update(), loop=loop)
+    print(update_loop)
     debug.debug(debug.D_INFO, 'TDT+ initialized')
 
 
@@ -199,3 +199,8 @@ async def handle_message(client, message):
                 await send.message(message.channel, response)
                 # handled = True
                 # end direct mention commands
+
+
+async def on_exit():
+
+    pass
