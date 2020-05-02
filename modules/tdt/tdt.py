@@ -214,4 +214,5 @@ async def handle_message(client, message):
 
 
 async def on_exit():
+    global update_loop
     pass
