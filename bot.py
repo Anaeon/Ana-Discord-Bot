@@ -84,6 +84,9 @@ async def make_md5_hash(_dir, fn):
     debug.debug(debug.D_VERBOSE, 'Checking ' + fn)
     if fn == md5hashname + '.' + ext:
         debug.debug(debug.D_VERBOSE, 'File is already hashed... skipping.')
+    elif os.path.exists(_dir + '/' + md5hashname + '.' + ext):
+        debug.debug(debug.D_VERBOSE, 'File already exists... deleting duplicate')
+        os.remove(_dir + fn)
     elif fn is not md5hashname + '.' + ext:
         debug.debug(debug.D_VERBOSE, 'Hashing file...')
         os.rename(_dir + '/' + fn, _dir + '/' + md5hashname + '.' + ext)
