@@ -68,7 +68,9 @@ async def on_ready(client, loop):
     :type loop: asyncio.AbstractEventLoop()
     :return:
     """
+
     debug.debug(debug.D_INFO, 'Initializing TDT+ module.')
+
     global _gen_channel
     global _bot_channel
     global _guild
@@ -83,6 +85,7 @@ async def on_ready(client, loop):
                 elif channel.name == 'bot-test-chat':
                     _bot_channel = channel
     update_loop = asyncio.run_coroutine_threadsafe(update(), loop=loop)
+
     debug.debug(debug.D_INFO, 'TDT+ initialized')
 
 

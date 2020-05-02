@@ -151,6 +151,8 @@ async def on_message_edit(before, after):
     # handle edited tdt commands
     if is_tdt:
         await tdt.handle_message(client, after)
+    else:
+        await on_message(after)
 
 
 @client.event
