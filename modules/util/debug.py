@@ -19,17 +19,19 @@ def on_ready():
         pass
 
 
-def debug(l, s):
+def debug(level, string):
+    global D_CURRENT_LEVEL
     # _frame = inspect.currentframe()
     # caller = inspect.getframeinfo(_frame)[0]
     # caller = inspect.stack()[0]
     time = datetime.now().strftime('%H:%M:%S')
     if DEBUG:
-        if l <= D_CURRENT_LEVEL:
-            print('[{}][{}] {}'.format(time, D_HEADER[l], s))
+        if level <= D_CURRENT_LEVEL:
+            print('[{}][{}] {}'.format(time, D_HEADER[level], string))
     # del _frame
 
 
 def on_exit():
+    global D_CURRENT_LEVEL
     storage.save_server_setting('debug_level', D_CURRENT_LEVEL)
 
