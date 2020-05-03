@@ -113,10 +113,11 @@ async def on_disconnect():
 
 @client.event
 async def on_ready():
+    global client
     print('Logged in as')
     print(client.user.name)
     print(client.user.id)
-    await client.change_presence(activity=discord.Activity(name="with quantum strings."))
+    # await client.change_presence(activity=discord.Activity(name="with quantum strings."))
     print('------')
     print('Wrapper version: ' + discord.__version__)
     print('------')

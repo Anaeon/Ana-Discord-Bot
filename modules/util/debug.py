@@ -7,14 +7,15 @@ D_ERROR = 0
 D_INFO = 1
 D_VERBOSE = 2
 D_VOMIT = 3
-D_CURRENT_LEVEL = 2
+D_CURRENT_LEVEL = 1
 
 D_HEADER = ['ERROR', 'INFO', 'VERBOSE', 'VOMIT']
 
 
 def on_ready():
+    global D_CURRENT_LEVEL
     try:
-        debug.D_CURRENT_LEVEL = storage.load_server_setting('debug_level')
+        D_CURRENT_LEVEL = storage.load_server_setting('debug_level')
     except KeyError as e:
         pass
 
