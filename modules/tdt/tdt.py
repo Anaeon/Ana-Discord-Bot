@@ -69,7 +69,7 @@ async def update():
 # Update = threading.Thread(target=tick, name='tdtUpdate')
 
 
-async def on_ready(client, loop, first_run = True):
+async def on_ready(client, loop):
     """
     Called when we're ready to start tasks from TDT's module.
     :param client: the client from the main module that called this.
@@ -99,8 +99,7 @@ async def on_ready(client, loop, first_run = True):
                 elif channel.name == 'bot-test-chat':
                     _bot_channel = channel
                     debug.debug(debug.D_VERBOSE, 'Bot channel locked in...')
-    if first_run:
-        update_loop = asyncio.run_coroutine_threadsafe(update(), loop=loop)
+    update_loop = asyncio.run_coroutine_threadsafe(update(), loop=loop)
     if _gen_channel is not None and _bot_channel is not None and _guild is not None:
         debug.debug(debug.D_INFO, 'TDT+ initialized')
     else:
