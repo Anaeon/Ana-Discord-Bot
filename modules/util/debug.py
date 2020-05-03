@@ -1,4 +1,4 @@
-import inspect
+from inspect import stack, getframeinfo
 from modules.util import storage
 from datetime import datetime
 
@@ -25,10 +25,13 @@ def debug(level, string):
     # caller = inspect.getframeinfo(_frame)[0]
     # caller = inspect.stack()[0]
     time = datetime.now().strftime('%H:%M:%S')
+    caller = getframeinfo(stack()[1][0])
+    name = caller.filename.split('\\')[-1].split('.')[0]
+    line_number = caller.lineno
     if DEBUG:
         if level <= D_CURRENT_LEVEL:
-            print('[{}][{}] {}'.format(time, D_HEADER[level], string))
-    # del _frame
+            print('[{}][{}][{}][{}] {}'.format(time, name, line_number, D_HEADER[level], string))
+    del caller
 
 
 def on_exit():
