@@ -112,7 +112,7 @@ async def on_ready(client, loop):
             debug.debug(debug.D_ERROR, 'Couldn\'t find the bot channel.')
 
 
-async def handle_message(client, message):
+async def handle_message(client, message, TALKATIVE):
     global update_loop
 
     m = message.content.lower()
@@ -143,8 +143,9 @@ async def handle_message(client, message):
 
     # Add reactions to some messages
 
-    if 'treebs' in m or 'omega' in m or 'leftovers' in m:
-        r = discord.Reaction(emoji='treebs:235655554465398784')
+    if 'treebs' in m or 'omega' in m or 'leftovers' in m and TALKATIVE:
+        r = discord.Reaction(message=message, data=None, emoji='treebs:235655554465398784')
+        # I don't know what the 'message' and 'data' params are doing here...
         debug.debug(debug.D_INFO, 'Treebs was here...')
         await send.reaction(message, r)
 
@@ -210,6 +211,10 @@ async def handle_message(client, message):
                 # handled = True
 
             # -- end dailies --
+
+            # -- general commands --
+
+            # -- end general commands --
 
             # commands unique to myself
             if str(message.author.id) == private.anaeon_id:

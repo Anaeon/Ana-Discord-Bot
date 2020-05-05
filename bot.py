@@ -16,6 +16,8 @@ from modules.util import send
 
 client = discord.Client()
 
+TALKATIVE = False
+
 
 async def send_talk(_svr, _ch, msg):
     """Sends a custom message to a specific server."""
@@ -23,7 +25,7 @@ async def send_talk(_svr, _ch, msg):
     #  slot in the intended server
     svr = ''
     svr_found = False
-    for server in client.servers:
+    for server in client.guilds:
         if server.name == _svr:
             svr = server
             svr_found = True
@@ -71,7 +73,7 @@ async def send_animal(message, animal):
             await send.message(message.channel, 'Error encountered on file "{}/{}"'.format(d, filename))
             # I want to have Ana move any files that are too large into the appropriate folder.
             await send.message(message.channel, 'Moving file to another folder to avoid the error.')
-            await client.send_typing(message.channel)
+            # await client.send_typing(message.channel)
             os.rename('{}/{}'.format(d, filename), '{}/too big/{}'.format(d, filename))
             await send.message(message.channel, 'File moved.')
 
@@ -161,6 +163,7 @@ async def on_message_edit(before, after):
 
 @client.event
 async def on_message(message):  # when someone sends a message. Read command inputs here.
+    global TALKATIVE
     m_guild = 'Unknown'
     m_channel = 'Unknown'
     if message.guild is not None:
@@ -186,6 +189,13 @@ async def on_message(message):  # when someone sends a message. Read command inp
     if message.author != client.user:  # don't react to your own messages.
 
         # Do these things in general...
+
+        if 'shut up' in m:
+            TALKATIVE = False
+            await send.message(message.channel, 'Understood.')
+        elif 'speak up' in m:
+            TALKATIVE = True
+            await send.message(message.channel, 'Understood.')
 
         # get a random Trump quote because why the fuck not?
 
@@ -327,7 +337,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
 
         # STUPID STUFF GOES HERE ============================
 
-        if hasattr(message.author, 'nick') and message.author.nick is not None:
+        if hasattr(message.author, 'nick') and message.author.nick is not None and TALKATIVE:
             if 'duck' in message.author.nick.lower():
                 await send.message(message.channel, 'Quack.')
             if 'goose' in message.author.nick.lower():
@@ -366,7 +376,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
 
         for mention in message.mentions:
 
-            if mention == client.user:
+            if mention == client.user and TALKATIVE:
                 if 'anal' in m:
                     r = [
                         'I guess... if I open up the right ports.',
@@ -415,7 +425,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
         # Only do these things in Digital Table server.
 
         if is_tdt:
-            await tdt.handle_message(client, message)
+            await tdt.handle_message(client, message, TALKATIVE)
 
         # @client.event
         # async def on_reaction_add(reaction, user): # when someone adds a reaction?
