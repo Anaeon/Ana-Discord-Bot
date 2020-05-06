@@ -71,7 +71,7 @@ def reset_points_to_give(server):
 
     storage.set_server_attribute(server.id, 'next_pearl_point_reset_datetime', y)
     if not new_points_given:
-        response = 'No users have been given new points because no one used any.'
+        response = strings.no_players()
     return response
 
 
@@ -211,11 +211,13 @@ def reset_points(client, message):
     return response
 
 
-def get_top_points(use_embed = False):
+def get_top_points(use_embed = False, raw = False):
     board = storage.get_attribute_for_users("pearl_points")
     board = sorted(board, key = itemgetter('pearl_points'), reverse = True)
 
-    if not use_embed:
+    if raw:
+        return board
+    elif not use_embed:
         response = 'Leaderboard:\n\n'
         for i, p in enumerate(board):
             response = '{0}{1}:[{2}] - <@{3}>\n'.format(response, i + 1, p['pearl_points'], p['id'])

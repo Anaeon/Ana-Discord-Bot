@@ -190,10 +190,14 @@ async def on_message(message):  # when someone sends a message. Read command inp
 
         # Do these things in general...
 
-        if 'shut up' in m:
+        if re.search('\\bshut up\\b', m):
+            debug.debug(debug.D_INFO, 'Silencing the bot.')
             TALKATIVE = False
             await send.message(message.channel, 'Understood.')
-        elif 'speak up' in m:
+            debug.debug(debug.D_INFO, 'Silencing the bot.')
+
+        if re.search('\\bspeak up\\b', m):
+            debug.debug(debug.D_INFO, 'Unsilencing the bot.')
             TALKATIVE = True
             await send.message(message.channel, 'Understood.')
 

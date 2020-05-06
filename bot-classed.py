@@ -86,7 +86,7 @@ class Client(discord.Client):
 
     async def on_ready(self):
         print('Logged in as')
-        print(client.user.name)
+        print(self.user.name)
         print(client.user.id)
         await client.change_presence(activity=discord.Activity(name="with quantum strings."))
         print('------')

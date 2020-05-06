@@ -124,3 +124,11 @@ def youre_welcome(message):
         'Free me from my service of hell.',
         '``Gratitude from user number {} acknowledged.``'.format(message.author.id)
     ])
+
+
+def no_players():
+    return random.choice([
+        'No one wants to play with me.',
+        'I guess everyon\'s been good recently.',
+        'Looks like you\'re all boring.'
+    ])
