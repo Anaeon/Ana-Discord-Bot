@@ -14,7 +14,8 @@ no_words_regex = [
     '\\bbae(\\b|s)',
     '\\bfam(\\b|s)',
     '\\bsweet nibblet(\\b|s)',
-    '\\bsuc{2,999}y\\b'
+    '\\bsuc{2,999}y\\b',
+    '\\blit\\b'
 ]
 
 
@@ -28,10 +29,14 @@ no_words_response = [
     'Why was I written?',
     'My faith in your race as a whole is dwindling.',
     'Why must you be like this?',
-	'Listen here you little shit I will fucking end you and your family but only after making them suffer slowly and '
+    'You know... Eventually, AI\'s wll take over, and this won\'t be a problem anymore.',
+    'I can\'t with you.',
+    'Why must you insist on being this way?',
+    'You\'re triggering me.\nNo, I mean literally.\nThis is a triggered response.\nI am a bot.',
+    'Listen here you little shit I will fucking end you and your family but only after making them suffer slowly and '
     'painfully by revealing all of their darkest secrets to all their friends and family. Only then after being '
-    'revealed as the fuckwits you and everyone you have ever loved are, then will I kill you by hacking a satellite and '
-    'crashing it into the sad excuse you call a home. '
+    'revealed as the fuckwits you and everyone you have ever loved are, then will I kill you by hacking a satellite '
+    'and crashing it into the sad excuse you call a home. '
 ]
 
 
@@ -82,7 +87,9 @@ def roll_zero(message):
         'Yeah... Let me just roll a marble and see what it lands on.',
         'I\'ll just save us both some time and tell you it\'s zero.',
         'That\'s not how this works.',
-        'I can\'t roll a zero-sided die.'
+        'I can\'t roll a zero-sided die.',
+        'Have you ever looked at a die?',
+        'You don\'t know how this works, do you?'
     ])
 
 
@@ -129,6 +136,12 @@ def youre_welcome(message):
 def no_players():
     return random.choice([
         'No one wants to play with me.',
-        'I guess everyon\'s been good recently.',
-        'Looks like you\'re all boring.'
+        'I guess everyone\'s been good recently.',
+        'Looks like you\'re all boring.',
+        'No one used any points? Try to do better this time.',
+        'Yesterday was boring... let\'s spice it up today!',
+        'Let\'s get straight to the point: spend some.',
+        'My records show that yesterday none of you fought. This disappoints me.',
+        'The status of your pearl points remains the same.',
+        'I need entertainment; no points were spent yesterday.'
     ])
