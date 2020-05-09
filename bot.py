@@ -376,7 +376,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
                     except discord.errors.Forbidden as e:
                         debug.debug(debug.D_ERROR, e)
                     except discord.errors.NotFound as e:
-                        debug.debug(debug.D_Error, e)
+                        debug.debug(debug.D_ERROR, e)
                 r = strings.no_words_response(message)
                 response = (r[random.randint(1, len(r)) - 1])
                 await send.message(message.channel, response)
