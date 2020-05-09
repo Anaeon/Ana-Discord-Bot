@@ -19,7 +19,7 @@ no_words_regex = [
 ]
 
 
-def no_words_response():
+def no_words_response(message):
     return random.choice([
         'No.',
         'Stop.',
