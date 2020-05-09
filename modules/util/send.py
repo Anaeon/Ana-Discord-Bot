@@ -1,3 +1,6 @@
+import asyncio
+
+
 async def message(channel, msg='', embed=None):
     """
     Default function for sending messages. Encapsulates the API function call for easy updating.
@@ -5,6 +8,8 @@ async def message(channel, msg='', embed=None):
     :type msg: str
     """
     if embed is None:
+        time = len(msg)/6
+        await asyncio.sleep(time)
         await channel.send(msg)
     else:
         await channel.send(embed=embed)
@@ -32,7 +37,6 @@ async def file(channel, input_file):
 
 
 async def typing(channel):
-    # TODO: Check the API for the new client.send_typing() method and pass it here.
-    pass
+    channel.trigger_typing()
 
 # TODO: Make a method to handle sending an embedded table.

@@ -243,4 +243,4 @@ async def handle_message(client, message, TALKATIVE):
 
 async def on_exit():
     global update_loop
-    pass
+    update_loop.cancel()

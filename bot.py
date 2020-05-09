@@ -51,7 +51,7 @@ async def send_talk(_svr, _ch, msg):
             else:
                 await send.message(ch, msg)
 
-
+discord.TextChannel()
 async def send_animal(message, animal):
     """
     Sends a random image of the given animal to the channel.
@@ -120,7 +120,7 @@ async def on_ready():
     print('Logged in as')
     print(client.user.name)
     print(client.user.id)
-    # await client.change_presence(activity=discord.Activity(name="with quantum strings."))
+    await client.change_presence(activity=discord.Activity(name='With quantum strings.'))
     print('------')
     print('Wrapper version: ' + discord.__version__)
     print('------')
@@ -338,10 +338,10 @@ async def on_message(message):  # when someone sends a message. Read command inp
 
                 if '!status' in m:
                     g = re.search('(?<=game=).+', m).group(0)
-                    g_obj = discord.Game(name=g)
-                    debug.debug(debug.D_VERBOSE, 'game object = {}'.format(g_obj))
+                    # g_obj = discord.Activity(name=g)
+                    # debug.debug(debug.D_VERBOSE, 'game object = {}'.format(g_obj))
                     debug.debug(debug.D_VERBOSE, 'Setting status to \"Playing {}\".'.format(g))
-                    await client.change_presence(activity=g_obj)
+                    await client.change_presence(status=discord.Status.idle, activity=discord.Game(name=g))
                     # await client.change_status(game=g_obj) # depricated
                     debug.debug(debug.D_VERBOSE, 'POST-AWAIT THING')
 
@@ -349,6 +349,9 @@ async def on_message(message):  # when someone sends a message. Read command inp
                     await send.message(message.channel, 'Cleaning up my image cache...')
                     await hash_images()
                     await send.message(message.channel, 'Done.')
+
+                if '!stop' in m:
+                    await client.close()
 
         # end basic personal commands
 
