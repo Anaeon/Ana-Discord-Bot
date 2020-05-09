@@ -17,6 +17,7 @@ from modules.util import send
 client = discord.Client()
 
 TALKATIVE = False
+CAN_DELETE = True
 
 
 async def send_talk(_svr, _ch, msg):
@@ -160,30 +161,31 @@ async def on_message_edit(before, after):
     else:
         await on_message(after)
 
-
+discord.message
 @client.event
 async def on_message(message):  # when someone sends a message. Read command inputs here.
+    global CAN_DELETE
     global TALKATIVE
     m_guild = 'Unknown'
+    m_guild_id = 'None'
     m_channel = 'Unknown'
+    m_channel_id = 'None'
     if message.guild is not None:
         m_guild = str(message.guild)
+        m_guild_id = str(message.guild.id)
 
     if message.channel is not None:
         m_channel = str(message.channel)
+        m_channel_id = str(message.channel.id)
 
     debug.debug(debug.D_INFO, '[G:{}][C:{}][A:{}]:{}'.format(m_guild, m_channel, message.author, message.content))
-    debug.debug(debug.D_VERBOSE, '[G:{}][C:{}][A:{}]'.format(message.guild.id, message.channel.id, message.author.id))
+    debug.debug(debug.D_VERBOSE, '[G:{}][C:{}][A:{}]'.format(m_guild_id, m_channel_id, message.author.id))
 
     # go ahead and check which server we're in
     is_tdt = False
     is_neon = False
     is_durg = False
-    try:
-        is_tdt = str(message.guild.id) == private.tdt_server_id
-    except AttributeError as e:
-        debug.debug(debug.D_ERROR,
-                    'AttributeError caught: {}'.format(e))
+    is_tdt = m_guild_id == private.tdt_server_id
 
     m = message.content.lower()
     if message.author != client.user:  # don't react to your own messages.
@@ -199,6 +201,19 @@ async def on_message(message):  # when someone sends a message. Read command inp
         if re.search('\\bspeak up\\b', m):
             debug.debug(debug.D_INFO, 'Unsilencing the bot.')
             TALKATIVE = True
+            await send.message(message.channel, 'Understood.')
+
+        if re.search('\\bdelete stuff\\b', m):
+            # if hasattr(client, discord.Permissions.manage_messages):
+            debug.debug(debug.D_INFO, 'Deleting things from this point.')
+            CAN_DELETE = True
+            await send.message(message.channel, 'Understood.')
+            # else:
+                # await send.message(message.channel, 'I do not have permission to do that from the server\'s owner.')
+
+        if re.search('\\bdo not delete stuff\\b', m):
+            debug.debug(debug.D_INFO, 'Deleting things from this point.')
+            CAN_DELETE = False
             await send.message(message.channel, 'Understood.')
 
         # get a random Trump quote because why the fuck not?
@@ -326,7 +341,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
                     g_obj = discord.Game(name=g)
                     debug.debug(debug.D_VERBOSE, 'game object = {}'.format(g_obj))
                     debug.debug(debug.D_VERBOSE, 'Setting status to \"Playing {}\".'.format(g))
-                    await client.change_presence(game=g_obj)
+                    await client.change_presence(activity=g_obj)
                     # await client.change_status(game=g_obj) # depricated
                     debug.debug(debug.D_VERBOSE, 'POST-AWAIT THING')
 
@@ -353,7 +368,11 @@ async def on_message(message):  # when someone sends a message. Read command inp
             debug.debug(debug.D_VOMIT, 'Checking for {} in "{}".'.format(regex, m))
             if re.search(regex, m):
                 debug.debug(debug.D_INFO, 'A unacceptable word was used... attempting to delete it.')
-                # await client.delete_message(message)
+                if CAN_DELETE:
+                    try:
+                        await message.delete()
+                    except PermissionError as e:
+                        debug.debug(debug.D_ERROR, e)
                 r = strings.no_words_response
                 response = (r[random.randint(1, len(r)) - 1])
                 await send.message(message.channel, response)
