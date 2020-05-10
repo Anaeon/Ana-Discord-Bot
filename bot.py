@@ -51,7 +51,7 @@ async def send_talk(_svr, _ch, msg):
             else:
                 await send.message(ch, msg)
 
-discord.TextChannel()
+
 async def send_animal(message, animal):
     """
     Sends a random image of the given animal to the channel.
@@ -131,6 +131,7 @@ async def on_ready():
     asyncloop = asyncio.get_event_loop()
 
     await tdt.on_ready(client, asyncloop)
+    await send.message(tdt._bot_channel, 'Rebooted and reconnected.')
     debug.on_ready()
 
 
@@ -161,7 +162,7 @@ async def on_message_edit(before, after):
     else:
         await on_message(after)
 
-discord.message
+
 @client.event
 async def on_message(message):  # when someone sends a message. Read command inputs here.
     global CAN_DELETE
@@ -182,7 +183,6 @@ async def on_message(message):  # when someone sends a message. Read command inp
     debug.debug(debug.D_VERBOSE, '[G:{}][C:{}][A:{}]'.format(m_guild_id, m_channel_id, message.author.id))
 
     # go ahead and check which server we're in
-    is_tdt = False
     is_neon = False
     is_durg = False
     is_tdt = m_guild_id == private.tdt_server_id
@@ -350,7 +350,8 @@ async def on_message(message):  # when someone sends a message. Read command inp
                     await hash_images()
                     await send.message(message.channel, 'Done.')
 
-                if '!stop' in m:
+                if '!reboot' in m or '!restart' in m:
+                    await send.message(tdt._bot_channel, 'Shutting down.')
                     await client.close()
 
         # end basic personal commands
@@ -466,6 +467,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
 async def on_exit():
     await tdt.on_exit()
     debug.on_exit()
+    await client.close()
 
 
 client.run(private.token)

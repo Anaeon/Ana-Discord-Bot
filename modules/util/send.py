@@ -4,11 +4,15 @@ import asyncio
 async def message(channel, msg='', embed=None):
     """
     Default function for sending messages. Encapsulates the API function call for easy updating.
+    :param channel: The TextChannel object to send the message to.
     :type channel: discord.TextChannel
+    :param msg: A string representing the message to be sent to the channel.
     :type msg: str
+    embed Optional[:class: discord.Embed] an Embed object to send instead of a message.
     """
     if embed is None:
-        time = len(msg)/6
+        time = len(msg)/4
+        await channel.trigger_typing()
         await asyncio.sleep(time)
         await channel.send(msg)
     else:
