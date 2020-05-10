@@ -17,7 +17,7 @@ from modules.util import send
 client = discord.Client()
 
 TALKATIVE = False
-CAN_DELETE = True
+CAN_DELETE = False
 
 
 async def send_talk(_svr, _ch, msg):
