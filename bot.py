@@ -341,7 +341,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
                     # g_obj = discord.Activity(name=g)
                     # debug.debug(debug.D_VERBOSE, 'game object = {}'.format(g_obj))
                     debug.debug(debug.D_VERBOSE, 'Setting status to \"Playing {}\".'.format(g))
-                    await client.change_presence(status=discord.Status.idle, activity=discord.Game(name=g))
+                    await client.change_presence(status=discord.Status.online, activity=discord.Game(name=g))
                     # await client.change_status(game=g_obj) # depricated
                     debug.debug(debug.D_VERBOSE, 'POST-AWAIT THING')
 
