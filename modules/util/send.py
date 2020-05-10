@@ -1,5 +1,7 @@
 import asyncio
 
+_chars_per_second = 10
+
 
 async def message(channel, msg='', embed=None):
     """
@@ -11,8 +13,8 @@ async def message(channel, msg='', embed=None):
     embed Optional[:class: discord.Embed] an Embed object to send instead of a message.
     """
     if embed is None:
-        time = len(msg)/4
-        await channel.trigger_typing()
+        time = len(msg)/_chars_per_second
+        await typing(channel)
         await asyncio.sleep(time)
         await channel.send(msg)
     else:
@@ -37,10 +39,11 @@ async def file(channel, input_file):
     :type channel: discord.Channel
     :type input_file: discord.File
     """
+    await typing(channel)
     await channel.send(file=input_file)
 
 
 async def typing(channel):
-    channel.trigger_typing()
+    await channel.trigger_typing()
 
 # TODO: Make a method to handle sending an embedded table.
