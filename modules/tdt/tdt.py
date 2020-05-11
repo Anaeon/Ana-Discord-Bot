@@ -114,6 +114,7 @@ async def on_ready(client, loop):
 
 async def handle_message(client, message, TALKATIVE):
     global update_loop
+    debug.debug(debug.D_VERBOSE, 'Entering TDT module.')
 
     m = message.content.lower()
 
@@ -156,6 +157,7 @@ async def handle_message(client, message, TALKATIVE):
     for mention in message.mentions:  # when someone is mentioned
         debug.debug(debug.D_VERBOSE, '{} was mentioned'.format(mention))
         if mention == client.user:  # if the bot is mentioned
+            debug.debug(debug.D_VERBOSE, 'A mention other than the bot was caught.')
             # handled = False
             response = ''
 
@@ -163,6 +165,7 @@ async def handle_message(client, message, TALKATIVE):
 
             if ('give' in m or '+1' in m) and ('pearlpoint' in m or 'pearl point' in m or (
                     'pearl' in m and 'point' in m) or 'point' in m) and '!resetpointstogive' not in m:
+                debug.debug(debug.D_VERBOSE, 'Pearl points are being given.')
                 response = scoreboard.give_points(client, message)
                 # handled = True
             elif ('take' in m or 'remove' in m or '-1' in m) and (
