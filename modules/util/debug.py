@@ -14,10 +14,15 @@ D_HEADER = ['ERROR', 'INFO', 'VERBOSE', 'VOMIT']
 
 def on_ready():
     global D_CURRENT_LEVEL
+
+    debug(D_INFO, 'Initializing Debug module...')
+
     try:
         D_CURRENT_LEVEL = storage.load_server_setting('debug_level')
     except KeyError as e:
         pass
+
+    debug(D_INFO, 'Debug initialized.')
 
 
 def debug(level, string):
@@ -37,5 +42,7 @@ def debug(level, string):
 
 def on_exit():
     global D_CURRENT_LEVEL
+    debug(D_INFO, 'Saving debug settings.')
     storage.save_server_setting('debug_level', D_CURRENT_LEVEL)
+    debug(D_INFO, 'Debug settings saved.')
 
