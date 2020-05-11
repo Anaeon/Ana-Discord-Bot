@@ -185,7 +185,8 @@ async def on_message(message):  # when someone sends a message. Read command inp
     # go ahead and check which server we're in
     is_neon = False
     is_durg = False
-    is_tdt = m_guild_id == private.tdt_server_id
+    is_tdt = m_guild_id == str(private.tdt_server_id)
+    debug.debug(debug.D_VERBOSE, 'TDT == ' + str(is_tdt))
 
     m = message.content.lower()
     if message.author != client.user:  # don't react to your own messages.
