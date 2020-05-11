@@ -1,6 +1,6 @@
 import asyncio
 
-_chars_per_second = 10
+_chars_per_second = 15
 
 
 async def message(channel, msg='', embed=None):
