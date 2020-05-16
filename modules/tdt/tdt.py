@@ -20,6 +20,27 @@ _bot_channel = None
 update_loop = None
 
 
+def compose_fractal_response() -> str:
+    # await client.send_typing(message.channel)
+    response = '```haskell\nDaily Fractals:\n\n'
+    t = ''
+    r = ''
+    fractal_dailies = gw2.get_fractal_dailies()
+    ids = []
+    for daily in fractal_dailies:
+        ids.append(daily['id'])
+    names = gw2.get_achievement_names(ids)
+    for name in names:
+        if ' Tier ' in name and ' 4 ' in name:
+            n = re.split(' 4 ', name)[1]
+            t = '{}tier 4: {}\n'.format(t, n)
+        elif ' Tier ' not in name:
+            scale = re.split('Scale ', name)[1]
+            n = gw2.get_fractal_name(scale)
+            r = '{}scale: {} {}\n'.format(r, scale, n)
+    return '{}{}\n{}\n```'.format(response, r, t)
+
+
 async def pearl_tick(guild, chan):
     debug.debug(debug.D_VERBOSE, 'Running pearl_tick...')
     if _guild is None:
@@ -112,7 +133,7 @@ async def on_ready(client, loop):
             debug.debug(debug.D_ERROR, 'Couldn\'t find the bot channel.')
 
 
-async def handle_message(client, message, TALKATIVE):
+async def handle_message(client: discord.Client, message: discord.message, TALKATIVE: bool):
     global update_loop
     debug.debug(debug.D_VERBOSE, 'Entering TDT module.')
 
@@ -120,24 +141,8 @@ async def handle_message(client, message, TALKATIVE):
 
     # respond to solo fractal emote and give daily fractals
     if '<:fractals:230520375396532224>' in m:
-        # await client.send_typing(message.channel)
-        response = '```haskell\nDaily Fractals:\n\n'
-        t = ''
-        r = ''
-        fractal_dailies = gw2.get_fractal_dailies()
-        ids = []
-        for daily in fractal_dailies:
-            ids.append(daily['id'])
-        names = gw2.get_achievement_names(ids)
-        for name in names:
-            if ' Tier ' in name and ' 4 ' in name:
-                n = re.split(' 4 ', name)[1]
-                t = '{}tier 4: {}\n'.format(t, n)
-            elif ' Tier ' not in name:
-                scale = re.split('Scale ', name)[1]
-                n = gw2.get_fractal_name(int(scale))
-                r = '{}scale: {} {}\n'.format(r, scale, n)
-        await send.message(message.channel, '{}{}\n{}\n```'.format(response, r, t))
+        response = compose_fractal_response()
+        await send.message(message.channel, response)
         # handled = True
 
     # end fractals
@@ -194,22 +199,8 @@ async def handle_message(client, message, TALKATIVE):
             # -- dailies --
 
             if re.search('\\bfractal(\\b|s)|\\bfric frac(\\b|s)', m):
-                response = '```haskell\nToday\'s daily fractals:\n\n'
-                t = ''
-                r = ''
-                fractal_dailies = gw2.get_fractal_dailies()
-                ids = []
-                for daily in fractal_dailies:
-                    ids.append(daily['id'])
-                names = gw2.get_achievement_names(ids)
-                for name in names:
-                    if ' Tier ' in name and ' 4 ' in name:
-                        t = '{}{}\n'.format(t, name)
-                    elif ' Tier ' not in name:
-                        scale = re.split('Scale ', name)[1]
-                        n = gw2.get_fractal_name(scale)
-                        r = '{}Daily {}, Scale {}\n'.format(r, n, scale)
-                response = '{}{}\n{}\n```'.format(response, r, t)
+                response = compose_fractal_response()
+                await send.message(message.channel, response)
                 # handled = True
 
             # -- end dailies --
