@@ -1,6 +1,7 @@
 import asyncio
 
 _chars_per_second = 15
+_max_type_seconds = 9
 
 
 async def message(channel, msg='', embed=None):
@@ -14,6 +15,9 @@ async def message(channel, msg='', embed=None):
     """
     if embed is None:
         time = len(msg)/_chars_per_second
+
+        time = time if time <= _max_type_seconds else _max_type_seconds
+
         await typing(channel)
         await asyncio.sleep(time)
         await channel.send(msg)

@@ -5,6 +5,7 @@ import re
 import os
 import asyncio
 import hashlib
+import logging
 
 from modules.tdt import tdt
 from modules.util import debug
@@ -16,10 +17,28 @@ from modules.util import send
 
 client = discord.Client()
 
+frmt = logging.Formatter(misc.LOGGER_FORMATTING)
+
+log = logging.getLogger(__name__)
+log.setLevel(logging.DEBUG)
+
+wslog = logging.getLogger('websocket')
+wslog.setLevel(logging.DEBUG)
+
+dislog = logging.getLogger('discord.gateway')
+dislog.setLevel(logging.DEBUG)
+
+c_out = logging.StreamHandler()
+c_out.setFormatter(frmt)
+
+log.addHandler(c_out)
+# wslog.addHandler(c_out)
+# dislog.addHandler(c_out)
+
 TALKATIVE = False
 CAN_DELETE = False
 
-
+# !talk, server, channel, message text
 async def send_talk(_svr, _ch, msg):
     """Sends a custom message to a specific server."""
 
@@ -32,7 +51,7 @@ async def send_talk(_svr, _ch, msg):
             svr_found = True
 
     if not svr_found:  # if the bot is not part of the server or the server can't be found, say so
-        await send.message(client.get_channel(private.anaeon_dm_id),
+        await send.message(client.get_channel(int(private.anaeon_dm_id)),
                            'No server found with name {}.'.format(_svr))
     elif svr_found:  # else, try to slot in the channel
         ch = ''
@@ -43,11 +62,11 @@ async def send_talk(_svr, _ch, msg):
                 ch_found = True
 
         if not ch_found:  # if the bot can't find the channel in the server, say so
-            await send.message(client.get_channel(private.anaeon_dm_id),
+            await send.message(client.get_channel(int(private.anaeon_dm_id)),
                                'No channel found with name {}.'.format(_ch))
         elif ch_found:  # else, go ahead and format the message and send it to the channel.
             if msg == '':
-                await send.message(client.get_channel(private.anaeon_dm_id), 'I can\'t send a blank message.')
+                await send.message(client.get_channel(int(private.anaeon_dm_id)), 'I can\'t send a blank message.')
             else:
                 await send.message(ch, msg)
 
@@ -69,11 +88,11 @@ async def send_animal(message, animal):
         except discord.HTTPException as e:
             # Check for what kind of exception it is before trying to move a file that doesn't exist
             # thereby raising another exception
+            log.exception(e)
             await send.message(message.channel, e)
-            time.sleep(2)
-            await send.message(message.channel, 'Error encountered on file "{}/{}"'.format(d, filename))
+            await send.message(message.channel, 'Looks like that file was too large.')
             # I want to have Ana move any files that are too large into the appropriate folder.
-            await send.message(message.channel, 'Moving file to another folder to avoid the error.')
+            await send.message(message.channel, 'Moving the file to another folder to avoid the error.')
             # await client.send_typing(message.channel)
             os.rename('{}/{}'.format(d, filename), '{}/too big/{}'.format(d, filename))
             await send.message(message.channel, 'File moved.')
@@ -84,19 +103,24 @@ async def make_md5_hash(_dir, fn):
     ext = fn.split('.')[-1]
     md5hashname = hashlib.md5(dat.read()).hexdigest()
     dat.close()
-    debug.debug(debug.D_VERBOSE, 'Checking ' + fn)
+    # debug.debug(debug.D_VERBOSE, 'Checking ' + fn)
+    log.debug('Checking ' + fn)
     if fn == md5hashname + '.' + ext:
-        debug.debug(debug.D_VERBOSE, 'File is already hashed... skipping.')
+        # debug.debug(debug.D_VERBOSE, 'File is already hashed... skipping.')
+        log.debug('File is already hashed... skipping)')
     elif os.path.exists(_dir + '/' + md5hashname + '.' + ext):
-        debug.debug(debug.D_VERBOSE, 'File already exists... deleting duplicate')
+        # debug.debug(debug.D_VERBOSE, 'File already exists... deleting duplicate')
+        log.debug('File already exists... deleting duplicate.')
         os.remove(_dir + fn)
     elif fn is not md5hashname + '.' + ext:
-        debug.debug(debug.D_VERBOSE, 'Hashing file...')
+        # debug.debug(debug.D_VERBOSE, 'Hashing file...')
+        log.debug('Hashing file...')
         os.rename(_dir + '/' + fn, _dir + '/' + md5hashname + '.' + ext)
 
 
 async def hash_images():
-    debug.debug(debug.D_INFO, 'Hashing image files.')
+    # debug.debug(debug.D_INFO, 'Hashing image files.')
+    log.info('Hashing image files')
     d = '{}{}'.format(misc.CACHE_DIRECTORY, 'images/')
     for _dir in os.listdir(d):
         for fn in os.listdir(d + '/' + _dir):
@@ -106,12 +130,12 @@ async def hash_images():
 
 @client.event
 async def on_connect():
-    print('Connected')
+    log.info('Connected')
 
 
 @client.event
 async def on_disconnect():
-    print('Disconnected')
+    log.info('Disconnected.')
 
 
 @client.event
@@ -120,7 +144,7 @@ async def on_ready():
     print('Logged in as')
     print(client.user.name)
     print(client.user.id)
-    await client.change_presence(activity=discord.Activity(name='With quantum strings.'))
+    await client.change_presence(activity=discord.Game(name='with quantum strings.'))
     print('------')
     print('Wrapper version: ' + discord.__version__)
     print('------')
@@ -130,9 +154,9 @@ async def on_ready():
 
     asyncloop = asyncio.get_event_loop()
 
-    await tdt.on_ready(client, asyncloop)
-    await send.message(tdt._bot_channel, 'Rebooted and reconnected.')
     debug.on_ready()
+    await tdt.on_ready(client, asyncloop)
+    await client.get_user(108467075613216768).send('Rebooted and reconnected.')
 
 
 @client.event
@@ -158,7 +182,7 @@ async def on_message_edit(before, after):
 
     # handle edited tdt commands
     if is_tdt:
-        await tdt.handle_message(client, after)
+        await tdt.handle_message(client, after, TALKATIVE)
     else:
         await on_message(after)
 
@@ -280,6 +304,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
         #  private message commands
         if str(message.channel.id) == private.anaeon_dm_id:
 
+            # !talk
             if m.startswith('!talk'):
                 args = message.content.split(',')
                 msg = ''
@@ -342,7 +367,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
                     # g_obj = discord.Activity(name=g)
                     # debug.debug(debug.D_VERBOSE, 'game object = {}'.format(g_obj))
                     debug.debug(debug.D_VERBOSE, 'Setting status to \"Playing {}\".'.format(g))
-                    await client.change_presence(status=discord.Status.online, activity=discord.Game(name=g))
+                    await client.change_presence(status=discord.Status.online, activity=discord.CustomActivity(name=g))
                     # await client.change_status(game=g_obj) # depricated
                     debug.debug(debug.D_VERBOSE, 'POST-AWAIT THING')
 
@@ -352,7 +377,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
                     await send.message(message.channel, 'Done.')
 
                 if '!reboot' in m or '!restart' in m:
-                    await send.message(tdt._bot_channel, 'Shutting down.')
+                    await client.get_user(108467075613216768).send('Shutting down.')
                     await client.close()
 
         # end basic personal commands
@@ -382,9 +407,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
                         debug.debug(debug.D_ERROR, e)
                     except discord.errors.NotFound as e:
                         debug.debug(debug.D_ERROR, e)
-                r = strings.no_words_response(message)
-                response = (r[random.randint(1, len(r)) - 1])
-                await send.message(message.channel, response)
+                await send.message(message.channel, strings.no_words_response(message))
 
                 time.sleep(2)
 

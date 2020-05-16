@@ -23,6 +23,8 @@ def load_server_setting(setting):
 
 def save_server_setting(setting, val):
     with shelve.open('data/settings', writeback=True) as s:
+        if not str(setting) in s:
+            s[str(setting)] = {}
         s[str(setting)] = str(val)
 
 

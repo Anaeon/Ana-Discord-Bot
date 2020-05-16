@@ -1,6 +1,18 @@
 import requests
 import json
 import discord
+import logging
+
+from modules.data import misc
+
+frmt = logging.Formatter(misc.LOGGER_FORMATTING)
+
+log = logging.getLogger(__name__)
+log.setLevel(logging.DEBUG)
+
+c_out = logging.StreamHandler()
+c_out.setFormatter(frmt)
+log.addHandler(c_out)
 
 fractal_names_by_scale = {
     '1': 'Volcanic',
@@ -136,4 +148,5 @@ def get_fractal_name(scale):
     :type scale: int
     :return: An array containing the name and instabilities of the fractal.
     """
+    log.debug('Fetching name for fractal scale ' + str(scale))
     return fractal_names_by_scale[scale]

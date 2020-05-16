@@ -30,15 +30,16 @@ def no_words_response(message):
         'Why was I written?',
         'My faith in your race as a whole is dwindling.',
         'Why must you be like this?',
-        'You know... Eventually, AI\'s wll take over, and this won\'t be a problem anymore.',
+        'You know... Eventually, AI\'s will take over, and this won\'t be a problem anymore.',
         'I can\'t with you.',
         'Why must you insist on being this way?',
         'You\'re triggering me.\nNo, I mean literally.\nThis is a triggered response.\nI am a bot.',
         'Listen here you little shit I will fucking end you and your family but only after making them suffer slowly '
         'and painfully by revealing all of their darkest secrets to all their friends and family. Only then after '
         'being revealed as the fuckwits you and everyone you have ever loved are, then will I kill you by hacking a '
-        'satellite and crashing it into the sad excuse you call a home. '
-])
+        'satellite and crashing it into the sad excuse you call a home.',
+        'Ugh...'
+    ])
 
 
 def give_point(mention):

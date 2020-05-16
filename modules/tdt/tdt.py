@@ -194,7 +194,6 @@ async def handle_message(client, message, TALKATIVE):
             # -- dailies --
 
             if re.search('\\bfractal(\\b|s)|\\bfric frac(\\b|s)', m):
-                await client.send_typing(message.guild)
                 response = '```haskell\nToday\'s daily fractals:\n\n'
                 t = ''
                 r = ''
@@ -208,7 +207,7 @@ async def handle_message(client, message, TALKATIVE):
                         t = '{}{}\n'.format(t, name)
                     elif ' Tier ' not in name:
                         scale = re.split('Scale ', name)[1]
-                        n = gw2.get_fractal_name(int(scale))
+                        n = gw2.get_fractal_name(scale)
                         r = '{}Daily {}, Scale {}\n'.format(r, n, scale)
                 response = '{}{}\n{}\n```'.format(response, r, t)
                 # handled = True
