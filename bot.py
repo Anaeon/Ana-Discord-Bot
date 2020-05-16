@@ -414,7 +414,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
         if re.search('\\bfag(\\b|s)|\\bfaggot(\\b|s)|\\bfaggotry\\b|\\bgay(\\b|s)|\\bga{2,99}y(\\b|s)|\\blgbt\\b', m):
             debug.debug(debug.D_INFO, 'Reacting to some faggotry.')
             try:
-                await send.reaction(message, '🏳️‍🌈')
+                await send.reaction(message, '🏳️‍🌈') #TODO: Something better than this? Why does this work?
             except discord.errors.HTTPException as e:
                 debug.debug(debug.D_ERROR, e)
 

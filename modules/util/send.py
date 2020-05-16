@@ -25,7 +25,7 @@ async def message(channel, msg='', embed=None):
         await channel.send(embed=embed)
 
 
-async def reaction(message, reaction):
+async def reaction(message:discord.Message, reaction: discord.Reaction):
     """
     Default function for adding a reaction to a specified message.
     :type message: discord.Message
@@ -33,7 +33,6 @@ async def reaction(message, reaction):
     """
 
     await message.add_reaction(reaction)
-
 
 async def file(channel, input_file):
     """
