@@ -200,7 +200,7 @@ async def handle_message(client: discord.Client, message: discord.message, TALKA
 
             if re.search('\\bfractal(\\b|s)|\\bfric frac(\\b|s)', m):
                 response = compose_fractal_response()
-                await send.message(message.channel, response)
+                # await send.message(message.channel, response)
                 # handled = True
 
             # -- end dailies --
