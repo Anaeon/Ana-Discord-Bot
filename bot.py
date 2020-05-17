@@ -380,6 +380,51 @@ async def on_message(message):  # when someone sends a message. Read command inp
                     await client.get_user(108467075613216768).send('Shutting down.')
                     await client.close()
 
+                if '!exe' in m:
+                    log.info('Running custom code.')
+                    code = message.content.replace('<@!297237845591195651> !exe ', '')
+                    log.debug(code)
+                    if 'await' in code:
+                        try:
+                            log.info('Running code as async.')
+                            # Make an async function with the code and `exec` it
+                            exec(
+                                f'async def __ex(): ' +
+                                ''.join(f'\n {l}' for l in code.split('\n')), # could I iterate this manually?
+                                # allow for the second line after initial delcaring line to map to locals() passed
+                                # then continue iteration?
+                                # would I need to point instead?
+                                # As it stands, if I have to pass an awaited function this way, I don't have access
+                                # to globals() or locals() WHICH IS A GOOD FUCKING THING NORMALLY, but I want to
+                                # protect this and have access so I can call awaited functions like async
+                                # send.message() and the like.
+                                globals(),
+                                locals()
+                            )
+
+                            # exec(
+                                # while int i; i < len(code.split()); i++:
+                            # )
+                            # NO, THIS IS FUCKIG C++
+                            # I NEED PYTHON
+                            # TODO: THIS SHIT
+                            await locals()['__ex']()
+                            # THIS SHIT BE DANGEROUS AS FUCK, YO. PROTECT THAT SHIT.
+                            log.debug('Code ran successfully.')
+                        except BaseException as e:
+                            log.exception('Code failed.')
+                            await send.message(message.channel, str(e))
+                            await send.message(message.channel, '```python\n' + code + '```')
+                    else:
+                        try:
+                            exec(code, globals(), locals())
+                            # THIS SHIT BE DANGEROUS AS FUCK, YO. PROTECT THAT SHIT.
+                            log.debug('Code ran successfully.')
+                        except BaseException as e:
+                            log.exception('Code failed.')
+                            await send.message(message.channel, str(e))
+                            await send.message(message.channel, '```python\n' + code + '```')
+
         # end basic personal commands
 
         # end general stuff
@@ -414,7 +459,9 @@ async def on_message(message):  # when someone sends a message. Read command inp
         if re.search('\\bfag(\\b|s)|\\bfaggot(\\b|s)|\\bfaggotry\\b|\\bgay(\\b|s)|\\bga{2,99}y(\\b|s)|\\blgbt\\b', m):
             debug.debug(debug.D_INFO, 'Reacting to some faggotry.')
             try:
-                await send.reaction(message, '🏳️‍🌈') #TODO: Something better than this? Why does this work?
+                await send.reaction(message, '🏳️‍🌈')
+                # TODO: Something better than this? Why does this work?
+                # It says it doesn't work, but it does exactly what I want it to.
             except discord.errors.HTTPException as e:
                 debug.debug(debug.D_ERROR, e)
 
