@@ -405,7 +405,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
                             # exec(
                                 # while int i; i < len(code.split()); i++:
                             # )
-                            # NO, THIS IS FUCKIG C++
+                            # NO, THIS IS FUCKING C++
                             # I NEED PYTHON
                             # TODO: THIS SHIT
                             await locals()['__ex']()
