@@ -318,7 +318,9 @@ async def on_message(message):  # when someone sends a message. Read command inp
                 await send_talk(args[1].strip(), args[2].strip(), msg.strip())
 
         for mention in message.mentions:
-            if mention == client.user and str(message.author.id) == private.anaeon_id:
+            if str(message.author.id) != private.anaeon_id:
+                pass
+            elif mention == client.user and str(message.author.id) == private.anaeon_id:
                 if '!debugon' in m:
                     if debug.DEBUG:
                         await send.message(message.channel, 'Debug was already active.')
@@ -380,41 +382,25 @@ async def on_message(message):  # when someone sends a message. Read command inp
                     await client.get_user(108467075613216768).send('Shutting down.')
                     await client.close()
 
-                if '!exe' in m:
+                if '!exe' in message.content:
                     log.info('Running custom code.')
                     code = message.content.replace('<@!297237845591195651> !exe ', '')
+                    locs=locals()
+                    new_code = f'async def _ex(locs): '
                     log.debug(code)
                     if 'await' in code:
                         try:
                             log.info('Running code as async.')
-                            # Make an async function with the code and `exec` it
-                            exec(
-                                f'async def __ex(): ' +
-                                ''.join(f'\n {l}' for l in code.split('\n')), # could I iterate this manually?
-                                # allow for the second line after initial delcaring line to map to locals() passed
-                                # then continue iteration?
-                                # would I need to point instead?
-                                # As it stands, if I have to pass an awaited function this way, I don't have access
-                                # to globals() or locals() WHICH IS A GOOD FUCKING THING NORMALLY, but I want to
-                                # protect this and have access so I can call awaited functions like async
-                                # send.message() and the like.
-                                globals(),
-                                locals()
-                            )
-
-                            # exec(
-                                # while int i; i < len(code.split()); i++:
-                            # )
-                            # NO, THIS IS FUCKING C++
-                            # I NEED PYTHON
-                            # TODO: THIS SHIT
-                            await locals()['__ex']()
+                            for line in code.split('\n'):
+                                new_code = new_code + f'\n    ' + line
+                            exec(new_code)
+                            await locals()['_ex'](locs)
                             # THIS SHIT BE DANGEROUS AS FUCK, YO. PROTECT THAT SHIT.
                             log.debug('Code ran successfully.')
                         except BaseException as e:
                             log.exception('Code failed.')
                             await send.message(message.channel, str(e))
-                            await send.message(message.channel, '```python\n' + code + '```')
+                            await send.message(message.channel, '```python\n' + new_code + '```')
                     else:
                         try:
                             exec(code, globals(), locals())
