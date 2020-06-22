@@ -16,13 +16,15 @@ async def message(channel, msg='', embed:Embed=None):
     embed Optional[:class: discord.Embed] an Embed object to send instead of a message.
     """
     if embed is None:
+        splitter = '||'
         time = len(msg)/_chars_per_second
 
         time = time if time <= _max_type_seconds else _max_type_seconds
-
-        await typing(channel)
-        await asyncio.sleep(time)
-        await channel.send(msg)
+        lines = msg.split(splitter)
+        for line in lines:
+            await typing(channel)
+            await asyncio.sleep(time/len(lines))
+            await channel.send(line)
     else:
         await channel.send(embed=embed)
 

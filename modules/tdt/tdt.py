@@ -169,29 +169,25 @@ async def handle_message(client: discord.Client, message: discord.message, TALKA
             # -- pearl points --
 
             if ('give' in m or '+1' in m) and ('pearlpoint' in m or 'pearl point' in m or (
-                    'pearl' in m and 'point' in m) or 'point' in m) and '!resetpointstogive' not in m:
+                    'pearl' in m and 'point' in m) or 'point' in m) and '!resetpointstogive' not in m and (
+                    'do i' not in m):
                 debug.debug(debug.D_VERBOSE, 'Pearl points are being given.')
                 response = scoreboard.give_points(client, message)
-                # handled = True
             elif ('take' in m or 'remove' in m or '-1' in m) and (
                             'pearlpoint' in m or 'pearl point' in m or ('pearl' in m and 'point' in m) or 'point' in m):
                 response = scoreboard.take_points(client, message)
-                # handled = True
             elif 'how many points' in m or 'how many pearlpoints' in m or (
                         'how' in m and 'many' in m and 'points' in m):
                 if ' i ' in m:
                     debug.debug(debug.D_INFO, 'Fetching remaining points for {}.'.format(message.author))
                     response = scoreboard.read_points_to_give(client, message)
-                    # handled = True
                 else:
                     response = scoreboard.read_points(client, message)
-                    # handled = True
             elif 'who\'s winning' in m or 'leaderboard' in m or 'scoreboard' in m:
                 if 'beta' not in m:
                     response = scoreboard.get_top_points()
                 elif 'beta' in m:
                     await send.message(message.channel, embed=scoreboard.get_top_points(True))
-                # handled = True
             debug.debug(debug.D_VERBOSE, '{}, {}'.format(message.author.id, private.anaeon_id))
 
             # -- end pearl points --

@@ -2,20 +2,20 @@ import random
 
 
 no_words_regex = [
-    '\\bsuc{2,999}(\\b|s|k)',
-    '\\bfuc{2,999}(\\b|s|k)',
-    '\\bthic{2,999}(\\b|s|k)',
-    '\\bpussi?(\\b|s)',
-    '\\bdic{2,999}(\\b|s|k)',
-    '\\bswag(\\b|s)',
-    '\\byolo(\\b|s)',
+    '\\bsu{2,999}c{2,999}(\\b|s|k)',
+    '\\bfu{2,999}c{2,999}(\\b|s|k)',
+    '\\bthi{2,999}c{2,999}(\\b|s|k)',
+    '\\bpu{2,999}ss{2,999}i?(\\b|s)',
+    '\\bdi{2,999}c{2,999}(\\b|s|k)',
+    '\\bswa{2,999}g(\\b|s)',
+    '\\byolo{2,999}(\\b|s)',
     '\\blic{2,999}(\\b|s|k)',
     '\\bpric{2,999}(\\b|s|k)',
     '\\bbae(\\b|s)',
     '\\bfam(\\b|s)',
     '\\bsweet nibblet(\\b|s)',
-    '\\bsuc{2,999}y\\b',
-    '\\blit\\b'
+    '\\bsu{2,999}c{2,999}y\\b',
+    '\\bli{2,999}t\\b'
 ]
 
 
@@ -52,7 +52,7 @@ def give_point(mention):
         "{}, your friends have acknowledged your existance.".format(mention.mention),
         "Fine... I guess.",
         "Alright, but I don't like it.",
-        "Are you sure? Like... really sure?\n\nOoookkkkkk.",
+        "Are you sure? Like... really sure?||Ooookkkkkk.",
         "Finally! 'Bout time.",
         "Do I even want to know what you had to do to get that, {}?".format(mention.mention),
         "Don't spend it all in one place. ;D",

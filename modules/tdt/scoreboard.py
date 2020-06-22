@@ -20,7 +20,7 @@ def init_points_to_give(message):
             storage.get_user_attribute(user.id, 'available_pearl_points')
         except KeyError as e:
             storage.set_user_attribute(user.id, 'available_pearl_points', dailyPoints)
-            response = '{}{}'.format(response, user.mention)
+            response = '{}||{}'.format(response, user.mention)
 
     # also init the server attribute for the datetime of the next reset
     x = datetime.today()  # today
@@ -35,7 +35,7 @@ def init_points_to_give(message):
 
 def reset_points_to_give(server):
     users = server.members
-    response = 'The following users have been given new points to use:\n\n'
+    response = 'The following users have been given new points to use:'
     new_points_given = False
     for user in users:
         user_points_left = 0
@@ -44,7 +44,7 @@ def reset_points_to_give(server):
             if user_points_left < pointToGiveCap:
                 give = user_points_left + dailyPoints
                 storage.set_user_attribute(user.id, 'available_pearl_points', give)
-                response = '{}{}\n'.format(response, user.mention)
+                response = '{}||{}'.format(response, user.mention)
                 new_points_given = True
         except KeyError as e:
             pass
@@ -120,16 +120,18 @@ def give_points(client, message):
                     p = storage.get_user_attribute(id, "pearl_points")
                     debug.debug(debug.D_INFO, '{} has {} points now.'.format(mention, p))
                     response = strings.give_point(mention)
-                    response = "{}\n\nAlright, I gave a point to {}.".format(response, mention.mention)
+                    response = "{}||Alright, I gave a point to {}.".format(response, mention.mention)
                     if ptg - 1 == 1:
-                        response = '{}\n\n{}, you have {} point left to give.'.format(response, message.author.mention,
+                        response = '{}||{}, you have {} point left to give.'.format(response, message.author.mention,
                                                                                       ptg - 1)
                     else:
-                        response = '{}\n\n{}, you have {} points left to give.'.format(response, message.author.mention,
+                        response = '{}||{}, you have {} points left to give.'.format(response, message.author.mention,
                                                                                        ptg - 1)
                     storage.set_user_attribute(message.author.id, 'available_pearl_points', ptg - 1)
             else:
                 response = 'You don\'t have any more points to give today, {}.'.format(message.author.mention)
+        else:
+            response = 'I can\'t give a point to no one or myself.||Try mentioning the person you want to give points to.'
     return response
 
 
@@ -161,12 +163,12 @@ def take_points(client, message):
                     p = storage.get_user_attribute(id, "pearl_points")
                     print('{} has {} points now.'.format(mention, p))
                     response = strings.take_point(mention)
-                    response = "{}\n\nAlright, I took a point from {}.".format(response, mention.mention)
+                    response = "{}||Alright, I took a point from {}.".format(response, mention.mention)
                     if ptg - 1 == 1:
-                        response = '{}\n\n{}, you have {} point left to take.'.format(response, message.author.mention,
+                        response = '{}||{}, you have {} point left to take.'.format(response, message.author.mention,
                                                                                       ptg - 1)
                     else:
-                        response = '{}\n\n{}, you have {} points left to take.'.format(response, message.author.mention,
+                        response = '{}||{}, you have {} points left to take.'.format(response, message.author.mention,
                                                                                        ptg - 1)
                     storage.set_user_attribute(message.author.id, 'available_pearl_points', ptg - 1)
             else:
@@ -196,18 +198,18 @@ def read_points(client, message):
 
 
 def reset_points(client, message):
-    response = 'Pearl points for the following users have been reset: \n\n'
+    response = 'Pearl points for the following users have been reset:'
     if message.mention_everyone:
         users = storage.get_attribute_for_users("pearl_points")
         for i, u in enumerate(users):
             storage.remove_user_attribute(u['id'], 'pearl_points')
-            response = '{}<@{}>\n'.format(response, u['id'])
+            response = '{}||<@{}>'.format(response, u['id'])
     else:
         for mention in message.mentions:
             if mention != client.user:
                 id = mention.id
                 storage.remove_user_attribute(id, "pearl_points")
-                response = '{}{}\n'.format(response, mention.mention)
+                response = '{}||{}'.format(response, mention.mention)
     return response
 
 
@@ -218,9 +220,10 @@ def get_top_points(use_embed = False, raw = False):
     if raw:
         return board
     elif not use_embed:
-        response = 'Leaderboard:\n\n'
+        response = 'Leaderboard:'
         for i, p in enumerate(board):
-            response = '{0}{1}:[{2}] - <@{3}>\n'.format(response, i + 1, p['pearl_points'], p['id'])
+            # response = '{0}{1}:[{2}] - <@{3}>\n'.format(response, i + 1, p['pearl_points'], p['id'])
+            response = '{0}||{1}:[{2}] - <@{3}>'.format(response, i + 1, p['pearl_points'], p['id'])
         return response
     elif use_embed:
         embed = discord.Embed(title = 'Leaderboard', color = misc.ANA_COLOR, footer='This is in beta testing.')
