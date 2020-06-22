@@ -6,6 +6,7 @@ import os
 import asyncio
 import hashlib
 import logging
+import GUI
 
 from modules.tdt import tdt
 from modules.util import debug
@@ -16,6 +17,7 @@ from modules.api import trump
 from modules.util import send
 
 client = discord.Client()
+gui = None
 
 frmt = logging.Formatter(misc.LOGGER_FORMATTING)
 
@@ -127,7 +129,6 @@ async def hash_images():
             if os.path.isfile(d + '/' + _dir + '/' + fn):
                 await make_md5_hash(d + _dir, fn)
 
-
 @client.event
 async def on_connect():
     log.info('Connected')
@@ -141,6 +142,7 @@ async def on_disconnect():
 @client.event
 async def on_ready():
     global client
+    global gui
     print('Logged in as')
     print(client.user.name)
     print(client.user.id)
@@ -153,6 +155,8 @@ async def on_ready():
     await hash_images()
 
     asyncloop = asyncio.get_event_loop()
+
+    gui = GUI.GUI(asyncloop, client)
 
     debug.on_ready()
     await tdt.on_ready(client, asyncloop)
