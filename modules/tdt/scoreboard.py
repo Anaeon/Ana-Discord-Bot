@@ -131,7 +131,8 @@ def give_points(client, message):
             else:
                 response = 'You don\'t have any more points to give today, {}.'.format(message.author.mention)
         else:
-            response = 'I can\'t give a point to no one or myself.||Try mentioning the person you want to give points to.'
+            response = 'I can\'t give a point to no one or myself.||'
+            'Try mentioning the person you want to give points to.'
     return response
 
 
@@ -173,6 +174,9 @@ def take_points(client, message):
                     storage.set_user_attribute(message.author.id, 'available_pearl_points', ptg - 1)
             else:
                 response = 'You don\'t have any more points to take today, {}.'.format(message.author.mention)
+        else:
+            response = 'I can\'t take a point from no one or myself.||'
+            'Try mentioning the person you want to give points to.'
     return response
 
 

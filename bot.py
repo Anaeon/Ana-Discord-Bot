@@ -156,11 +156,12 @@ async def on_ready():
 
     asyncloop = asyncio.get_event_loop()
 
-    gui = GUI.GUI(asyncloop, client)
+    if gui is None:
+        gui = GUI.on_ready(asyncloop, client)
 
     debug.on_ready()
     await tdt.on_ready(client, asyncloop)
-    await client.get_user(108467075613216768).send('Rebooted and reconnected.')
+    # await client.get_user(108467075613216768).send('Rebooted and reconnected.')
 
 
 @client.event
@@ -173,7 +174,7 @@ async def on_message_edit(before, after):
     #  is_neon = False
     #  is_durg = False
     try:
-        is_tdt = str(after.guild.id) == private.tdt_server_id
+        is_tdt = after.guild.id == private.tdt_server_id
     except AttributeError as e:
         debug.debug(debug.D_ERROR,
                     'Caught AttributeError while trying to determine what server a message came from. {}'.format(e))
@@ -195,10 +196,15 @@ async def on_message_edit(before, after):
 async def on_message(message):  # when someone sends a message. Read command inputs here.
     global CAN_DELETE
     global TALKATIVE
+    global gui
+
+    gui.add_chat_message(message)
+
     m_guild = 'Unknown'
     m_guild_id = 'None'
     m_channel = 'Unknown'
     m_channel_id = 'None'
+
     if message.guild is not None:
         m_guild = str(message.guild)
         m_guild_id = str(message.guild.id)
@@ -306,7 +312,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
         # basic personal commands
 
         #  private message commands
-        if str(message.channel.id) == private.anaeon_dm_id:
+        if message.channel.id == private.anaeon_dm_id:
 
             # !talk
             if m.startswith('!talk'):
@@ -322,9 +328,9 @@ async def on_message(message):  # when someone sends a message. Read command inp
                 await send_talk(args[1].strip(), args[2].strip(), msg.strip())
 
         for mention in message.mentions:
-            if str(message.author.id) != private.anaeon_id:
+            if message.author.id != private.anaeon_id:
                 pass
-            elif mention == client.user and str(message.author.id) == private.anaeon_id:
+            elif mention == client.user and message.author.id == private.anaeon_id:
                 if '!debugon' in m:
                     if debug.DEBUG:
                         await send.message(message.channel, 'Debug was already active.')
@@ -528,7 +534,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
 async def on_exit():
     await tdt.on_exit()
     debug.on_exit()
-    await client.close()
+    await client.close()  # is this redundant?
 
 
 client.run(private.token)
