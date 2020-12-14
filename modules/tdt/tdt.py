@@ -150,10 +150,8 @@ async def handle_message(client: discord.Client, message: discord.message, TALKA
     # Add reactions to some messages
 
     if 'treebs' in m or 'omega' in m or 'leftovers' in m and TALKATIVE:
-        r = discord.Reaction(message=message, data=None, emoji='treebs:235655554465398784')
-        # I don't know what the 'message' and 'data' params are doing here...
         debug.debug(debug.D_INFO, 'Treebs was here...')
-        await send.reaction(message, r)
+        await send.reaction(message, 'treebs:235655554465398784')
 
     # End adding reactions
 
