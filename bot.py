@@ -7,6 +7,9 @@ import asyncio
 import hashlib
 import logging
 import GUI
+import calendar
+
+from datetime import datetime
 
 from modules.tdt import tdt
 from modules.util import debug
@@ -14,7 +17,9 @@ from modules.data import strings
 from modules.data import private
 from modules.data import misc
 from modules.api import trump
+from modules.api import wordnik
 from modules.util import send
+from modules.util import storage
 
 client = discord.Client()
 gui = None
@@ -32,6 +37,8 @@ dislog.setLevel(logging.DEBUG)
 
 c_out = logging.StreamHandler()
 c_out.setFormatter(frmt)
+
+main_update_loop = None
 
 log.addHandler(c_out)
 # wslog.addHandler(c_out)
@@ -113,7 +120,7 @@ async def make_md5_hash(_dir, fn):
     elif os.path.exists(_dir + '/' + md5hashname + '.' + ext):
         # debug.debug(debug.D_VERBOSE, 'File already exists... deleting duplicate')
         log.debug('File already exists... deleting duplicate.')
-        os.remove(_dir + fn)
+        os.remove(_dir + '/' + fn)
     elif fn is not md5hashname + '.' + ext:
         # debug.debug(debug.D_VERBOSE, 'Hashing file...')
         log.debug('Hashing file...')
@@ -125,9 +132,82 @@ async def hash_images():
     log.info('Hashing image files')
     d = '{}{}'.format(misc.CACHE_DIRECTORY, 'images/')
     for _dir in os.listdir(d):
-        for fn in os.listdir(d + '/' + _dir):
-            if os.path.isfile(d + '/' + _dir + '/' + fn):
-                await make_md5_hash(d + _dir, fn)
+        if _dir != 'desktop.ini':
+            for fn in os.listdir(d + '/' + _dir):
+                if os.path.isfile(d + '/' + _dir + '/' + fn) and fn != 'desktop.ini':
+                    await make_md5_hash(d + _dir, fn)
+
+
+async def wotd(chan=None):
+    if chan is None:
+        pass
+    else:
+        await send.message(chan, wordnik.get_wotd())
+
+
+async def daily():
+    try:
+        _now = datetime.now()
+        _next = storage.get_server_attribute('default', 'next_wotd_datetime')
+        debug.debug(debug.D_VERBOSE, 'Current time: {} Next reset: {}'.format(
+            _now.strftime('%H:%M:%S'), _next.strftime('%H:%M:%S')))
+        if _now > _next:
+            # DO DAILY STUFF HERE
+
+            if tdt._gen_channel is not None:
+                await wotd(tdt._gen_channel)
+            else:
+                log.info('tdt general channel not set yet... waiting.')
+
+            # NO DAILY STUFF PAST THIS LINE
+    except KeyError as e:
+        debug.debug(debug.D_ERROR, e)
+        x = datetime.today()  # today
+        if datetime.now().hour < 17:
+            y = x.replace(hour=17, minute=0, second=0, microsecond=0)  # today at 5pm
+        else:
+            if x.day + 1 <= calendar.monthrange(x.year, x.month)[1]:
+                y = x.replace(day=x.day + 1, hour=17, minute=0, second=5, microsecond=0)  # tomorrow at 5pm
+            else:
+                if x.month + 1 <= 12:
+                    #  first day of next month at 5pm
+                    y = x.replace(month=x.month + 1, day=1, hour=17, minute=0, second=5, microsecond=0)
+                else:
+                    y = x.replace(year=x.year + 1, month=1, day=1, hour=17, minute=0, second=5,
+                                  microsecond=0)
+        storage.set_server_attribute('default', 'next_wotd_datetime', y)
+    except AttributeError as e:
+        debug.debug(debug.D_ERROR, e)
+    debug.debug(debug.D_VERBOSE, 'Time to next wotd: {}'.format(
+        (storage.get_server_attribute('default', 'next_wotd_datetime') - datetime.now())))
+
+    #ensure that the timer is reset
+    x = datetime.today()  # today
+    if datetime.now().hour < 17:
+        y = x.replace(hour=17, minute=0, second=0, microsecond=0)  # today at 5pm
+    else:
+        if x.day + 1 <= calendar.monthrange(x.year, x.month)[1]:
+            y = x.replace(day=x.day + 1, hour=17, minute=0, second=0, microsecond=0)  # tomorrow at 5pm
+        else:
+            if x.month + 1 <= 12:
+                #  first day of next month at 5pm
+                y = x.replace(month=x.month + 1, day=1, hour=17, minute=0, second=0, microsecond=0)
+            else:
+                y = x.replace(year=x.year + 1, month=1, day=1, hour=17, minute=0, second=0, microsecond=0)
+
+    delta_t = y - x  # time between now and next reset
+    secs = delta_t.seconds + 1
+
+    # t = Timer(secs, resetPointsToGive(server))
+
+    storage.set_server_attribute('default', 'next_wotd_datetime', y)
+
+
+async def update():
+    debug.debug(debug.D_VERBOSE, 'Running main update loop...')
+    await daily()
+    await asyncio.sleep(10)
+
 
 @client.event
 async def on_connect():
@@ -143,6 +223,7 @@ async def on_disconnect():
 async def on_ready():
     global client
     global gui
+    global main_update_loop
     print('Logged in as')
     print(client.user.name)
     print(client.user.id)
@@ -162,6 +243,7 @@ async def on_ready():
     debug.on_ready()
     await tdt.on_ready(client, asyncloop)
     # await client.get_user(108467075613216768).send('Rebooted and reconnected.')
+    main_update_loop = asyncio.run_coroutine_threadsafe(update(), loop=asyncloop)
 
 
 @client.event
@@ -227,29 +309,32 @@ async def on_message(message):  # when someone sends a message. Read command inp
 
         # Do these things in general...
 
-        if re.search('\\bshut up\\b', m):
-            debug.debug(debug.D_INFO, 'Silencing the bot.')
-            TALKATIVE = False
-            await send.message(message.channel, 'Understood.')
-            debug.debug(debug.D_INFO, 'Silencing the bot.')
+        # Only if mentioned
+        for mention in message.mentions:
+            if mention == client.user:
+                if re.search('\\bshut up\\b', m):
+                    debug.debug(debug.D_INFO, 'Silencing the bot.')
+                    TALKATIVE = False
+                    await send.message(message.channel, 'Understood.')
+                    debug.debug(debug.D_INFO, 'Silencing the bot.')
 
-        if re.search('\\bspeak up\\b', m):
-            debug.debug(debug.D_INFO, 'Unsilencing the bot.')
-            TALKATIVE = True
-            await send.message(message.channel, 'Understood.')
+                if re.search('\\bspeak up\\b', m):
+                    debug.debug(debug.D_INFO, 'Unsilencing the bot.')
+                    TALKATIVE = True
+                    await send.message(message.channel, 'Understood.')
 
-        if re.search('\\bdelete stuff\\b', m):
-            # if hasattr(client, discord.Permissions.manage_messages):
-            debug.debug(debug.D_INFO, 'Deleting things from this point.')
-            CAN_DELETE = True
-            await send.message(message.channel, 'Understood.')
-            # else:
-                # await send.message(message.channel, 'I do not have permission to do that from the server\'s owner.')
+                if re.search('\\bdelete stuff\\b', m):
+                    # if hasattr(client, discord.Permissions.manage_messages):
+                    debug.debug(debug.D_INFO, 'Deleting things from this point.')
+                    CAN_DELETE = True
+                    await send.message(message.channel, 'Understood.')
+                    # else:
+                        # await send.message(message.channel, 'I do not have permission to do that from the server\'s owner.')
 
-        if re.search('\\bdo not delete stuff\\b', m):
-            debug.debug(debug.D_INFO, 'Deleting things from this point.')
-            CAN_DELETE = False
-            await send.message(message.channel, 'Understood.')
+                if re.search('\\bdo not delete stuff\\b', m):
+                    debug.debug(debug.D_INFO, 'Deleting things from this point.')
+                    CAN_DELETE = False
+                    await send.message(message.channel, 'Understood.')
 
         # get a random Trump quote because why the fuck not?
 
