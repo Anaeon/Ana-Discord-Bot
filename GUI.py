@@ -47,10 +47,15 @@ class GUI(AsyncTk):
         m_channel = 'DM' if type(message.channel) is discord.DMChannel else message.channel.name
         m_author = message.author.name if message.author.display_name is None else message.author.display_name
         fr.config(state='normal')  # unlock the text box so it can be edited.
+        ms = message.content
+        uni_chars = [ms[c] for c in range(len(ms)) if ord(ms[c]) in range(65536)]
+        string = ''
+        for ch in uni_chars:
+            string = string + ch
         if self.msg_index == 0:
             fr.insert(
                 END,
-                '[G:{}][C:{}][A:{}]:{}'.format(m_guild, m_channel, m_author, message.content),
+                '[G:{}][C:{}][A:{}]:{}'.format(m_guild, m_channel, m_author, string),
                 None if tag is None else tag
             )
         elif self.msg_index > 0:
@@ -65,7 +70,7 @@ class GUI(AsyncTk):
                 # fr.window_create(END, window=AsyncLabel(fr, image=img))
             fr.insert(
                 END,
-                '\n[G:{}][C:{}][A:{}]:{}'.format(m_guild, m_channel, m_author, message.content),
+                '\n[G:{}][C:{}][A:{}]:{}'.format(m_guild, m_channel, m_author, string),
                 None if tag is None else tag
             )
         fr.config(state='disabled')  # lock the text box so it can't be edited.
