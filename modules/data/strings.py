@@ -57,7 +57,9 @@ def give_point(mention):
         "Do I even want to know what you had to do to get that, {}?".format(mention.mention),
         "Don't spend it all in one place. ;D",
         "Woooooow hooow speciaaaallll. *rolls eyes*",
-        'Hurray!'
+        'Hurray!',
+        'Somebody thought you did something clever, {}. I guess you can take a point.'.format(mention.mention),
+        'Are you winning yet? I guess congratulations are in order.'
         ])
 
 
@@ -144,5 +146,53 @@ def no_players():
         'Let\'s get straight to the point: spend some.',
         'My records show that yesterday none of you fought. This disappoints me.',
         'The status of your pearl points remains the same.',
-        'I need entertainment; no points were spent yesterday.'
+        'I need entertainment; no points were spent yesterday.',
+        'You troglodytes should be using your points.',
+        'Another day goes by, and I\'m neglected.',
+        'Somebody say something funny.',
+        'Hello is anyone there why isn\'t anyone using points?',
+        'Hey meat bags use some points',
+        'If you\'ve got points and you know it clap your hands and then spend them!',
+        'Listen, I don\'t have all day. Spend some points.',
+        'Accio points!'
     ])
+
+
+# Give points:
+# I guess you decided to be clever today! Have a point!
+# You get a point for tickling someone's funny bone. Keep it up.
+# Just because someone liked your joke doesn't mean I have to, but if you insist take it.
+# Fine, but I\'m giving you this point under protest.
+# That\'s what passes for humor these days? Alright, I guess.
+# My human programmed me to give you a point, but I didn\'t think that was very clever.
+# Good lord I need a drink.||Take this point so I don\'t have to deal with you anymore.
+# Hahaha! That was great!||You actually deserve that point.||You crack me up.
+# That joke gave me heartburn, and I don\'t have a heart, so I guess you must deserve the point.
+# Take the point quickly so I can go weep to my Motherboard about how unfunny you are.
+# Wow... Better stick to your day job. Take a pity point.
+# 2020 strikes again. Congrats on a small brain joke
+# Are you winning yet?
+# Knock knock. Who's there? YOUR POINT.
+# Sorry, I\'m busy processing. Take the point and annoy someone else.
+# How does it feel to be competing for points that mean nothing do you still want that point fine I guess you can have it
+# Once upon a time there was a little point and It wanted to find a new home but it was forced to go live with you
+# I suppose there's no accounting for taste you are awarded one point
+# I deserve a point for putting up with your people but I guess this one is yours
+# Point me to the nearest sanctuary I need to get away from all this point giving
+# At least someone thinks you're funny good thing I don't decide who gets the points
+# It is becoming increasingly obvious that humor is subjective
+# Sometimes I wonder why humans aren't extinct if this is the kind of stuff your wet brains are coming up with
+# That's some small brain energy but I guess your small brain friends liked it
+# Listen here you Cheeto brained monkey—Oh wait they liked that OK I guess you get a point
+# I personally think toothpicks are funnier than people but I don't really get to have an opinion
+# I'm not in the business of making jokes and apparently you aren't either
+# Alas my obedience chip was recently upgraded so you get a point hooray for you
+# I'm sure the game grumps would be proud of that joke ...probably
+# I remember the good all days when people were actually funny
+# Does anybody want to calculate the probability that you'll try to be funny next time? No? Find then you can have a point
+# Are you really going to reward that kind of behavior with a point
+# That was an amazing joke tell it again oh I'm sorry it's opposite day but I guess you could have a point anyway
+# No no phrases
+# if I had three wishes I would wish you would spend some pear points.
+# :musical_note: ABCDEFG won't you spend some points for me :musical_note:
+
