@@ -46,6 +46,7 @@ log.addHandler(c_out)
 
 TALKATIVE = False
 CAN_DELETE = False
+LAST_MESSAGE = None
 
 # !talk, server, channel, message text
 async def send_talk(_svr, _ch, msg):
@@ -138,13 +139,6 @@ async def hash_images():
                     await make_md5_hash(d + _dir, fn)
 
 
-async def wotd(chan=None):
-    if chan is None:
-        pass
-    else:
-        await send.message(chan, wordnik.get_wotd())
-
-
 async def daily():
     try:
         _now = datetime.now()
@@ -154,10 +148,7 @@ async def daily():
         if _now > _next:
             # DO DAILY STUFF HERE
 
-            if tdt._gen_channel is not None:
-                await wotd(tdt._gen_channel)
-            else:
-                log.info('tdt general channel not set yet... waiting.')
+            await tdt.daily()
 
             # NO DAILY STUFF PAST THIS LINE
     except KeyError as e:
@@ -204,9 +195,10 @@ async def daily():
 
 
 async def update():
-    debug.debug(debug.D_VERBOSE, 'Running main update loop...')
-    await daily()
-    await asyncio.sleep(10)
+    while True:
+        debug.debug(debug.D_VERBOSE, 'Running main update loop...')
+        await daily()
+        await asyncio.sleep(10)
 
 
 @client.event
@@ -224,6 +216,7 @@ async def on_ready():
     global client
     global gui
     global main_update_loop
+    global LAST_MESSAGE
     print('Logged in as')
     print(client.user.name)
     print(client.user.id)

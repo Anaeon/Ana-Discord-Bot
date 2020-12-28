@@ -22,9 +22,10 @@ async def message(channel, msg='', embed:Embed=None):
         time = time if time <= _max_type_seconds else _max_type_seconds
         lines = msg.split(splitter)
         for line in lines:
-            await typing(channel)
-            await asyncio.sleep(time/len(lines))
-            await channel.send(line)
+            if line != '':
+                await typing(channel)
+                await asyncio.sleep(time/len(lines))
+                await channel.send(line)
     else:
         await channel.send(embed=embed)
 

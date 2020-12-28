@@ -100,6 +100,10 @@ def give_points(client, message):
     if len(message.mentions) >= 3:
         return 'You can\'t send points to more than one person at a time.'
     for mention in message.mentions:
+        debug.debug(debug.D_VERBOSE, 'Checking mention: ' + mention.name)
+        debug.debug(debug.D_VERBOSE, 'mention != client.user : ' + str(mention != client.user))
+        debug.debug(debug.D_VERBOSE, 'mention != message.author : ' + str(mention != message.author))
+        debug.debug(debug.D_VERBOSE, 'mention.bot : ' + str(mention.bot))
         if mention != client.user and mention != message.author and not mention.bot:
             ptg = 0
             try:
@@ -111,7 +115,7 @@ def give_points(client, message):
                 try:
                     pearlpoints = int(storage.get_user_attribute(id, "pearl_points"))
                 except KeyError as e:
-                    debug.debug(debug.D_ERROR, '{} did not have a \'pearl_points\' attribute.'.format(mention))
+                    debug.debug(debug.D_ERROR, '{} did not have a \'pearl_points\' attribute.'.format(mention.name))
                     debug.debug(debug.D_ERROR, e)
                 finally:
                     debug.debug(debug.D_INFO, 'Giving {} a point.'.format(mention))
@@ -128,11 +132,12 @@ def give_points(client, message):
                         response = '{}||{}, you have {} points left to give.'.format(response, message.author.mention,
                                                                                        ptg - 1)
                     storage.set_user_attribute(message.author.id, 'available_pearl_points', ptg - 1)
+                    return response
             else:
-                response = 'You don\'t have any more points to give today, {}.'.format(message.author.mention)
+                return 'You don\'t have any more points to give today, {}.'.format(message.author.mention)
         else:
-            response = 'I can\'t give a point to no one or myself.||'
-            'Try mentioning the person you want to give points to.'
+            response = 'I can\'t give a point to no one or myself.||'\
+                'Try mentioning the person you want to give points to.'
     return response
 
 
@@ -172,11 +177,12 @@ def take_points(client, message):
                         response = '{}||{}, you have {} points left to take.'.format(response, message.author.mention,
                                                                                        ptg - 1)
                     storage.set_user_attribute(message.author.id, 'available_pearl_points', ptg - 1)
+                    return response
             else:
-                response = 'You don\'t have any more points to take today, {}.'.format(message.author.mention)
+                return 'You don\'t have any more points to take today, {}.'.format(message.author.mention)
         else:
-            response = 'I can\'t take a point from no one or myself.||'
-            'Try mentioning the person you want to give points to.'
+            return'I can\'t take a point from no one or myself.||'\
+                'Try mentioning the person you want to give points to.'
     return response
 
 
@@ -249,7 +255,7 @@ def force_change_attribute(client, message, attribute_name, value):
     """Changes the target users attribute by the given amount."""
     old_attribute = ''
     for mention in message.mentions:
-        if mention is not client.user:
+        if mention != client.user:
             int_value = None
             try:
                 old_attribute = storage.get_user_attribute(mention.id, attribute_name)
@@ -266,5 +272,4 @@ def force_change_attribute(client, message, attribute_name, value):
                 return s
             except ValueError as e:
                 return '{} is not a valid integer.'.format(value)
-        else:
-            return 'I can\'t modify my own attributes.'
+    return "I don't know what happened..."

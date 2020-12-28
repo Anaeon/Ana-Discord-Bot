@@ -5,6 +5,7 @@ import time
 import discord
 
 from modules.api import gw2
+from modules.api import wordnik
 from modules.tdt import scoreboard
 from modules.util import storage
 from modules.util import debug
@@ -18,6 +19,17 @@ _guild = None
 _gen_channel = None
 _bot_channel = None
 update_loop = None
+
+LAST_MESSAGE_TIME = None
+
+# TODO: UPDATE THIS MODULE TO USE PROPER LOGGING.
+
+
+async def wotd(chan=None):
+    if chan is None:
+        pass
+    else:
+        await send.message(chan, wordnik.get_wotd())
 
 
 def compose_fractal_response() -> str:
@@ -41,6 +53,7 @@ def compose_fractal_response() -> str:
     return '{}{}\n{}\n```'.format(response, r, t)
 
 
+# TODO: Remove this if new setup works.
 async def pearl_tick(guild, chan):
     debug.debug(debug.D_VERBOSE, 'Running pearl_tick...')
     if _guild is None:
@@ -76,18 +89,45 @@ async def pearl_tick(guild, chan):
             (storage.get_server_attribute(guild.id, 'next_pearl_point_reset_datetime') - datetime.now())))
 
 
+# TODO: Remove this if new setup works.
 async def update():
     global _guild
     global _gen_channel
     debug.debug(debug.D_VOMIT, 'Staring TDT update coroutine...')
     while True:
         debug.debug(debug.D_VOMIT, 'TDT Updating.')
-        await pearl_tick(_guild, _gen_channel)
+        # await pearl_tick(_guild, _gen_channel)
 
     # if it's past that time, reset.
         await asyncio.sleep(10)
 
 # Update = threading.Thread(target=tick, name='tdtUpdate')
+
+
+async def daily():
+    global _gen_channel
+    global _guild
+
+    if _gen_channel is not None:
+        if _guild is not None:
+            await send.message(_gen_channel, scoreboard.reset_points_to_give(_guild))
+        await wotd(_gen_channel)
+
+
+async def catch_up(client):
+    # channel_histories = []
+    debug.debug(debug.D_INFO, 'Getting history for TDT...')
+    for channel in _guild.text_channels:
+        debug.debug(debug.D_INFO, 'Collecting messages from {}'.format(channel.name))
+        try:
+            messages = await channel.history(after = LAST_MESSAGE_TIME).flatten()
+            for msg in messages:
+                await handle_message(client, msg, False, True)
+                print(msg.content)
+                for mention in msg.mentions:
+                    print(mention)
+        except discord.errors.Forbidden as e:
+            debug.debug(debug.D_INFO, "I don't have permission for {}.".format(channel.name))
 
 
 async def on_ready(client, loop):
@@ -106,6 +146,8 @@ async def on_ready(client, loop):
     global _bot_channel
     global _guild
     global update_loop
+    global LAST_MESSAGE_TIME
+
     debug.debug(debug.D_VERBOSE, 'Collecting server info...')
     for server in client.guilds:
         debug.debug(debug.D_VOMIT, '{}:{} == {}'.format(
@@ -120,7 +162,7 @@ async def on_ready(client, loop):
                 elif channel.name == 'bot-test-chat':
                     _bot_channel = channel
                     debug.debug(debug.D_VERBOSE, 'Bot channel locked in...')
-    update_loop = asyncio.run_coroutine_threadsafe(update(), loop=loop)
+    # update_loop = asyncio.run_coroutine_threadsafe(update(), loop=loop)
     if _gen_channel is not None and _bot_channel is not None and _guild is not None:
         debug.debug(debug.D_INFO, 'TDT+ initialized')
     else:
@@ -132,15 +174,26 @@ async def on_ready(client, loop):
         if _bot_channel is None:
             debug.debug(debug.D_ERROR, 'Couldn\'t find the bot channel.')
 
+    # Time to catch up.
+    LAST_MESSAGE_TIME = storage.get_server_attribute(_guild.id, 'last_message')
+    await catch_up(client)
 
-async def handle_message(client: discord.Client, message: discord.message, TALKATIVE: bool):
+
+async def handle_message(client: discord.Client, message: discord.message, TALKATIVE: bool, CATCHUP = False):
     global update_loop
+    global LAST_MESSAGE_TIME
     debug.debug(debug.D_VERBOSE, 'Entering TDT module.')
+
+    LAST_MESSAGE_TIME = message.created_at
+
+    # Cache the last message time so we can se where we're at later.
+    if not CATCHUP:
+        storage.set_server_attribute(_guild.id, 'last_message', LAST_MESSAGE_TIME)
 
     m = message.content.lower()
 
     # respond to solo fractal emote and give daily fractals
-    if '<:fractals:230520375396532224>' in m:
+    if '<:fractals:230520375396532224>' in m and not CATCHUP:
         response = compose_fractal_response()
         await send.message(message.channel, response)
         # handled = True
@@ -192,7 +245,7 @@ async def handle_message(client: discord.Client, message: discord.message, TALKA
 
             # -- dailies --
 
-            if re.search('\\bfractal(\\b|s)|\\bfric frac(\\b|s)', m):
+            if re.search('\\bfractal(\\b|s)|\\bfric frac(\\b|s)', m) and not CATCHUP:
                 response = compose_fractal_response()
                 # await send.message(message.channel, response)
                 # handled = True
@@ -204,7 +257,7 @@ async def handle_message(client: discord.Client, message: discord.message, TALKA
             # -- end general commands --
 
             # commands unique to myself
-            if str(message.author.id) == private.anaeon_id:
+            if message.author.id == private.anaeon_id:
                 if '!resetpearlpoints' in m:
                     response = scoreboard.reset_points(client, message)
                     # handled = True
@@ -214,9 +267,9 @@ async def handle_message(client: discord.Client, message: discord.message, TALKA
                 if '!resetpointstogive' in m:  # forces daily-like reset.
                     response = scoreboard.reset_points_to_give(message.guild)
                     # handled = True
-                if '!changeattribute' in m:
-                    args = m.split(',')
-                    response = scoreboard.force_change_attribute(client, message, args[2].strip(), args[3].strip())
+                if '!changeattribute' in m:  # @Ana !changeattribute @user attribute_name value
+                    args = m.split(' ')
+                    response = scoreboard.force_change_attribute(client, message, args[3].strip(), args[4].strip())
                     # handled = True
                 if '!let' in m:
                     await send.message(message.channel, 'This command is broken. Please update.')
