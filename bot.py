@@ -21,7 +21,8 @@ from modules.api import wordnik
 from modules.util import send
 from modules.util import storage
 
-client = discord.Client()
+intents = discord.Intents(messages=True, members=True, guilds=True)
+client = discord.Client(intents=intents)
 gui = None
 
 frmt = logging.Formatter(misc.LOGGER_FORMATTING)
@@ -230,8 +231,8 @@ async def on_ready():
 
     asyncloop = asyncio.get_event_loop()
 
-    if gui is None:
-        gui = GUI.on_ready(asyncloop, client)
+    # if gui is None:
+        # gui = GUI.on_ready(asyncloop, client)
 
     debug.on_ready()
     await tdt.on_ready(client, asyncloop)
@@ -273,7 +274,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
     global TALKATIVE
     global gui
 
-    gui.add_chat_message(message)
+    # gui.add_chat_message(message)
 
     m_guild = 'Unknown'
     m_guild_id = 'None'
@@ -476,7 +477,7 @@ async def on_message(message):  # when someone sends a message. Read command inp
                     locs=locals()
                     new_code = f'async def _ex(locs): '
                     log.debug(code)
-                    if 'await' in code:
+                    if 'await' in code or 'async' in code:
                         try:
                             log.info('Running code as async.')
                             for line in code.split('\n'):

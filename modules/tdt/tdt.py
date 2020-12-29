@@ -148,20 +148,21 @@ async def on_ready(client, loop):
     global update_loop
     global LAST_MESSAGE_TIME
 
-    debug.debug(debug.D_VERBOSE, 'Collecting server info...')
+    debug.debug(debug.D_INFO, 'Collecting server info...')
     for server in client.guilds:
-        debug.debug(debug.D_VOMIT, '{}:{} == {}'.format(
+        debug.debug(debug.D_INFO, '{}:{} == {}'.format(
             server.id, private.tdt_server_id, server.id == private.tdt_server_id))
         if server.id == private.tdt_server_id:
             _guild = server
-            debug.debug(debug.D_VERBOSE, 'Server locked in...\nFinding channels...')
-            for channel in server.channels:
+            debug.debug(debug.D_INFO, 'Server locked in...\nFinding channels...')
+            for channel in server.text_channels:
+                debug.debug(debug.D_INFO, 'Scanning channels...   ' + channel.name)
                 if channel.name == 'general':
                     _gen_channel = channel
-                    debug.debug(debug.D_VERBOSE, 'General channel locked in...')
+                    debug.debug(debug.D_INFO, 'General channel locked in...')
                 elif channel.name == 'bot-test-chat':
                     _bot_channel = channel
-                    debug.debug(debug.D_VERBOSE, 'Bot channel locked in...')
+                    debug.debug(debug.D_INFO, 'Bot channel locked in...')
     # update_loop = asyncio.run_coroutine_threadsafe(update(), loop=loop)
     if _gen_channel is not None and _bot_channel is not None and _guild is not None:
         debug.debug(debug.D_INFO, 'TDT+ initialized')

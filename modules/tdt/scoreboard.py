@@ -39,15 +39,18 @@ def reset_points_to_give(server):
     new_points_given = False
     for user in users:
         user_points_left = 0
+        debug.debug(debug.D_INFO, 'Checking ' + str(user.name) +'...')
         try:
             user_points_left = storage.get_user_attribute(user.id, 'available_pearl_points')
+            debug.debug(debug.D_INFO, str(user_points_left) + ' points left.')
             if user_points_left < pointToGiveCap:
                 give = user_points_left + dailyPoints
+                debug.debug(debug.D_INFO, 'Giving ' + str(dailyPoints) + ' point(s).')
                 storage.set_user_attribute(user.id, 'available_pearl_points', give)
                 response = '{}||{}'.format(response, user.mention)
                 new_points_given = True
         except KeyError as e:
-            pass
+            debug.debug(debug.D_INFO, 'Skipping Ana...')
 
     # await client.send_message(server, response)
     debug.debug(debug.D_INFO, 'Points to spend have been reset')
