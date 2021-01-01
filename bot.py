@@ -144,7 +144,7 @@ async def daily():
     try:
         _now = datetime.now()
         _next = storage.get_server_attribute('default', 'next_wotd_datetime')
-        debug.debug(debug.D_VERBOSE, 'Current time: {} Next reset: {}'.format(
+        debug.debug(debug.D_VOMIT, 'Current time: {} Next reset: {}'.format(
             _now.strftime('%H:%M:%S'), _next.strftime('%H:%M:%S')))
         if _now > _next:
             # DO DAILY STUFF HERE
@@ -170,7 +170,7 @@ async def daily():
         storage.set_server_attribute('default', 'next_wotd_datetime', y)
     except AttributeError as e:
         debug.debug(debug.D_ERROR, e)
-    debug.debug(debug.D_VERBOSE, 'Time to next wotd: {}'.format(
+    debug.debug(debug.D_VOMIT, 'Time to next wotd: {}'.format(
         (storage.get_server_attribute('default', 'next_wotd_datetime') - datetime.now())))
 
     #ensure that the timer is reset
@@ -197,7 +197,7 @@ async def daily():
 
 async def update():
     while True:
-        debug.debug(debug.D_VERBOSE, 'Running main update loop...')
+        debug.debug(debug.D_VOMIT, 'Running main update loop...')
         await daily()
         await asyncio.sleep(10)
 
