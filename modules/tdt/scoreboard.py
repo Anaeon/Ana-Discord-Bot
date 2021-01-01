@@ -184,7 +184,7 @@ def take_points(client, message):
             else:
                 return 'You don\'t have any more points to take today, {}.'.format(message.author.mention)
         else:
-            return'I can\'t take a point from no one or myself.||'\
+            response = 'I can\'t take a point from no one or myself.||'\
                 'Try mentioning the person you want to give points to.'
     return response
 
