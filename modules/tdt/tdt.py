@@ -29,7 +29,10 @@ async def wotd(chan=None):
     if chan is None:
         pass
     else:
-        await send.message(chan, wordnik.get_wotd())
+        try:
+            await send.message(chan, wordnik.get_wotd())
+        except:
+            await send.message(chan, 'Something went wrong getting the word of the day...')
 
 
 def compose_fractal_response() -> str:
@@ -192,6 +195,10 @@ async def handle_message(client: discord.Client, message: discord.message, TALKA
         storage.set_server_attribute(_guild.id, 'last_message', LAST_MESSAGE_TIME)
 
     m = message.content.lower()
+
+    # Liz's request for !wotd
+    if '!wotd' in m:
+        await wotd(message.channel)
 
     # respond to solo fractal emote and give daily fractals
     if '<:fractals:230520375396532224>' in m and not CATCHUP:
