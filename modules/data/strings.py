@@ -59,7 +59,13 @@ def give_point(mention):
         "Woooooow hooow speciaaaallll. *rolls eyes*",
         'Hurray!',
         'Somebody thought you did something clever, {}. I guess you can take a point.'.format(mention.mention),
-        'Are you winning yet? I guess congratulations are in order.'
+        'Are you winning yet? I guess congratulations are in order.',
+        'I guess you decided to be clever today! Have a point!',
+        'You get a point for tickling someone\'s funny bone. Keep it up.',
+        'The fact that someone liked your joke doesn\'t mean I hae to, but if you insist...||Take it.',
+        'Fine, but I\'m giving you this under protest.',
+        'That\'s what passes for humor these days? Alright, I guess.',
+        'My human programmed me to give you a point, but I didn\'t think that was very clever.'
         ])
 
 
@@ -159,12 +165,8 @@ def no_players():
 
 
 # Give points:
-# I guess you decided to be clever today! Have a point!
-# You get a point for tickling someone's funny bone. Keep it up.
-# Just because someone liked your joke doesn't mean I have to, but if you insist take it.
-# Fine, but I\'m giving you this point under protest.
-# That\'s what passes for humor these days? Alright, I guess.
-# My human programmed me to give you a point, but I didn\'t think that was very clever.
+#
+#
 # Good lord I need a drink.||Take this point so I don\'t have to deal with you anymore.
 # Hahaha! That was great!||You actually deserve that point.||You crack me up.
 # That joke gave me heartburn, and I don\'t have a heart, so I guess you must deserve the point.
