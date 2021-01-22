@@ -52,7 +52,7 @@ def get_wotd():
 
     hyph = ''
     if 'error' in hyph_data:
-        if hyph_data['statusCode'] == '404':
+        if hyph_data['statusCode'] == 404:
             hyph = 'Hyphenation data not found (Error 404).)'
         else:
             hyph = 'Unknown. (Error {}))'.format(hyph_data['statusCode'])
@@ -61,7 +61,7 @@ def get_wotd():
             seg = d['text']
             if 'type' in d:
                 if d['type'] == 'stress':
-                    seg = seg.capitalize()
+                    seg = seg.upper()
                 elif d['type'] == 'secondary stress':
                     seg = '*' + seg + '*'
 
