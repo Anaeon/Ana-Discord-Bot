@@ -141,6 +141,43 @@ async def hash_images():
 
 
 async def daily():
+    #ensure that the timer is reset
+    x = datetime.today()  # today
+    if datetime.now().hour < 17:
+        y = x.replace(hour=17, minute=0, second=0, microsecond=0)  # today at 5pm
+    else:
+        if x.day + 1 <= calendar.monthrange(x.year, x.month)[1]:
+            y = x.replace(day=x.day + 1, hour=17, minute=0, second=0, microsecond=0)  # tomorrow at 5pm
+        else:
+            if x.month + 1 <= 12:
+                #  first day of next month at 5pm
+                y = x.replace(month=x.month + 1, day=1, hour=17, minute=0, second=0, microsecond=0)
+            else:
+                y = x.replace(year=x.year + 1, month=1, day=1, hour=17, minute=0, second=0, microsecond=0)
+
+    delta_t = y - x  # time between now and next reset
+    secs = delta_t.seconds + 1
+
+    # t = Timer(secs, resetPointsToGive(server))
+
+    # Fetch the current info before it's actually changed. This is important.
+    _now = datetime.now()
+    _next = storage.get_server_attribute('default', 'next_wotd_datetime')
+    # Now set the next reset to avoid this line running again.
+    storage.set_server_attribute('default', 'next_wotd_datetime', y)
+
+    debug.debug(debug.D_VOMIT, 'Current time: {} Next reset: {}'.format(
+        _now.strftime('%H:%M:%S'), _next.strftime('%H:%M:%S')))
+    # Now do the stuff.
+    if _now > _next:
+        # DO DAILY STUFF HERE
+
+        await tdt.daily()
+
+        # NO DAILY STUFF PAST THIS LINE
+
+
+async def daily_old():
     try:
         _now = datetime.now()
         _next = storage.get_server_attribute('default', 'next_wotd_datetime')
@@ -199,7 +236,7 @@ async def update():
     while True:
         debug.debug(debug.D_VOMIT, 'Running main update loop...')
         await daily()
-        await asyncio.sleep(10)
+        await asyncio.sleep(30)
 
 
 @client.event
