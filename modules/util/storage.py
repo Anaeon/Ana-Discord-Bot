@@ -77,14 +77,14 @@ def get_server_attribute(id, key):
 
 
 def set_server_attribute(id, key, value):
-    with shelve.open('data/server', writeback = True) as s:
+    with shelve.open('data/server', writeback=True) as s:
         if not str(id) in s:
             s[str(id)] = {}
         s[str(id)][key] = value
 
 
 def remove_server_attribute(id, key):
-    with shelve.open('data/server', writeback = True) as s:
+    with shelve.open('data/server', writeback=True) as s:
         del s[str(id)][key]
 
 

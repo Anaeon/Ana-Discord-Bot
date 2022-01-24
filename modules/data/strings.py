@@ -2,20 +2,21 @@ import random
 
 
 no_words_regex = [
-    '\\bsu{2,999}c{2,999}(\\b|s|k)',
-    '\\bfu{2,999}c{2,999}(\\b|s|k)',
-    '\\bthi{2,999}c{2,999}(\\b|s|k)',
-    '\\bpu{2,999}ss{2,999}i?(\\b|s)',
-    '\\bdi{2,999}c{2,999}(\\b|s|k)',
-    '\\bswa{2,999}g(\\b|s)',
-    '\\byolo{2,999}(\\b|s)',
-    '\\blic{2,999}(\\b|s|k)',
-    '\\bpric{2,999}(\\b|s|k)',
-    '\\bbae(\\b|s)',
-    '\\bfam(\\b|s)',
-    '\\bsweet nibblet(\\b|s)',
-    '\\bsu{2,999}c{2,999}y\\b',
-    '\\bli{2,999}t\\b'
+    '\\bsu{1,999}c{1,999}\\b',
+    '\\bfu{1,999}c{1,999}\\b',
+    '\\bthi{1,999}c{1,999}\\b',
+    '\\bpu{1,999}ss{1,999}i?\\b',
+    '\\bdi{1,999}c{1,999}\\b',
+    '\\bswa{1,999}g\\b',
+    '\\byolo{1,999}\\b',
+    '\\blic{1,999}\\b',
+    '\\bpric{1,999}\\b',
+    '\\bbae\\b',
+    '\\bfam\\b',
+    '\\bsweet nibblet\\b',
+    '\\bsweet nibblets\\b',
+    '\\bsu{1,999}c{1,999}y\\b',
+    '\\bli{1,999}t\\b'
 ]
 
 

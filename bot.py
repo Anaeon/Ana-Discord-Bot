@@ -347,7 +347,6 @@ async def on_message(message):  # when someone sends a message. Read command inp
                     debug.debug(debug.D_INFO, 'Silencing the bot.')
                     TALKATIVE = False
                     await send.message(message.channel, 'Understood.')
-                    debug.debug(debug.D_INFO, 'Silencing the bot.')
 
                 if re.search('\\bspeak up\\b', m):
                     debug.debug(debug.D_INFO, 'Unsilencing the bot.')
@@ -363,16 +362,16 @@ async def on_message(message):  # when someone sends a message. Read command inp
                         # await send.message(message.channel, 'I do not have permission to do that from the server\'s owner.')
 
                 if re.search('\\bdo not delete stuff\\b', m):
-                    debug.debug(debug.D_INFO, 'Deleting things from this point.')
+                    debug.debug(debug.D_INFO, 'No longer deleting things.')
                     CAN_DELETE = False
                     await send.message(message.channel, 'Understood.')
 
         # get a random Trump quote because why the fuck not?
 
-        if re.search('\\btrump\\b|\\bgyna\\b', m):
-            await send.typing(message.channel)
-            msg = trump.get_quote()
-            await send.message(message.channel, '"{}" - Lord Emperor The Donald Trump'.format(msg))
+        # if re.search('\\btrump\\b|\\bgyna\\b', m):
+        #    await send.typing(message.channel)
+        #    msg = trump.get_quote()
+        #    await send.message(message.channel, '"{}" - Lord Emperor The Donald Trump'.format(msg))
 
         # end trump
 

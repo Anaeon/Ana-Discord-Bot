@@ -3,6 +3,8 @@ import calendar
 import asyncio
 import time
 import discord
+import traceback
+import logging
 
 from modules.api import gw2
 from modules.api import wordnik
@@ -23,15 +25,26 @@ update_loop = None
 LAST_MESSAGE_TIME = None
 
 # TODO: UPDATE THIS MODULE TO USE PROPER LOGGING.
+frmt = logging.Formatter(misc.LOGGER_FORMATTING)
+
+log = logging.getLogger(__name__)
+log.setLevel(logging.DEBUG)
+
+c_out = logging.StreamHandler()
+c_out.setFormatter(frmt)
+
+log.addHandler(c_out)
 
 
-async def wotd(chan=None):
+
+async def wotd(chan=None, raw=False):
     if chan is None:
         pass
     else:
         try:
-            await send.message(chan, wordnik.get_wotd())
-        except:
+            await send.message(chan, wordnik.get_wotd(raw))
+        except Exception as e:
+            print(traceback.format_exc())
             await send.message(chan, 'Something went wrong getting the word of the day...')
 
 
@@ -190,8 +203,10 @@ async def handle_message(client: discord.Client, message: discord.message, TALKA
 
     LAST_MESSAGE_TIME = message.created_at
 
-    # Cache the last message time so we can se where we're at later.
+    # Cache the last message time so we can see where we're at later.
     if not CATCHUP:
+        log.info('_guild.id = ' + str(_guild.id))
+        log.info('LAST_MESSAGE_TIME = ' + str(LAST_MESSAGE_TIME))
         storage.set_server_attribute(_guild.id, 'last_message', LAST_MESSAGE_TIME)
 
     m = message.content.lower()
@@ -199,6 +214,9 @@ async def handle_message(client: discord.Client, message: discord.message, TALKA
     # Liz's request for !wotd
     if '!wotd' in m:
         await wotd(message.channel)
+
+    if '!wotd_raw' in m:
+        await wotd(message.channel, True)
 
     # respond to solo fractal emote and give daily fractals
     if '<:fractals:230520375396532224>' in m and not CATCHUP:

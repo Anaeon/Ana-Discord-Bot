@@ -638,3 +638,4 @@ venv/Scripts/pip3.exe
 debug.log
 .idea/workspace.xml
 *.xml___jb_tmp___
+*.broken
