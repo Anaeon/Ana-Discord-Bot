@@ -4,8 +4,7 @@
 *.bak
 modules/data/private.py
 __pycache__/
-.idea/workspace.xml
-.idea/workspace.xml
+.idea/
 venv/Lib/site-packages/aiohttp-3.6.2.dist-info/INSTALLER
 venv/Lib/site-packages/aiohttp-3.6.2.dist-info/LICENSE.txt
 venv/Lib/site-packages/aiohttp-3.6.2.dist-info/METADATA
@@ -631,11 +630,6 @@ venv/Scripts/pip3-script.py
 venv/Scripts/pip3.7-script.py
 venv/Scripts/pip3.7.exe
 venv/Scripts/pip3.exe
-.idea/workspace.xml
-.idea/workspace.xml
-.idea/workspace.xml
-.idea/workspace.xml
 debug.log
-.idea/workspace.xml
 *.xml___jb_tmp___
 *.broken

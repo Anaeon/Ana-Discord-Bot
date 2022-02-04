@@ -6,7 +6,7 @@ import os
 import asyncio
 import hashlib
 import logging
-import GUI
+#import GUI
 import calendar
 
 from datetime import datetime
