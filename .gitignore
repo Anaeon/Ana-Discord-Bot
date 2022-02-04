@@ -633,3 +633,5 @@ venv/Scripts/pip3.exe
 debug.log
 *.xml___jb_tmp___
 *.broken
+.idea/misc.xml
+.idea/Ana-Discord-Bot.iml
