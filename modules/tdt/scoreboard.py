@@ -41,12 +41,12 @@ def reset_points_to_give(server):
         user_points_left = 0
         debug.debug(debug.D_INFO, 'Checking ' + str(user.name) +'...')
         try:
-            user_points_left = storage.get_user_attribute(message.guild.id, user.id, 'available_pearl_points')
+            user_points_left = storage.get_user_attribute(server.id, user.id, 'available_pearl_points')
             debug.debug(debug.D_INFO, str(user_points_left) + ' points left.')
             if user_points_left < pointToGiveCap:
                 give = user_points_left + dailyPoints
                 debug.debug(debug.D_INFO, 'Giving ' + str(dailyPoints) + ' point(s).')
-                storage.set_user_attribute(message.guild.id, user.id, 'available_pearl_points', give)
+                storage.set_user_attribute(server.id, user.id, 'available_pearl_points', give)
                 response = '{}||{}'.format(response, user.mention)
                 new_points_given = True
         except KeyError as e:
