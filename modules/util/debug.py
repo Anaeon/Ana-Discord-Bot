@@ -18,7 +18,7 @@ def on_ready():
     debug(D_INFO, 'Initializing Debug module...')
 
     try:
-        D_CURRENT_LEVEL = storage.load_server_setting('debug_level')
+        D_CURRENT_LEVEL = storage.load_bot_setting('debug_level')
     except KeyError as e:
         pass
 
@@ -43,6 +43,6 @@ def debug(level, string):
 def on_exit():
     global D_CURRENT_LEVEL
     debug(D_INFO, 'Saving debug settings.')
-    storage.save_server_setting('debug_level', D_CURRENT_LEVEL)
+    storage.save_bot_setting('debug_level', D_CURRENT_LEVEL)
     debug(D_INFO, 'Debug settings saved.')
 

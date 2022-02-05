@@ -4,7 +4,7 @@ import calendar
 
 import discord
 
-from modules.data import strings, misc
+from modules.data import strings, misc, private
 from modules.util import storage
 from modules.util import debug
 
@@ -13,13 +13,13 @@ pointToGiveCap = 3
 
 
 def init_points_to_give(message):
-    users = message.server.members
+    users = message.guild.members
     response = 'The following users have been initialized, and have one point to give:\n\n'
     for user in users:
         try:
-            storage.get_user_attribute(user.id, 'available_pearl_points')
+            storage.get_user_attribute(message.guild.id, user.id, 'available_pearl_points')
         except KeyError as e:
-            storage.set_user_attribute(user.id, 'available_pearl_points', dailyPoints)
+            storage.set_user_attribute(message.guild.id, user.id, 'available_pearl_points', dailyPoints)
             response = '{}||{}'.format(response, user.mention)
 
     # also init the server attribute for the datetime of the next reset
@@ -29,7 +29,7 @@ def init_points_to_give(message):
     delta_t = y - x  # time between now and next reset
     secs = delta_t.seconds + 1
 
-    storage.set_server_attribute(message.server.id, 'next_pearl_point_reset_datetime', y)
+    storage.set_server_attribute(message.guild.id, 'next_pearl_point_reset_datetime', y)
     return response
 
 
@@ -41,12 +41,12 @@ def reset_points_to_give(server):
         user_points_left = 0
         debug.debug(debug.D_INFO, 'Checking ' + str(user.name) +'...')
         try:
-            user_points_left = storage.get_user_attribute(user.id, 'available_pearl_points')
+            user_points_left = storage.get_user_attribute(message.guild.id, user.id, 'available_pearl_points')
             debug.debug(debug.D_INFO, str(user_points_left) + ' points left.')
             if user_points_left < pointToGiveCap:
                 give = user_points_left + dailyPoints
                 debug.debug(debug.D_INFO, 'Giving ' + str(dailyPoints) + ' point(s).')
-                storage.set_user_attribute(user.id, 'available_pearl_points', give)
+                storage.set_user_attribute(message.guild.id, user.id, 'available_pearl_points', give)
                 response = '{}||{}'.format(response, user.mention)
                 new_points_given = True
         except KeyError as e:
@@ -86,7 +86,7 @@ def read_points_to_give(client, message):
         id = message.author.id
 
         try:
-            pearlpointstogive = int(storage.get_user_attribute(id, 'available_pearl_points'))
+            pearlpointstogive = int(storage.get_user_attribute(message.guild.id, id, 'available_pearl_points'))
         except KeyError as e:
             debug.debug(debug.D_ERROR, e)
         if pearlpointstogive == 1:
@@ -110,21 +110,21 @@ def give_points(client, message):
         if mention != client.user and mention != message.author and not mention.bot:
             ptg = 0
             try:
-                ptg = storage.get_user_attribute(message.author.id, 'available_pearl_points')
+                ptg = storage.get_user_attribute(message.guild.id, message.author.id, 'available_pearl_points')
             except KeyError as e:
                 debug.debug(debug.D_ERROR, e)
             if ptg > 0:
                 id = mention.id
                 try:
-                    pearlpoints = int(storage.get_user_attribute(id, "pearl_points"))
+                    pearlpoints = int(storage.get_user_attribute(message.guild.id, id, "pearl_points"))
                 except KeyError as e:
                     debug.debug(debug.D_ERROR, '{} did not have a \'pearl_points\' attribute.'.format(mention.name))
                     debug.debug(debug.D_ERROR, e)
                 finally:
                     debug.debug(debug.D_INFO, 'Giving {} a point.'.format(mention))
                     pearlpoints += 1
-                    storage.set_user_attribute(id, "pearl_points", pearlpoints)
-                    p = storage.get_user_attribute(id, "pearl_points")
+                    storage.set_user_attribute(message.guild.id, id, "pearl_points", pearlpoints)
+                    p = storage.get_user_attribute(message.guild.id, id, "pearl_points")
                     debug.debug(debug.D_INFO, '{} has {} points now.'.format(mention, p))
                     response = strings.give_point(mention)
                     response = "{}||Alright, I gave a point to {}.".format(response, mention.mention)
@@ -134,7 +134,7 @@ def give_points(client, message):
                     else:
                         response = '{}||{}, you have {} points left to give.'.format(response, message.author.mention,
                                                                                        ptg - 1)
-                    storage.set_user_attribute(message.author.id, 'available_pearl_points', ptg - 1)
+                    storage.set_user_attribute(message.guild.id, message.author.id, 'available_pearl_points', ptg - 1)
                     return response
             else:
                 return 'You don\'t have any more points to give today, {}.'.format(message.author.mention)
@@ -154,22 +154,22 @@ def take_points(client, message):
         if mention != client.user and mention != message.author and not mention.bot:
             ptg = 0
             try:
-                ptg = storage.get_user_attribute(message.author.id, 'available_pearl_points')
+                ptg = storage.get_user_attribute(message.guild.id, message.author.id, 'available_pearl_points')
             except:
                 pass
             if ptg > 0:
                 id = mention.id
 
                 try:
-                    pearlpoints = int(storage.get_user_attribute(id, "pearl_points"))
+                    pearlpoints = int(storage.get_user_attribute(message.guild.id, id, "pearl_points"))
                 except KeyError as e:
                     print('{} did not have a \'pearl_points\' attribute.'.format(mention))
                     print('{} was not given a point.'.format(mention))
                 finally:
                     print('Taking a point from {}.'.format(mention))
                     pearlpoints -= 1
-                    storage.set_user_attribute(id, "pearl_points", pearlpoints)
-                    p = storage.get_user_attribute(id, "pearl_points")
+                    storage.set_user_attribute(message.guild.id, id, "pearl_points", pearlpoints)
+                    p = storage.get_user_attribute(message.guild.id, id, "pearl_points")
                     print('{} has {} points now.'.format(mention, p))
                     response = strings.take_point(mention)
                     response = "{}||Alright, I took a point from {}.".format(response, mention.mention)
@@ -179,7 +179,7 @@ def take_points(client, message):
                     else:
                         response = '{}||{}, you have {} points left to take.'.format(response, message.author.mention,
                                                                                        ptg - 1)
-                    storage.set_user_attribute(message.author.id, 'available_pearl_points', ptg - 1)
+                    storage.set_user_attribute(message.guild.id, message.author.id, 'available_pearl_points', ptg - 1)
                     return response
             else:
                 return 'You don\'t have any more points to take today, {}.'.format(message.author.mention)
@@ -198,10 +198,11 @@ def read_points(client, message):
             id = mention.id
 
             try:
-                pearlpoints = int(storage.get_user_attribute(id, "pearl_points"))
+                pearlpoints = int(storage.get_user_attribute(message.guild.id, id, "pearl_points"))
             except KeyError as e:
                 debug.debug(debug.D_ERROR, '{} did not have a \'pearl_points\' attribute.'.format(mention))
-                storage.set_user_attribute(id, "pearl_points", pearlpoints)
+                storage.set_user_attribute(message.guild.id, id, "pearl_points", pearlpoints)
+                pearlpoints = int(storage.get_user_attribute(message.guild.id, id, "pearl_points"))
             finally:
                 if pearlpoints == 1:
                     response = "{} has {} pearl point.".format(mention.mention, pearlpoints)
@@ -213,21 +214,21 @@ def read_points(client, message):
 def reset_points(client, message):
     response = 'Pearl points for the following users have been reset:'
     if message.mention_everyone:
-        users = storage.get_attribute_for_users("pearl_points")
+        users = storage.get_attribute_for_users(message.guild.id, "pearl_points")
         for i, u in enumerate(users):
-            storage.remove_user_attribute(u['id'], 'pearl_points')
+            storage.remove_user_attribute(message.guild.id, u['id'], 'pearl_points')
             response = '{}||<@{}>'.format(response, u['id'])
     else:
         for mention in message.mentions:
             if mention != client.user:
                 id = mention.id
-                storage.remove_user_attribute(id, "pearl_points")
+                storage.remove_user_attribute(message.guild.id, id, "pearl_points")
                 response = '{}||{}'.format(response, mention.mention)
     return response
 
 
 def get_top_points(use_embed = False, raw = False):
-    board = storage.get_attribute_for_users("pearl_points")
+    board = storage.get_attribute_for_users(private.tdt_server_id, "pearl_points")
     board = sorted(board, key = itemgetter('pearl_points'), reverse = True)
 
     if raw:
@@ -261,7 +262,7 @@ def force_change_attribute(client, message, attribute_name, value):
         if mention != client.user:
             int_value = None
             try:
-                old_attribute = storage.get_user_attribute(mention.id, attribute_name)
+                old_attribute = storage.get_user_attribute(message.guild.id, mention.id, attribute_name)
             except KeyError as e:
                 return '{} does not have a {} attribute.'.format(mention.mention, attribute_name)
             try:
@@ -270,7 +271,7 @@ def force_change_attribute(client, message, attribute_name, value):
                 return 'Command is not valid on {} attribute'.format(attribute_name)
             try:
                 int_value = int(value)
-                storage.set_user_attribute(mention.id, attribute_name, int_attribute + int_value)
+                storage.set_user_attribute(message.guild.id, mention.id, attribute_name, int_attribute + int_value)
                 s = '{} attribute set to {}. (was {})'.format(attribute_name, int_attribute + int_value, int_attribute)
                 return s
             except ValueError as e:

@@ -14,6 +14,8 @@ from modules.util import debug
 from modules.util import send
 from modules.data import private
 from modules.data import misc
+
+from dateutil import parser
 from datetime import datetime
 import threading
 
@@ -22,7 +24,7 @@ _gen_channel = None
 _bot_channel = None
 update_loop = None
 
-LAST_MESSAGE_TIME = None
+LAST_MESSAGE_TIME: str = None
 
 # TODO: UPDATE THIS MODULE TO USE PROPER LOGGING.
 frmt = logging.Formatter(misc.LOGGER_FORMATTING)
@@ -133,10 +135,11 @@ async def daily():
 async def catch_up(client):
     # channel_histories = []
     debug.debug(debug.D_INFO, 'Getting history for TDT...')
+    msg_datetime = parser.parse(LAST_MESSAGE_TIME)
     for channel in _guild.text_channels:
         debug.debug(debug.D_INFO, 'Collecting messages from {}'.format(channel.name))
         try:
-            messages = await channel.history(after = LAST_MESSAGE_TIME).flatten()
+            messages = await channel.history(after=msg_datetime).flatten()
             for msg in messages:
                 await handle_message(client, msg, False, True)
                 print(msg.content)

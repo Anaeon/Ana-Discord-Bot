@@ -49,6 +49,7 @@ TALKATIVE = False
 CAN_DELETE = False
 LAST_MESSAGE = None
 
+
 # !talk, server, channel, message text
 async def send_talk(_svr, _ch, msg):
     """Sends a custom message to a specific server."""
@@ -162,9 +163,9 @@ async def daily():
 
     # Fetch the current info before it's actually changed. This is important.
     _now = datetime.now()
-    _next = storage.get_server_attribute('default', 'next_wotd_datetime')
+    _next = storage.load_bot_setting('next_wotd_datetime')
     # Now set the next reset to avoid this line running again.
-    storage.set_server_attribute('default', 'next_wotd_datetime', y)
+    storage.save_bot_setting('next_wotd_datetime', y)
 
     debug.debug(debug.D_VOMIT, 'Current time: {} Next reset: {}'.format(
         _now.strftime('%H:%M:%S'), _next.strftime('%H:%M:%S')))
@@ -177,10 +178,11 @@ async def daily():
         # NO DAILY STUFF PAST THIS LINE
 
 
+#TODO: Delete this method, I think.
 async def daily_old():
     try:
         _now = datetime.now()
-        _next = storage.get_server_attribute('default', 'next_wotd_datetime')
+        _next = storage.load_bot_setting('next_wotd_datetime')
         debug.debug(debug.D_VOMIT, 'Current time: {} Next reset: {}'.format(
             _now.strftime('%H:%M:%S'), _next.strftime('%H:%M:%S')))
         if _now > _next:
@@ -204,11 +206,11 @@ async def daily_old():
                 else:
                     y = x.replace(year=x.year + 1, month=1, day=1, hour=17, minute=0, second=5,
                                   microsecond=0)
-        storage.set_server_attribute('default', 'next_wotd_datetime', y)
+        storage.save_bot_setting('next_wotd_datetime', y)
     except AttributeError as e:
         debug.debug(debug.D_ERROR, e)
     debug.debug(debug.D_VOMIT, 'Time to next wotd: {}'.format(
-        (storage.get_server_attribute('default', 'next_wotd_datetime') - datetime.now())))
+        (storage.load_bot_setting('next_wotd_datetime') - datetime.now())))
 
     #ensure that the timer is reset
     x = datetime.today()  # today
@@ -229,7 +231,7 @@ async def daily_old():
 
     # t = Timer(secs, resetPointsToGive(server))
 
-    storage.set_server_attribute('default', 'next_wotd_datetime', y)
+    storage.save_bot_setting('next_wotd_datetime', y)
 
 
 async def update():
@@ -270,7 +272,7 @@ async def on_ready():
 
     # if gui is None:
         # gui = GUI.on_ready(asyncloop, client)
-
+    storage.on_ready(client)
     debug.on_ready()
     await tdt.on_ready(client, asyncloop)
     # await client.get_user(108467075613216768).send('Rebooted and reconnected.')

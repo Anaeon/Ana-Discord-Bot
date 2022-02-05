@@ -5,6 +5,8 @@
 modules/data/private.py
 __pycache__/
 .idea/
+data/*.json
+data/servers/*
 venv/Lib/site-packages/aiohttp-3.6.2.dist-info/INSTALLER
 venv/Lib/site-packages/aiohttp-3.6.2.dist-info/LICENSE.txt
 venv/Lib/site-packages/aiohttp-3.6.2.dist-info/METADATA
