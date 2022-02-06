@@ -236,7 +236,7 @@ def get_top_points(use_embed = False, raw = False):
     elif not use_embed:
         response = 'Leaderboard:'
         for i, p in enumerate(board):
-            response = '{0}{1}:[{2}] - <@{3}>\n'.format(response, i + 1, p['pearl_points'], p['id'])
+            response = '{0}\n{1}:[{2}] - <@{3}>'.format(response, i + 1, p['pearl_points'], p['id'])
             # response = '{0}||{1}:[{2}] - <@{3}>'.format(response, i + 1, p['pearl_points'], p['id'])
         return response
     elif use_embed:
