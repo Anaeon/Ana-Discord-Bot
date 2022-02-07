@@ -84,10 +84,11 @@ def on_ready(client):
 
     log.info("storage.py ready.")
 
+
 def load_bot_setting(set):
     setting = str(set)
     Path('data/settings.json').touch(exist_ok=True)
-    with open('data/settings.json') as file:
+    with open('data/settings.json', 'r') as file:
         data = json.load(file)
         if setting in data:
             return data[setting]
@@ -97,7 +98,7 @@ def load_bot_setting(set):
 
 def save_bot_setting(set, val):
     setting = str(set)
-    with open('data/settings.json', 'w') as file:
+    with open('data/settings.json', 'r') as file:
         data = json.load(file)
     with open('data/settings.json', 'w') as file:
         if isinstance(val, datetime.datetime):
@@ -113,7 +114,7 @@ def load_server_setting(id, set):
 #        setting = s[str(setting)]
 #    return setting
     Path('data/servers/' + str(id) + '/settings.json').touch(exist_ok=True)
-    with open('data/servers/' + str(id) + '/settings.json') as file:
+    with open('data/servers/' + str(id) + '/settings.json', 'r') as file:
         data = json.load(file)
         if setting in data:
             return data[setting]

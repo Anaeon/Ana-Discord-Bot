@@ -10,6 +10,7 @@ import logging
 import calendar
 
 from datetime import datetime
+from dateutil import parser
 
 from modules.tdt import tdt
 from modules.util import debug
@@ -163,9 +164,12 @@ async def daily():
 
     # Fetch the current info before it's actually changed. This is important.
     _now = datetime.now()
-    _next = storage.load_bot_setting('next_wotd_datetime')
+    try:
+        _next = parser.parse(storage.load_bot_setting('next_daily_datetime'))
+    except storage.NoSuchSettingException:
+        log.info('No daily reset time has been saved, yet.')
     # Now set the next reset to avoid this line running again.
-    storage.save_bot_setting('next_wotd_datetime', y)
+    storage.save_bot_setting('next_daily_datetime', y)
 
     debug.debug(debug.D_VOMIT, 'Current time: {} Next reset: {}'.format(
         _now.strftime('%H:%M:%S'), _next.strftime('%H:%M:%S')))
@@ -237,7 +241,7 @@ async def daily_old():
 async def update():
     while True:
         # debug.debug(debug.D_VOMIT, 'Running main update loop...')
-        log.info(debug.D_VOMIT, 'Running main update loop...')
+        log.info('Running main update loop...')
         await daily()
         await asyncio.sleep(30)
 
