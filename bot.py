@@ -236,7 +236,8 @@ async def daily_old():
 
 async def update():
     while True:
-        debug.debug(debug.D_VOMIT, 'Running main update loop...')
+        # debug.debug(debug.D_VOMIT, 'Running main update loop...')
+        log.info(debug.D_VOMIT, 'Running main update loop...')
         await daily()
         await asyncio.sleep(30)
 
