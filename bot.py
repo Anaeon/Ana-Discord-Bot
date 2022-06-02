@@ -373,15 +373,6 @@ async def on_message(message):  # when someone sends a message. Read command inp
                     CAN_DELETE = False
                     await send.message(message.channel, 'Understood.')
 
-        # get a random Trump quote because why the fuck not?
-
-        # if re.search('\\btrump\\b|\\bgyna\\b', m):
-        #    await send.typing(message.channel)
-        #    msg = trump.get_quote()
-        #    await send.message(message.channel, '"{}" - Lord Emperor The Donald Trump'.format(msg))
-
-        # end trump
-
         if re.search('\\broll\\b', m):
             sm = m.replace(' ', '')
             sresult = re.search('(?<=roll)*\d+d\d+', sm)
