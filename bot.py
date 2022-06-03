@@ -561,15 +561,6 @@ async def on_message(message):  # when someone sends a message. Read command inp
 
                 time.sleep(2)
 
-        if re.search('\\bfag(\\b|s)|\\bfaggot(\\b|s)|\\bfaggotry\\b|\\bgay(\\b|s)|\\bga{2,99}y(\\b|s)|\\blgbt\\b', m):
-            debug.debug(debug.D_INFO, 'Reacting to some faggotry.')
-            try:
-                await send.reaction(message, '🏳️‍🌈')
-                # TODO: Something better than this? Why does this work?
-                # It says it doesn't work, but it does exactly what I want it to.
-            except discord.errors.HTTPException as e:
-                debug.debug(debug.D_ERROR, e)
-
         # GIV DEM BITCHES SOME LIZARDS
         if re.search('\\blizard(\\b|s)', m):
             await send_animal(message, 'lizard')

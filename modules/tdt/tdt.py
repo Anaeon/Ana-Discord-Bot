@@ -234,6 +234,16 @@ async def handle_message(client: discord.Client, message: discord.message, TALKA
         debug.debug(debug.D_INFO, 'Treebs was here...')
         await send.reaction(message, 'treebs:235655554465398784')
 
+    if re.search('\\bgay(\\b|s)|\\bga{2,99}y(\\b|s)|\\blgbt\\b', m):
+        debug.debug(debug.D_INFO, 'Someone said gay. Placing our flag.')
+        try:
+            # TODO: Something better than this? Why does this work?
+            # It says it doesn't work, but it does exactly what I want it to.
+            # I am confusion.
+            await send.reaction(message, '🏳️‍🌈')
+        except discord.errors.HTTPException as e:
+            debug.debug(debug.D_ERROR, e)
+
     # End adding reactions
 
     # direct mention commands
