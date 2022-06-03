@@ -1,3 +1,7 @@
+# DO NOT USE NEW LINE SYMBOLS HERE.
+# USE '||'. THIS IS WHAT THE FUNCTION THAT READS STRINGS AND HANDLES SENDING MESSAGES LOOKS FOR TO MAKE A NEW LINE.
+
+
 import random
 
 
@@ -13,8 +17,8 @@ no_words_regex = [
     '\\bpric{1,999}\\b',
     '\\bbae\\b',
     '\\bfam\\b',
-    '\\bsweet nibblet\\b',
-    '\\bsweet nibblets\\b',
+    '\\bsweet nibblet\\b',  # Don't ask.
+    '\\bsweet nibblets\\b',  # Don't ask.
     '\\bsu{1,999}c{1,999}y\\b',
     '\\bli{1,999}t\\b'
 ]
@@ -37,7 +41,7 @@ def no_words_response(message):
         'You\'re triggering me.\nNo, I mean literally.\nThis is a triggered response.\nI am a bot.',
         'Listen here you little shit I will fucking end you and your family but only after making them suffer slowly '
         'and painfully by revealing all of their darkest secrets to all their friends and family. Only then after '
-        'being revealed as the fuckwits you and everyone you have ever loved are, then will I kill you by hacking a '
+        'being revealed as the fuck-wits you and everyone you have ever loved are, then will I kill you by hacking a '
         'satellite and crashing it into the sad excuse you call a home.',
         'Ugh...'
     ])

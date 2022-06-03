@@ -1,3 +1,6 @@
+# NOT ALL CODE IN THIS FILE IS ORIGINALLY MINE. IT CAME WITH THE DISCORD.PY BOT EXAMPLE AND I HAVE EDITED/EXPANDED ON
+# IT BECAUSE SHELVE SUCKS AND JSON WORKS BETTER FOR ME ANYWAY.
+
 import logging
 import os
 # import shelve
@@ -66,7 +69,7 @@ def on_ready(client):
                 dump(new_data, f)
 
         # User settings.
-        # Keep in mind that the generic data must be generic because not all server's users have the same data.
+        # Keep in mind that the generic data must be generic because not all servers' users have the same data.
         for u in g.members:
             if not os.path.exists('data/servers/{}/users'.format(str(g.id))):
                 os.mkdir('data/servers/{}/users'.format(str(g.id), str(u.id)))
@@ -122,7 +125,8 @@ def load_server_setting(id, set):
             raise NoSuchSettingException
 
 
-#TODO: Refactor all references to this or set_server_attribute()???
+# TODO: Refactor all references to this or set_server_attribute()???
+# Like... I think they do the same thing. Verify if they are the same, and simplify into one method.
 def save_server_setting(id, set, val):
     filestring = 'data/servers/' + str(id) + '/settings.json'
     setting = str(set)
@@ -170,6 +174,7 @@ def set_user_attribute(sid, uid, key, value):
 
 # What is this for? Do I need it? Can I make it work with JSON instead of shelve?
 # Something stupid that I never use. No. Yes, and I did.
+# Keep it in case I need to remove an attribute for whatever reason.
 def remove_user_attribute(sid: int, uid: int, key: str) -> None:
     #    with shelve.open('data/user', writeback = True) as s:
     #        del s[str(id)][key]

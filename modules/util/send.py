@@ -4,11 +4,12 @@ from discord import Reaction, Message, Embed, Emoji
 
 _chars_per_second = 15
 _max_type_seconds = 9
+_splitter = '||'
 
 
 async def message(channel, msg='', embed:Embed=None):
     """
-    Default function for sending messages. Encapsulates the API function call for easy updating.
+    Default function for sending messages. Encapsulates the API function calls for easy updating.
     :param channel: The TextChannel object to send the message to.
     :type channel: discord.TextChannel
     :param msg: A string representing the message to be sent to the channel.
@@ -16,11 +17,10 @@ async def message(channel, msg='', embed:Embed=None):
     embed Optional[:class: discord.Embed] an Embed object to send instead of a message.
     """
     if embed is None:
-        splitter = '||'
         time = len(msg)/_chars_per_second
 
         time = time if time <= _max_type_seconds else _max_type_seconds
-        lines = msg.split(splitter)
+        lines = msg.split(_splitter)
         for line in lines:
             if line != '':
                 await typing(channel)

@@ -11,6 +11,7 @@ from modules.util import debug
 dailyPoints = 1
 pointToGiveCap = 3
 
+# TODO: Update this module to use proper logging!!!
 
 def init_points_to_give(message):
     users = message.guild.members
@@ -256,7 +257,7 @@ def get_top_points(use_embed = False, raw = False):
 
 
 def force_change_attribute(client, message, attribute_name, value):
-    """Changes the target users attribute by the given amount."""
+    """Modifies the target users attribute by the given amount."""
     old_attribute = ''
     for mention in message.mentions:
         if mention != client.user:

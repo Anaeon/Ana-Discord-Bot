@@ -51,9 +51,12 @@ CAN_DELETE = False
 LAST_MESSAGE = None
 
 
-# !talk, server, channel, message text
 async def send_talk(_svr, _ch, msg):
-    """Sends a custom message to a specific server."""
+    """
+    Sends a custom message to a specific server.
+    Command Format:
+    !talk, server, channel, message_text
+    """
 
     #  slot in the intended server
     svr = ''
@@ -176,13 +179,12 @@ async def daily():
     # Now do the stuff.
     if _now > _next:
         # DO DAILY STUFF HERE
-
+        # TODO: Maybe put a method here and close this block as a helper to simplify readability.
         await tdt.daily()
 
         # NO DAILY STUFF PAST THIS LINE
 
-
-#TODO: Delete this method, I think.
+# TODO: Delete this method. I don't think I'm using it.
 async def daily_old():
     try:
         _now = datetime.now()
@@ -216,7 +218,7 @@ async def daily_old():
     debug.debug(debug.D_VOMIT, 'Time to next wotd: {}'.format(
         (storage.load_bot_setting('next_wotd_datetime') - datetime.now())))
 
-    #ensure that the timer is reset
+    # ensure that the timer is reset
     x = datetime.today()  # today
     if datetime.now().hour < 17:
         y = x.replace(hour=17, minute=0, second=0, microsecond=0)  # today at 5pm
@@ -280,7 +282,6 @@ async def on_ready():
     storage.on_ready(client)
     debug.on_ready()
     await tdt.on_ready(client, asyncloop)
-    # await client.get_user(108467075613216768).send('Rebooted and reconnected.')
     main_update_loop = asyncio.run_coroutine_threadsafe(update(), loop=asyncloop)
 
 
@@ -382,11 +383,6 @@ async def on_message(message):  # when someone sends a message. Read command inp
                 if sresult is None:
                     pass
                 roll = sresult.group(0)
-                # try:
-                #    roll = re.search('(?<=roll)*\d+d\d+', sm).group(0)
-                # except:
-                #    roll = re.search('(?<=roll)*d\d+', sm).group(0)
-                #    pass
                 debug.debug(debug.D_INFO, 'roll == {}'.format(roll))
                 request = roll.split('d', 1)
                 rolls = 1
