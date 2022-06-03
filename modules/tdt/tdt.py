@@ -230,10 +230,12 @@ async def handle_message(client: discord.Client, message: discord.message, TALKA
 
     # Add reactions to some messages
 
+    # Treebs was here...
     if 'treebs' in m or 'omega' in m or 'leftovers' in m and TALKATIVE:
         debug.debug(debug.D_INFO, 'Treebs was here...')
         await send.reaction(message, 'treebs:235655554465398784')
 
+    # Plant the flag...
     if re.search('\\bgay(\\b|s)|\\bga{2,99}y(\\b|s)|\\blgbt\\b', m):
         debug.debug(debug.D_INFO, 'Someone said gay. Placing our flag.')
         try:
