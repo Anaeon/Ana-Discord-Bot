@@ -35,9 +35,12 @@ def init_points_to_give(message):
 
 
 def reset_points_to_give(server):
+
+    # This chunk gives the users
     users = server.members
     response = 'The following users have been given new points to use:'
     new_points_given = False
+
     for user in users:
         user_points_left = 0
         debug.debug(debug.D_INFO, 'Checking ' + str(user.name) +'...')
@@ -53,9 +56,11 @@ def reset_points_to_give(server):
         except KeyError as e:
             debug.debug(debug.D_INFO, 'Skipping Ana...')
 
+    # This chunk sets the reset timer to a specific time tomorrow (or to the proper time today, if it should happen).
     # await client.send_message(server, response)
     debug.debug(debug.D_INFO, 'Points to spend have been reset')
     x = datetime.today()  # today
+
     if datetime.now().hour < 17:
         y = x.replace(hour = 17, minute = 0, second = 0, microsecond = 0)  # today at 5pm
     else:
