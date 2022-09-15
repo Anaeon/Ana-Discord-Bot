@@ -47,7 +47,7 @@ def on_ready(client):
 
     # Bot settings.
     Path('data/settings.json').touch(exist_ok=True) # If the file is not, make it so.
-    if os.path.getsize('data/settings.json') < 1: # If the file has no data...
+    if os.path.getsize('data/settings.json') < 2: # If the file has no data...
         # Make some new data.
         new_data = {
             "debug_level" : 0
@@ -62,7 +62,7 @@ def on_ready(client):
             os.mkdir('data/servers/{}'.format(str(g.id)))
         p = 'data/servers/{}/settings.json'.format(str(g.id))
         Path(p).touch(exist_ok=True) # If there is no file, make it so.
-        if os.path.getsize(p) < 1: # If the file has no data...
+        if os.path.getsize(p) < 2: # If the file has no data...
             # Make some new data.
             new_data = {
                 "name" : g.name
@@ -78,7 +78,7 @@ def on_ready(client):
                 os.mkdir('data/servers/{}/users'.format(str(g.id), str(u.id)))
             p = 'data/servers/{}/users/{}.json'.format(str(g.id), str(u.id))
             Path(p).touch(exist_ok=True) # If there is no file, make it so.
-            if os.path.getsize(p) < 1: # If the file has no data...
+            if os.path.getsize(p) < 2: # If the file has no data...
                 # Make some new data.
                 new_data = {
                     "name" : u.name,
@@ -107,15 +107,24 @@ def load_bot_setting(set):
 
 def save_bot_setting(set, val):
     setting = str(set)
-    with open('data/settings.json', 'r') as file:
-        data = json.load(file)
-    with open('data/settings.json', 'w') as file:
-        if isinstance(val, datetime.datetime):
-            data[setting] = val.isoformat()
-        else:
-            data[setting] = val
-        dump(data, file)
-
+    try:
+        with open('data/settings.json', 'r') as file:
+            data = json.load(file)
+        with open('data/settings.json', 'w') as file:
+            if isinstance(val, datetime.datetime):
+                data[setting] = val.isoformat()
+            else:
+                data[setting] = val
+            dump(data, file)
+    except json.decoder.JSONDecodeError as e:
+        with open('data/settings.json', 'w') as file:
+            new_val = val
+            if isinstance(val, datetime.datetime):
+                new_val = val.isoformat()
+            new_data = {
+                str(set): new_val
+            }
+            dump(new_data, file)
 
 
 def load_server_setting(id, set):
