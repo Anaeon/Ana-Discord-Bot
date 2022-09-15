@@ -22,9 +22,6 @@ def on_ready():
     except KeyError as e:
         # Will I ever hit this?
         pass
-    except JSONDecodeError as e:
-        # This should only hit once, the first time, to create the attribute.
-        storage.save_bot_setting('debug_level', D_CURRENT_LEVEL)
 
     debug(D_INFO, 'Debug initialized.')
 

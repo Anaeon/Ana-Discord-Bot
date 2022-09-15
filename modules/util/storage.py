@@ -101,14 +101,24 @@ def load_bot_setting(set):
 
 def save_bot_setting(set, val):
     setting = str(set)
-    with open('data/settings.json', 'r') as file:
-        data = json.load(file)
-    with open('data/settings.json', 'w') as file:
-        if isinstance(val, datetime.datetime):
-            data[setting] = val.isoformat()
-        else:
-            data[setting] = val
-        dump(data, file)
+    try:
+        with open('data/settings.json', 'r') as file:
+            data = json.load(file)
+        with open('data/settings.json', 'w') as file:
+            if isinstance(val, datetime.datetime):
+                data[setting] = val.isoformat()
+            else:
+                data[setting] = val
+            dump(data, file)
+    except json.decoder.JSONDecodeError as e:
+        log.info(e.msg)
+        with open('data/settings.json', 'w') as file:
+            if isinstance(val, datetime.datetime):
+                data[setting] = val.isoformat()
+            else:
+                data[setting] = val
+            dump(data, file)
+
 
 
 def load_server_setting(id, set):
