@@ -107,15 +107,14 @@ def load_bot_setting(set):
 
 def save_bot_setting(set, val):
     setting = str(set)
-    try:
-        with open('data/settings.json', 'r') as file:
-            data = json.load(file)
-        with open('data/settings.json', 'w') as file:
-            if isinstance(val, datetime.datetime):
-                data[setting] = val.isoformat()
-            else:
-                data[setting] = val
-            dump(data, file)
+    with open('data/settings.json', 'r') as file:
+        data = json.load(file)
+    with open('data/settings.json', 'w') as file:
+        if isinstance(val, datetime.datetime):
+            data[setting] = val.isoformat()
+        else:
+            data[setting] = val
+        dump(data, file)
 
 
 
