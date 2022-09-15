@@ -22,7 +22,7 @@ def on_ready():
     except KeyError as e:
         # Will I ever hit this?
         pass
-    except EmptyFileError as e:
+    except EmptyFileException as e:
         storage.save_bot_setting('debug_level', D_CURRENT_LEVEL)
 
     debug(D_INFO, 'Debug ready.')
