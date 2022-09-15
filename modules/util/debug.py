@@ -15,15 +15,17 @@ D_HEADER = ['ERROR', 'INFO', 'VERBOSE', 'VOMIT']
 def on_ready():
     global D_CURRENT_LEVEL
 
-    debug(D_INFO, 'Initializing Debug module...')
+    debug(D_INFO, 'Loading Debug module...')
 
     try:
         D_CURRENT_LEVEL = storage.load_bot_setting('debug_level')
     except KeyError as e:
         # Will I ever hit this?
         pass
+    except EmptyFileError as e:
+        storage.save_bot_setting('debug_level', D_CURRENT_LEVEL)
 
-    debug(D_INFO, 'Debug initialized.')
+    debug(D_INFO, 'Debug ready.')
 
 
 def debug(level, string):

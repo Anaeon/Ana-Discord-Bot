@@ -26,6 +26,8 @@ class StorageException(Exception):
     """base class for Storage exceptions"""
     pass
 
+class EmptyFileException(StorageException):
+    """exception raised when attempting to read a JSON object that hasn't been populated"""
 
 class NoSuchAttributeException(StorageException):
     """exception raised when an attribute doesn't exist"""
@@ -41,6 +43,7 @@ def dump(json_object : json, target_file) -> json:
 
 def on_ready(client):
     # TODO: Make sure all the appropriate files have been generated here beforehand.
+    log.info("Loading storage module...")
 
     # Bot settings.
     Path('data/settings.json').touch(exist_ok=True) # If the file is not, make it so.
@@ -85,18 +88,21 @@ def on_ready(client):
                 with open(p, 'w') as f:
                     dump(new_data, f)
 
-    log.info("storage.py ready.")
+    log.info("Storage ready.")
 
 
 def load_bot_setting(set):
     setting = str(set)
     Path('data/settings.json').touch(exist_ok=True)
     with open('data/settings.json', 'r') as file:
-        data = json.load(file)
-        if setting in data:
-            return data[setting]
-        else:
-            raise NoSuchSettingException
+        try:
+            data = json.load(file)
+            if setting in data:
+                return data[setting]
+            else:
+                raise NoSuchSettingException("\"" + setting + "\" not found in settings.json")
+        except json.decoder.JSONDecodeError as e:
+                raise EmptyFileException("The settings file is blank.")
 
 
 def save_bot_setting(set, val):
@@ -104,14 +110,6 @@ def save_bot_setting(set, val):
     try:
         with open('data/settings.json', 'r') as file:
             data = json.load(file)
-        with open('data/settings.json', 'w') as file:
-            if isinstance(val, datetime.datetime):
-                data[setting] = val.isoformat()
-            else:
-                data[setting] = val
-            dump(data, file)
-    except json.decoder.JSONDecodeError as e:
-        log.info(e.msg)
         with open('data/settings.json', 'w') as file:
             if isinstance(val, datetime.datetime):
                 data[setting] = val.isoformat()
