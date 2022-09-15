@@ -637,3 +637,5 @@ debug.log
 *.broken
 .idea/misc.xml
 .idea/Ana-Discord-Bot.iml
+.vs/Ana-Discord-Bot/v17/.suo
+.vs/VSWorkspaceState.json
